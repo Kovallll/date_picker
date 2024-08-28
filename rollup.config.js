@@ -1,5 +1,6 @@
 import path from 'path'
 import jsx from 'rollup-plugin-jsx'
+import styles from 'rollup-plugin-styles'
 
 import alias from '@rollup/plugin-alias'
 import babel from '@rollup/plugin-babel'
@@ -12,7 +13,7 @@ import terser from '@rollup/plugin-terser'
 const devMode = process.env.NODE_ENV === 'development'
 
 export default {
-    input: 'src/index.tsx',
+    input: 'src/index.jsx',
     watch: {
         include: './src/**',
         clearScreen: false,
@@ -27,6 +28,7 @@ export default {
         commonjs(),
         image(),
         json(),
+        styles(),
         jsx({ factory: 'React.createElement' }),
         babel({ exclude: 'node_modules/**' }),
         alias({
