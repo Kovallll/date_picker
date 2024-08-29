@@ -1,1 +1,0 @@
-export { getStartDay } from './getStartDay'
