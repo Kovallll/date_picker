@@ -21,6 +21,11 @@ const theme: Theme = {
         md: '16px',
         lg: '24px',
     },
+    fullWidth: '100%',
+    fontWeight: {
+        bold: '700',
+        medium: '500',
+    },
     media: {
         sm: '600px',
         md: '768px',
@@ -44,6 +49,9 @@ const theme: Theme = {
         sm: 0.9,
         md: 1.1,
         lg: 1.3,
+    },
+    cellsBorder: {
+        none: '0',
     },
     calendarStyles: {
         small: {

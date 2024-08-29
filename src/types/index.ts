@@ -29,6 +29,10 @@ export interface Theme {
         md: string
         lg: string
     }
+    fontWeight: {
+        bold: string
+        medium: string
+    }
     media: {
         sm: string
         md: string
@@ -39,6 +43,7 @@ export interface Theme {
         md: string
         lg: string
     }
+    fullWidth: string
     dayHeight: {
         sm: string
         md: string
@@ -52,6 +57,9 @@ export interface Theme {
         sm: number
         md: number
         lg: number
+    }
+    cellsBorder: {
+        none: string
     }
     calendarStyles: {
         small: {
