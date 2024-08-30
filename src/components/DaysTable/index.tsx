@@ -3,29 +3,22 @@ import { useState } from 'react'
 import { Day } from '../Day/index.jsx'
 import { Container, WeekRow } from './styled.js'
 
-import { daysOnTable } from '@constants'
+import { falseArray } from '@constants'
 import { DaysTableProps } from '@types'
 import { getCalendarDays } from '@utils/getCalendarDays/index.js'
 
-export const DaysTable = ({
-    currentMonth,
-    countOfRows,
-    year,
-    ...props
-}: DaysTableProps) => {
-    const falseArray = Array(daysOnTable).fill(false)
+export const DaysTable = ({ currentMonth, year, ...props }: DaysTableProps) => {
     const [activeDays, setActiveDays] = useState(falseArray)
-    const days = getCalendarDays(year, currentMonth - 1, countOfRows)
-    console.log(days, 'days')
+    const days = getCalendarDays(year, currentMonth - 1)
     const handleClickDay = (id: string) => {
-        const activeDay = activeDays[+id - 1]
+        const activeDay = activeDays[Number(id) - 1]
         if (activeDay) {
             const newActiveDays = falseArray
             setActiveDays(newActiveDays)
         } else {
-            const newActiveDays = falseArray.slice(0, +id - 1)
+            const newActiveDays = falseArray.slice(0, Number(id) - 1)
             newActiveDays.push(true)
-            newActiveDays.push(...falseArray.slice(+id))
+            newActiveDays.push(...falseArray.slice(Number(id)))
             setActiveDays(newActiveDays)
         }
     }
@@ -39,7 +32,7 @@ export const DaysTable = ({
                             key={id}
                             id={id}
                             onClickDay={handleClickDay}
-                            isActive={activeDays[+id - 1]}
+                            isActive={activeDays[Number(id) - 1]}
                         >
                             {day}
                         </Day>

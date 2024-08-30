@@ -52,9 +52,20 @@ export const months = [
 
 export const yearNow = new Date().getFullYear()
 
-export const daysOnTable = 35
+export const cellsOnTable = 35
 
 export const daysInWeek = 7
+
+export const countOfRowsCalendar = 6;
+
+export const maxMonths = 12
+
+export const minMonth = 1
+
+export const defaultProps = {
+    defaultYear: 2000,
+    defaultMonth: 1,
+}
 
 export const icons = {
     prevArrowIcon: prevIcon,
@@ -62,3 +73,5 @@ export const icons = {
     calendarIcon: calendarIcon,
     clearIcon: clearIcon,
 }
+
+export const falseArray = Array(cellsOnTable).fill(false)

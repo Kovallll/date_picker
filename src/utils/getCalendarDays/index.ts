@@ -1,18 +1,20 @@
-import { daysInWeek, Month, monthDays, months } from '@constants'
+import {
+    countOfRowsCalendar,
+    daysInWeek,
+    Month,
+    monthDays,
+    months,
+} from '@constants'
 import { DaysTable } from '@types'
 
-export const getCalendarDays = (
-    year: number,
-    month: number,
-    countOfRows: number
-) => {
-    const actualPrevMonthDays = new Date(year, month).getDay() - 1
+export const getCalendarDays = (year: number, month: number) => {
+    const actualPrevMonthDays = new Date(year, month).getDay()
     const prevMonth: Month = months[month - 1]
     const activeMonth = months[month]
     const countDaysPrevMonth = monthDays[prevMonth]
     const countDaysActiveMonth = monthDays[activeMonth]
     const days: DaysTable[] = [
-        ...Array(countOfRows)
+        ...Array(countOfRowsCalendar)
             .fill({})
             .map((_, index) => ({
                 id: String(index),

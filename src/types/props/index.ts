@@ -3,6 +3,7 @@ export interface DefaultCalendarProps
     countOfRows?: number
     initialYear?: number
     initialMonth?: number
+    isWithRange: boolean
 }
 
 export interface DayProps
@@ -31,7 +32,6 @@ export type WeekBarProps = React.ButtonHTMLAttributes<HTMLDivElement>
 export interface DaysTableProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
     currentMonth: number
-    countOfRows: number
     year: number
 }
 

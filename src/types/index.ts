@@ -29,6 +29,14 @@ export interface Theme {
         md: string
         lg: string
     }
+    fontWeight: {
+        bold: string
+        medium: string
+    }
+    cellsBorder: {
+        none: string
+    }
+    fullWidth: string
     media: {
         sm: string
         md: string

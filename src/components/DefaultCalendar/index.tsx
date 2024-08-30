@@ -5,27 +5,27 @@ import { MonthBar } from '../MonthBar'
 import { WeekBar } from '../WeekBar'
 import { Container } from './styled'
 
+import { defaultProps, maxMonths, minMonth } from '/src/constants'
 import { DefaultCalendarProps } from '@types'
 
 export const DefaultCalendar = ({
-    countOfRows = 5,
-    initialYear = 2024,
-    initialMonth = 1,
+    initialYear = defaultProps.defaultYear,
+    initialMonth = defaultProps.defaultMonth,
     ...props
 }: DefaultCalendarProps) => {
     const [currentMonth, setCurrentMonth] = useState(initialMonth)
     const [year, setYear] = useState(initialYear)
 
     const handleIncrementMonth = () => {
-        if (currentMonth === 12) {
-            setCurrentMonth(1)
+        if (currentMonth === maxMonths) {
+            setCurrentMonth(minMonth)
             setYear((prev) => prev + 1)
         } else setCurrentMonth((prev) => prev + 1)
     }
 
     const handleDecrementMonth = () => {
-        if (currentMonth === 1) {
-            setCurrentMonth(12)
+        if (currentMonth === minMonth) {
+            setCurrentMonth(maxMonths)
             setYear((prev) => prev - 1)
         } else setCurrentMonth((prev) => prev - 1)
     }
@@ -39,11 +39,7 @@ export const DefaultCalendar = ({
                 decrement={handleDecrementMonth}
             />
             <WeekBar />
-            <DaysTable
-                year={year}
-                countOfRows={countOfRows}
-                currentMonth={currentMonth}
-            />
+            <DaysTable year={year} currentMonth={currentMonth} />
         </Container>
     )
 }

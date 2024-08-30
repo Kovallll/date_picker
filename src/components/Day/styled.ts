@@ -4,10 +4,9 @@ import mixins from '@styles/mixins'
 import { DayContainerProps } from '@types'
 
 export const Container = styled.button<DayContainerProps>`
-    width: 100%;
+    width: ${({ theme }) => theme.fullWidth};
     height: ${({ theme }) => mixins.dayHeight(theme)};
-    ${mixins.flexRowCenter()}
-    border: 0;
+    border: ${({ theme }) => theme.cellsBorder.none};
     border-radius: ${({ isActive, isStartRange }) =>
         isActive || isStartRange ? '8px' : '0px'};
     background: ${({ isActive, inRange, isStartRange, theme }) =>

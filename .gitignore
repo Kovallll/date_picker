@@ -18,6 +18,9 @@ dist-ssr
 .idea
 .env
 .DS_Store
+.yarn
+.pnp.cjs
+.pnp.loader.mjs
 *.suo
 *.ntvs*
 *.njsproj

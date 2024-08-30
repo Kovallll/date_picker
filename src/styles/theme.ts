@@ -21,10 +21,18 @@ const theme: Theme = {
         md: '16px',
         lg: '24px',
     },
+    fullWidth: '100%',
+    fontWeight: {
+        bold: '700',
+        medium: '500',
+    },
     media: {
         sm: '600px',
         md: '768px',
         lg: '1000px',
+    },
+    cellsBorder: {
+        none: '0',
     },
     spaces: {
         sm: '6px',
