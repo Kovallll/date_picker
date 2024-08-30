@@ -4,7 +4,6 @@ import mixins from '@styles/mixins'
 
 export const Container = styled.section`
     ${mixins.flexColumnCenter()}
-
     font-size: ${({ theme }) => mixins.fontSize(theme)};
     padding: ${({ theme }) => mixins.padding(theme)};
     border: ${({ theme }) => mixins.calendarBorder(theme)};

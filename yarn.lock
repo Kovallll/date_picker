@@ -6323,7 +6323,6 @@ __metadata:
     globals: "npm:^15.9.0"
     husky: "npm:^9.1.5"
     jest: "npm:^29.7.0"
-    jest-config: "npm:^29.7.0"
     prettier: "npm:^3.3.3"
     prettier-eslint: "npm:^16.3.0"
     react: "npm:^18.3.1"

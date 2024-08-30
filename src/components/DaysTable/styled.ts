@@ -3,9 +3,8 @@ import styled from 'styled-components'
 import mixins from '@styles/mixins'
 
 export const Container = styled.article`
+    width: 100%;
     ${mixins.flexColumnCenter()}
-
-    width: ${({ theme }) => theme.fullWidth}
     align-items: unset;
 `
 
