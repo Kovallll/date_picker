@@ -4,13 +4,24 @@ import { Container, WeekRow } from './styled.js'
 import { DaysTableProps } from './types'
 
 import Day from '@components/Day'
-import { countMonth, initialActiveCellId, initialRangeEnd, initialRangeStart } from '@constants'
+import {
+    countMonth,
+    initialActiveCellId,
+    initialRangeEnd,
+    initialRangeStart,
+} from '@constants'
 import { IRange, MonthCellsData } from '@types'
 import { getCalendarCells, getFalseYearArray } from '@utils'
 
 export const DaysTable = (props: DaysTableProps) => {
-    const { currentMonth, year, isWithRange, onClickWithRange, ...restProps } =
-        props
+    const {
+        currentMonth,
+        year,
+        isWithRange,
+        onClickWithRange,
+        startDay,
+        ...restProps
+    } = props
 
     const [years, setYears] = useState([year])
 
@@ -34,7 +45,7 @@ export const DaysTable = (props: DaysTableProps) => {
     const activeMonthId =
         years.findIndex((el) => el === year) * countMonth + (currentMonth - 1)
 
-    const days = getCalendarCells(year, currentMonth - 1)
+    const days = getCalendarCells(year, currentMonth - 1, startDay)
 
     const handleClickDay = useCallback(
         (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {

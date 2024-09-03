@@ -18,6 +18,8 @@ export interface IRange {
     end: number
 }
 
+export type StartDay = 1 | 0
+
 export interface Theme {
     palette: {
         common: {

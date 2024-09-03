@@ -20,7 +20,7 @@ export enum Month {
     December = 'December',
 }
 
-export const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+export const initialWeekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 
 export const months = [
     Month.January,

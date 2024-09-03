@@ -5,6 +5,7 @@ export interface DefaultCalendarProps
     countOfRows?: number
     initialYear?: number
     initialMonth?: number
+    isChangeStartDay?: boolean
     isWithRange?: boolean
     onClickWithRange?: (
         ctrl: boolean,

@@ -1,9 +1,10 @@
-import { IRange, MonthCellsData } from '@types'
+import { IRange, MonthCellsData, StartDay } from '@types'
 
 export interface DaysTableProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
     currentMonth: number
     year: number
+    startDay: StartDay
     isWithRange?: boolean
     onClickWithRange?: (
         ctrl: boolean,

@@ -3,9 +3,7 @@ import { memo } from 'react'
 import { Container, Text } from './styled.js'
 import { WeekBarProps } from './types'
 
-import { weekDays } from '@constants'
-
-const WeekBar = ({ ...props }: WeekBarProps) => {
+const WeekBar = ({ weekDays, ...props }: WeekBarProps) => {
     return (
         <Container {...props}>
             {weekDays.map((day) => (

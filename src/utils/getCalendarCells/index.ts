@@ -5,10 +5,14 @@ import { getDaysInMonth } from '../getDaysInMonth'
 import { getInitialCells } from '../getInitialCells'
 
 import { daysInWeek } from '@constants'
-import { CellsInitialData } from '@types'
+import { CellsInitialData, StartDay } from '@types'
 
-export const getCalendarCells = (year: number, monthIndex: number) => {
-    let actualPrevMonthDays = new Date(year, monthIndex).getDay() - 1
+export const getCalendarCells = (
+    year: number,
+    monthIndex: number,
+    startDay: StartDay
+) => {
+    let actualPrevMonthDays = new Date(year, monthIndex).getDay() - startDay
     if (actualPrevMonthDays < 0)
         actualPrevMonthDays = daysInWeek - Math.abs(actualPrevMonthDays)
     const countDaysPrevMonth = getDaysInMonth(year, monthIndex)
