@@ -15,10 +15,13 @@ export const Month = styled.div`
     ${mixins.flexRowCenter()}
 `
 
-export const Image = styled.div`
+export const Image = styled.button<{ disabled?: boolean }>`
     ${mixins.flexRowCenter()}
 
-    width: ${({ theme }) => theme.arrowSize.width}
-    height: ${({ theme }) => theme.arrowSize.height}
+    width: ${({ theme }) => theme.arrowSize.width + 'px'};
+    height: ${({ theme }) => theme.arrowSize.height + 'px'};
     transform: scale(${({ theme }) => mixins.arrowScale(theme)});
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+    border: ${({ theme }) => theme.cellsBorder.none};
+    background: ${({ theme }) => theme.palette.common.white};
 `

@@ -10,5 +10,4 @@ export const Container = styled.section`
     border: ${({ theme }) => mixins.calendarBorder(theme)};
     border-radius: ${({ theme }) => mixins.calendarBorderRadius(theme)};
     width: ${({ theme }) => mixins.calendarWidth(theme)};
-    height: ${({ theme }) => mixins.calendarHeight(theme)};
 `

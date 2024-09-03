@@ -1,7 +1,9 @@
 import calendarIcon from '@assets/icons/calendar.svg'
 import clearIcon from '@assets/icons/clear.svg'
-import nextIcon from '@assets/icons/next.svg'
-import prevIcon from '@assets/icons/prev.svg'
+import disabledNextArrowIcon from '@assets/icons/disabledNextArrow.svg'
+import disabledPrevArrowIcon from '@assets/icons/disabledPrevArrow.svg'
+import nextArrowIcon from '@assets/icons/nextArrow.svg'
+import prevArrowIcon from '@assets/icons/prevArrow.svg'
 
 export enum Month {
     January = 'January',
@@ -16,21 +18,6 @@ export enum Month {
     October = 'October',
     November = 'November',
     December = 'December',
-}
-
-export const monthDays = {
-    [Month.January]: 31,
-    [Month.February]: 28,
-    [Month.March]: 31,
-    [Month.April]: 30,
-    [Month.May]: 31,
-    [Month.June]: 30,
-    [Month.July]: 31,
-    [Month.August]: 31,
-    [Month.September]: 30,
-    [Month.October]: 31,
-    [Month.November]: 30,
-    [Month.December]: 31,
 }
 
 export const weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
@@ -50,28 +37,28 @@ export const months = [
     Month.December,
 ]
 
-export const yearNow = new Date().getFullYear()
-
-export const cellsOnTable = 35
-
 export const daysInWeek = 7
 
-export const countOfRowsCalendar = 6;
+export const countMonth = 12
 
-export const maxMonths = 12
+export const numberBaseMonth = 1
 
-export const minMonth = 1
+export const initialRangeStart = -1
+
+export const initialRangeEnd = -1
+
+export const initialActiveCellId = '-1'
 
 export const defaultProps = {
-    defaultYear: 2000,
+    defaultYear: 2024,
     defaultMonth: 1,
 }
 
 export const icons = {
-    prevArrowIcon: prevIcon,
-    nextArrowIcon: nextIcon,
-    calendarIcon: calendarIcon,
-    clearIcon: clearIcon,
+    prevArrowIcon,
+    nextArrowIcon,
+    disabledNextArrowIcon,
+    disabledPrevArrowIcon,
+    calendarIcon,
+    clearIcon,
 }
-
-export const falseArray = Array(cellsOnTable).fill(false)

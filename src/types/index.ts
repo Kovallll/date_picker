@@ -1,13 +1,21 @@
-export * from './props'
-
-export interface DaysTable {
+export interface CellsInitialData {
     id: string
-    data: DaysData[]
+    data: CellData[]
 }
 
-export interface DaysData {
+export interface CellData {
     id: string
     day: number
+}
+
+export interface MonthCellsData {
+    id: string
+    data: boolean[]
+}
+
+export interface IRange {
+    start: number
+    end: number
 }
 
 export interface Theme {
@@ -19,6 +27,8 @@ export interface Theme {
         activeDateBackgroundColor: string
         activeColor: string
         startRangeBackgroundColor: string
+        endRangeBackgroundColor: string
+        endRangeColor: string
         startRangeColor: string
         inRangeColor: string
         inRangeBackgroundColor: string
@@ -47,10 +57,13 @@ export interface Theme {
         md: string
         lg: string
     }
-    dayHeight: {
+    cellHeight: {
         sm: string
         md: string
         lg: string
+    }
+    cellBorderRadius: {
+        active: string
     }
     arrowSize: {
         width: string
@@ -64,19 +77,16 @@ export interface Theme {
     calendarStyles: {
         small: {
             width: string
-            height: string
             borderRadius: string
             border: string
         }
         medium: {
             width: string
-            height: string
             borderRadius: string
             border: string
         }
         large: {
             width: string
-            height: string
             borderRadius: string
             border: string
         }

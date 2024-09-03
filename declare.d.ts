@@ -9,6 +9,6 @@ declare module '*.svg' {
 declare module 'styled-components' {
     export interface DefaultTheme extends Theme {}
 }
-declare module "react/jsx-runtime" {
-    export default any;
-  }
+declare module 'react/jsx-runtime' {
+    export default any
+}

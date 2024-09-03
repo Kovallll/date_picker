@@ -10,6 +10,8 @@ const theme: Theme = {
         },
         activeDateBackgroundColor: '#2f80ed',
         activeColor: '#fff',
+        endRangeBackgroundColor: '#2f80ed',
+        endRangeColor: '#fff',
         startRangeBackgroundColor: '#82b3f4',
         startRangeColor: '#fff',
         inRangeColor: '#2f80ed;',
@@ -17,9 +19,9 @@ const theme: Theme = {
         disabledColor: '#aaa',
     },
     fontSizes: {
-        sm: '12px',
-        md: '16px',
-        lg: '24px',
+        sm: '12',
+        md: '16',
+        lg: '24',
     },
     fullWidth: '100%',
     fontWeight: {
@@ -27,26 +29,29 @@ const theme: Theme = {
         medium: '500',
     },
     media: {
-        sm: '600px',
-        md: '768px',
-        lg: '1000px',
+        sm: '600',
+        md: '768',
+        lg: '1000',
     },
     cellsBorder: {
         none: '0',
     },
     spaces: {
-        sm: '6px',
-        md: '8px',
-        lg: '10px',
+        sm: '6',
+        md: '8',
+        lg: '10',
     },
-    dayHeight: {
-        sm: '32px',
-        md: '36px',
-        lg: '40px',
+    cellHeight: {
+        sm: '32',
+        md: '36',
+        lg: '40',
+    },
+    cellBorderRadius: {
+        active: '8',
     },
     arrowSize: {
-        width: '16px',
-        height: '16px',
+        width: '16',
+        height: '16',
     },
     arrowScale: {
         sm: 0.9,
@@ -55,21 +60,18 @@ const theme: Theme = {
     },
     calendarStyles: {
         small: {
-            width: '200px',
-            height: '210px',
-            borderRadius: '6px',
+            width: '200',
+            borderRadius: '6',
             border: '1px solid #e1e1e1',
         },
         medium: {
-            width: '240px',
-            height: '240px',
-            borderRadius: '8px',
+            width: '240',
+            borderRadius: '8',
             border: '1px solid #e1e1e1',
         },
         large: {
-            width: '300px',
-            height: '300px',
-            borderRadius: '10px',
+            width: '300',
+            borderRadius: '10',
             border: '1px solid #e1e1e1',
         },
     },

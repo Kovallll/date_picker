@@ -11,8 +11,6 @@ import resolve from '@rollup/plugin-node-resolve'
 import terser from '@rollup/plugin-terser'
 import typescript from '@rollup/plugin-typescript'
 
-const devMode = process.env.NODE_ENV === 'development'
-
 export default {
     input: 'src/index.tsx',
     watch: {
@@ -32,7 +30,7 @@ export default {
         styles(),
         typescript({ tsconfig: './tsconfig.json' }),
         jsx({ factory: 'React.createElement' }),
-        babel({ exclude: 'node_modules/**' }),
+        babel({ exclude: 'node_modules/**', babelHelpers: 'bundled' }),
         alias({
             '@': path.resolve(__dirname, 'src/*'),
             '@types': path.resolve(__dirname, 'src/types'),
@@ -43,7 +41,8 @@ export default {
             '@styles/*': path.resolve(__dirname, 'src/styles/*'),
             '@utils/*': path.resolve(__dirname, 'src/utils/*'),
             '@hooks': path.resolve(__dirname, 'src/hooks'),
+            '@decorators': path.resolve(__dirname, 'src/decorators'),
+            '@service': path.resolve(__dirname, 'src/service'),
         }),
     ],
-    sourceMap: devMode ? 'inline' : false,
 }

@@ -1,17 +1,45 @@
 import styled from 'styled-components'
 
+import { DayContainerProps } from './types'
+
 import mixins from '@styles/mixins'
-import { DayContainerProps } from '@types'
 
 export const Container = styled.button<DayContainerProps>`
     width: ${({ theme }) => theme.fullWidth};
-    height: ${({ theme }) => mixins.dayHeight(theme)};
+    height: ${({ theme }) => mixins.cellHeight(theme)};
     border: ${({ theme }) => theme.cellsBorder.none};
-    border-radius: ${({ isActive, isStartRange }) =>
-        isActive || isStartRange ? '8px' : '0px'};
-    background: ${({ isActive, inRange, isStartRange, theme }) =>
-        mixins.dayBackgroundColor(theme, isActive, inRange, isStartRange)};
-    color: ${({ isActive, inRange, isStartRange, isDisabled, theme }) =>
-        mixins.dayColor(theme, isActive, inRange, isStartRange, isDisabled)};
+    border-radius: ${({ theme, $isActive, $isStartRange, $isEndRange }) =>
+        mixins.dayBorderRadius(theme, $isActive, $isStartRange, $isEndRange)};
+    background: ${({
+        theme,
+        $isActive,
+        $inRange,
+        $isStartRange,
+        $isEndRange,
+    }) =>
+        mixins.dayBackgroundColor(
+            theme,
+            $isActive,
+            $inRange,
+            $isStartRange,
+            $isEndRange
+        )};
+    color: ${({
+        theme,
+        $isActive,
+        $inRange,
+        $isStartRange,
+        $isDisabled,
+        $isEndRange,
+    }) =>
+        mixins.dayColor(
+            theme,
+            $isActive,
+            $inRange,
+            $isStartRange,
+            $isDisabled,
+            $isEndRange
+        )};
     font-size: ${({ theme }) => mixins.fontSize(theme)};
+    cursor: pointer;
 `
