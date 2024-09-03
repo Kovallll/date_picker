@@ -20,9 +20,9 @@ jobs:
 
             - name: install modules
               run: yarn install
-            - name: build storybook
-              run: yarn build-sb
             - name: lint code
               run: yarn lint
+            - name: build storybook
+              run: yarn build-sb
             - name: check unit tests
               run: yarn test:unit

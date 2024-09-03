@@ -72,6 +72,6 @@ export default [
         },
     },
     {
-        ignores: ['dist/*', '.yarn', '.pnp.cjs'],
+        ignores: ['dist/*', '.yarn', '.pnp.cjs', 'storybook-static/*'],
     },
 ]
