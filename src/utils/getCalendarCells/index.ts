@@ -1,11 +1,30 @@
-import { getCellsInMonth } from '../getCellsInMonth'
-import { getCountCellsPrevMonths } from '../getCountCellsPrevMonths'
-import { getCountCellsPrevYears } from '../getCountCellsPrevYears'
-import { getDaysInMonth } from '../getDaysInMonth'
-import { getInitialCells } from '../getInitialCells'
-
-import { daysInWeek } from '@constants'
+import { countMonth, daysInWeek } from '@constants'
 import { CellsInitialData } from '@types'
+import {
+    getAllCellsPrevMonths,
+    getCellsInMonth,
+    getCountCellsPrevYears,
+} from '@utils'
+
+const getDaysInMonth = (year: number, monthIndex: number) => {
+    const days = new Date(year, monthIndex, 0).getDate()
+    return days
+}
+
+const getInitialCells = <T>(
+    len: number,
+    array: Array<T> = [],
+    initialId: number = 0
+) => {
+    return [
+        ...Array(len)
+            .fill({})
+            .map((_, index) => ({
+                id: String(initialId * countMonth + index + 1),
+                data: array,
+            })),
+    ]
+}
 
 export const getCalendarCells = (year: number, monthIndex: number) => {
     let actualPrevMonthDays = new Date(year, monthIndex).getDay() - 1
@@ -14,14 +33,15 @@ export const getCalendarCells = (year: number, monthIndex: number) => {
     const countDaysPrevMonth = getDaysInMonth(year, monthIndex)
     const countDaysActiveMonth = getDaysInMonth(year, monthIndex + 1)
     const cellsInActiveMonth = getCellsInMonth(year, monthIndex)
-    const countDaysArrays = cellsInActiveMonth / 7
+    const countDaysArrays = cellsInActiveMonth / daysInWeek
     const days: CellsInitialData[] = getInitialCells(countDaysArrays, [])
 
     let arr = []
     let j = 0
 
     const yearId = getCountCellsPrevYears(year)
-    const prevMonthCellsCount = getCountCellsPrevMonths(year, monthIndex)
+    const prevMonthCellsCount = getAllCellsPrevMonths(year, monthIndex)
+    const reversePrevId = 2
     let numberForReversePrevMonthIds = actualPrevMonthDays - 1
     let cellId = yearId + prevMonthCellsCount
     for (
@@ -37,7 +57,7 @@ export const getCalendarCells = (year: number, monthIndex: number) => {
             day: i,
         })
         cellId++
-        numberForReversePrevMonthIds -= 2
+        numberForReversePrevMonthIds -= reversePrevId
     }
     for (let i = 1; i <= countDaysActiveMonth; i++) {
         arr.push({ id: String(cellId), day: i })

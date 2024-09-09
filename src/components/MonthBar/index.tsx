@@ -1,9 +1,12 @@
-import { Container, Image, Month } from './styled.js'
+import { memo } from 'react'
+
+import { nextImageAlt, prevImageAlt } from './config'
+import { Container, Image, Month } from './styled'
 import { MonthBarProps } from './types'
 
 import { icons, months } from '@constants'
 
-export const MonthBar = (props: MonthBarProps) => {
+const MonthBar = (props: MonthBarProps) => {
     const { currentMonth, year, increment, decrement, ...restProps } = props
 
     const isDisabled = year === 0 && currentMonth === 1
@@ -15,14 +18,24 @@ export const MonthBar = (props: MonthBarProps) => {
     return (
         <Container {...restProps}>
             <Image onClick={decrement} disabled={disabledPrevButton}>
-                <img src={disabledPrevIcon} aria-hidden="true" />
+                <img
+                    src={disabledPrevIcon}
+                    aria-hidden="true"
+                    alt={prevImageAlt}
+                />
             </Image>
             <Month>
                 {months[currentMonth - 1]} {year}
             </Month>
             <Image onClick={increment}>
-                <img src={icons.nextArrowIcon} aria-hidden="true" />
+                <img
+                    src={icons.nextArrowIcon}
+                    aria-hidden="true"
+                    alt={nextImageAlt}
+                />
             </Image>
         </Container>
     )
 }
+
+export default memo(MonthBar)

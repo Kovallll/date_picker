@@ -13,9 +13,45 @@ export interface MonthCellsData {
     data: boolean[]
 }
 
-export interface IRange {
-    start: number
-    end: number
+export interface Range {
+    start: number | null
+    end: number | null
+}
+
+export interface InputRange {
+    start: string
+    end: string
+}
+
+export type onClickWithRange = (
+    ctrl: boolean,
+    cellId: number,
+    range: Range,
+    isSecondInput?: boolean,
+    inputDate?: string,
+    prevFirstDate?: string,
+    prevSecondDate?: string
+) => { range: Range; inputRange: InputRange }
+
+export interface ElementStyle {
+    large: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
+    medium: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
+    small: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
 }
 
 export interface Theme {
@@ -24,15 +60,13 @@ export interface Theme {
             black: string
             white: string
         }
-        activeDateBackgroundColor: string
-        activeColor: string
-        startRangeBackgroundColor: string
-        endRangeBackgroundColor: string
-        endRangeColor: string
-        startRangeColor: string
-        inRangeColor: string
+        blue: string
+        lightBlue: string
         inRangeBackgroundColor: string
         disabledColor: string
+        holidayColor: string
+        newMonth: string
+        errorColor: string
     }
     fontSizes: {
         sm: string
@@ -43,10 +77,8 @@ export interface Theme {
         bold: string
         medium: string
     }
-    cellsBorder: {
-        none: string
-    }
-    fullWidth: string
+    noneBorder: string
+    fullSize: string
     media: {
         sm: string
         md: string
@@ -56,15 +88,14 @@ export interface Theme {
         sm: string
         md: string
         lg: string
+        xl: string
     }
     cellHeight: {
         sm: string
         md: string
         lg: string
     }
-    cellBorderRadius: {
-        active: string
-    }
+    cellBorderRadius: string
     arrowSize: {
         width: string
         height: string
@@ -74,21 +105,11 @@ export interface Theme {
         md: number
         lg: number
     }
-    calendarStyles: {
-        small: {
-            width: string
-            borderRadius: string
-            border: string
-        }
-        medium: {
-            width: string
-            borderRadius: string
-            border: string
-        }
-        large: {
-            width: string
-            borderRadius: string
-            border: string
-        }
+    inputScale: {
+        sm: number
+        md: number
+        lg: number
     }
+    inputStyles: ElementStyle
+    calendarStyles: ElementStyle
 }

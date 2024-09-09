@@ -1,4 +1,4 @@
-import { MonthBar } from './index'
+import MonthBar from './index'
 
 import type { Meta, StoryObj } from '@storybook/react'
 

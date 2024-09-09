@@ -1,9 +1,10 @@
 export { getCalendarCells } from './getCalendarCells'
-export { insertElementInArray } from './insertElementInArray'
-export { getInitialCells } from './getInitialCells'
-export { getDaysInMonth } from './getDaysInMonth'
-export { getCellsInMonth } from './getCellsInMonth'
-export { getCountCellsPrevMonths } from './getCountCellsPrevMonths'
-export { getCountCellsPrevYears } from './getCountCellsPrevYears'
-export { getFalseYearArray } from './getFalseYearArray'
-export { getFalseMonthArray } from './getFalseMonthArray'
+export {
+    getCellsInMonth,
+    getCellsNextMonth,
+    getCellsPrevMonth,
+    getCountCellsPrevYears,
+    getAllCellsPrevMonths,
+} from './getCells'
+export { getDateFormat } from './getDateFormat'
+export { getValidInputCell } from './getValidInputCell'

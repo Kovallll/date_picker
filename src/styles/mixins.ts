@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-import { Theme } from '@types'
+import { ElementStyle, Theme } from '@types'
 
 export default {
     flexRowSE: () => css`
@@ -51,17 +51,17 @@ export default {
             margin: ${fisrtPos} ${theme.spaces.sm + 'px'} ${lastPos};
         }
     `,
-    padding: (theme: Theme) => css`
-        ${theme.spaces.lg + 'px'};
+    padding: (theme: Theme, fisrtPos?: string, lastPos?: string) => css`
+        ${fisrtPos} ${theme.spaces.lg + 'px'} ${lastPos};
         @media (max-width: ${theme.media.md + 'px'}) {
-            padding: ${theme.spaces.md + 'px'};
+            padding: ${fisrtPos} ${theme.spaces.md + 'px'} ${lastPos};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            padding: ${theme.spaces.sm + 'px'};
+            padding: ${fisrtPos} ${theme.spaces.sm + 'px'} ${lastPos};
         }
     `,
     arrowScale: (theme: Theme) => css`
-        ${theme.arrowScale.lg + ')'};
+        transform: scale(${theme.arrowScale.lg});
 
         @media (max-width: ${theme.media.md + 'px'}) {
             transform: scale(${theme.arrowScale.md});
@@ -70,31 +70,75 @@ export default {
             transform: scale(${theme.arrowScale.sm});
         }
     `,
-    calendarBorderRadius: (theme: Theme) => css`
-        ${theme.calendarStyles.large.borderRadius + 'px'};
+    inputScale: (theme: Theme) => css`
+        transform: scale(${theme.inputScale.lg});
+
         @media (max-width: ${theme.media.md + 'px'}) {
-            border-radius: ${theme.calendarStyles.medium.borderRadius + 'px'};
+            transform: scale(${theme.inputScale.md});
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            border-radius: ${theme.calendarStyles.small.borderRadius + 'px'};
+            transform: scale(${theme.inputScale.sm});
         }
     `,
-    calendarBorder: (theme: Theme) => css`
-        ${theme.calendarStyles.large.border};
+    inputShift: (theme: Theme, shiftType: string) => css`
+        ${theme.spaces.lg + 'px'};
+
         @media (max-width: ${theme.media.md + 'px'}) {
-            border: ${theme.calendarStyles.medium.border};
+            ${shiftType}: ${theme.spaces.md + 'px'};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            border: ${theme.calendarStyles.small.border};
+            ${shiftType}: ${theme.spaces.sm + 'px'};
         }
     `,
-    calendarWidth: (theme: Theme) => css`
-        ${theme.calendarStyles.large.width + 'px'};
+    inputPadding: (theme: Theme) => css`
+        ${theme.spaces.lg + 'px'} ${theme.spaces.xl + 'px'};
         @media (max-width: ${theme.media.md + 'px'}) {
-            width: ${theme.calendarStyles.medium.width + 'px'};
+            padding: ${theme.spaces.md + 'px'}
+                ${String(+theme.spaces.xl - 4) + 'px'};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            width: ${theme.calendarStyles.small.width + 'px'};
+            padding: ${theme.spaces.sm + 'px'}
+                ${String(+theme.spaces.xl - 8) + 'px'};
+        }
+    `,
+    elementBorderRadius: (theme: Theme, elementStyle: ElementStyle) => css`
+        ${elementStyle.large.borderRadius + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            border-radius: ${elementStyle.medium.borderRadius + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            border-radius: ${elementStyle.small.borderRadius + 'px'};
+        }
+    `,
+    elementBorder: (theme: Theme, elementStyle: ElementStyle) => css`
+        ${elementStyle.large.border};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            border: ${elementStyle.medium.border};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            border: ${elementStyle.small.border};
+        }
+    `,
+    elementMaxWidth: (theme: Theme, elementStyle: ElementStyle) => css`
+        ${elementStyle.large.width + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            max-width: ${elementStyle.medium.width + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            max-width: ${elementStyle.small.width + 'px'};
+        }
+    `,
+    elementWidth: (
+        theme: Theme,
+        elementStyle: ElementStyle,
+        typeWidth: string
+    ) => css`
+        ${elementStyle.large[typeWidth] + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            width: ${elementStyle.medium[typeWidth] + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            width: ${elementStyle.small[typeWidth] + 'px'};
         }
     `,
     dayColor: (
@@ -103,13 +147,17 @@ export default {
         inRange?: boolean,
         isStartRange?: boolean,
         isDisabled?: boolean,
-        isEndRange?: boolean
+        isEndRange?: boolean,
+        isHoliday?: boolean,
+        isNewMonth?: boolean
     ) => {
         if (isDisabled) return theme.palette.disabledColor
-        if (inRange) return theme.palette.inRangeColor
-        if (isActive) return theme.palette.activeColor
-        if (isEndRange) return theme.palette.endRangeColor
-        if (isStartRange) return theme.palette.startRangeColor
+        if (inRange) return theme.palette.blue
+        if (isActive) return theme.palette.common.white
+        if (isEndRange) return theme.palette.common.white
+        if (isStartRange) return theme.palette.common.white
+        if (isNewMonth) return theme.palette.newMonth
+        if (isHoliday) return theme.palette.holidayColor
         else return theme.palette.common.black
     },
     dayBorderRadius: (
@@ -118,11 +166,11 @@ export default {
         isStartRange?: boolean,
         isEndRange?: boolean
     ) => {
-        if (isActive) return theme.cellBorderRadius.active + 'px'
+        if (isActive) return theme.cellBorderRadius + 'px'
         else if (isStartRange)
-            return `${theme.cellBorderRadius.active + 'px'} 0px 0px ${theme.cellBorderRadius.active + 'px'}`
+            return `${theme.cellBorderRadius + 'px'} 0px 0px ${theme.cellBorderRadius + 'px'}`
         else if (isEndRange)
-            return `0px ${theme.cellBorderRadius.active + 'px'} ${theme.cellBorderRadius.active + 'px'} 0px`
+            return `0px ${theme.cellBorderRadius + 'px'} ${theme.cellBorderRadius + 'px'} 0px`
         else return '0px'
     },
     dayBackgroundColor: (
@@ -133,9 +181,9 @@ export default {
         isEndRange?: boolean
     ) => {
         if (inRange) return theme.palette.inRangeBackgroundColor
-        if (isActive) return theme.palette.activeDateBackgroundColor
-        if (isEndRange) return theme.palette.endRangeBackgroundColor
-        if (isStartRange) return theme.palette.startRangeBackgroundColor
+        if (isActive) return theme.palette.blue
+        if (isEndRange) return theme.palette.blue
+        if (isStartRange) return theme.palette.lightBlue
         else return theme.palette.common.white
     },
 }

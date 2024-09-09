@@ -1,14 +1,23 @@
-import { IRange, MonthCellsData } from '@types'
+import { WeekDays } from '@constants'
+import { onClickWithRange } from '@types'
 
 export interface DaysTableProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
     currentMonth: number
     year: number
+    handleChangeError: (error: string) => void
+    error: string
+    initialWeekDays: WeekDays[]
+    isKeyboardChange: boolean
     isWithRange?: boolean
-    onClickWithRange?: (
-        ctrl: boolean,
-        cellId: number,
-        range: IRange,
-        monthRange: MonthCellsData[]
-    ) => { data: MonthCellsData[]; range: IRange }
+    handleKeyboardChange: (isKeyboard: boolean) => void
+    handleChangeYear: (year: number) => void
+    handleDecrementMonth: () => void
+    handleIncrementMonth: () => void
+    handleChangeCurrentMonth: (value: number) => void
+    onClickWithRange?: onClickWithRange
+    firstInputDate: string
+    secondInputDate: string
+    handleChangeFirstDateInput: (value: string) => void
+    handleChangeSecondDateInput: (value: string) => void
 }
