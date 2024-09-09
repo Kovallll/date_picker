@@ -22,7 +22,6 @@ export const WeekRow = (props: WeekRowProps) => {
         currentMonth,
         ...restProps
     } = props
-
     const SundayIndex = initialWeekDays.findIndex(
         (el) => el === WeekDays.Sunday
     )
@@ -37,8 +36,8 @@ export const WeekRow = (props: WeekRowProps) => {
             {data.map(({ id: dayId, day }, index) => {
                 const isActive = activeCellId === dayId && range.start === null
                 const isRange =
-                    +dayId > (range.start ?? +dayId) &&
-                    (range.end ?? +dayId) > +dayId
+                    Number(dayId) > (range.start ?? Number(dayId)) &&
+                    (range.end ?? Number(dayId)) > Number(dayId)
                 const isStartRange = range.start === Number(dayId)
                 const isEndRange = range.end === Number(dayId)
                 const isHoliday =

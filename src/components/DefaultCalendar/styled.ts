@@ -7,6 +7,7 @@ import mixins from '@styles/mixins'
 export const Container = styled.section<CalendarContainerProps>`
     ${mixins.flexColumnCenter()}
 
+    justify-content: start;
     box-sizing: border-box;
     width: ${({ theme, $isWithRange, $isWithInput }) =>
         mixins.elementWidth(

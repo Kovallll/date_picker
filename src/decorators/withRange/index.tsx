@@ -24,16 +24,25 @@ export const withRange = <T extends WithRangeProps>(
 
         const ctrlReverseRange = { start: cellId, end: range.start }
 
-        const changeStartRangeInput = { start: inputDate, end: prevSecondDate }
-
-        const changeEndRangeInput = { start: prevFirstDate, end: inputDate }
-
-        const noCtrlReverseRangeInput = {
-            start: prevSecondDate,
-            end: inputDate,
+        const changeStartRangeInput = {
+            start: inputDate ?? '',
+            end: prevSecondDate ?? '',
         }
 
-        const ctrlReverseRangeInput = { start: inputDate, end: prevFirstDate }
+        const changeEndRangeInput = {
+            start: prevFirstDate ?? '',
+            end: inputDate ?? '',
+        }
+
+        const noCtrlReverseRangeInput = {
+            start: prevSecondDate ?? '',
+            end: inputDate ?? '',
+        }
+
+        const ctrlReverseRangeInput = {
+            start: inputDate ?? '',
+            end: prevFirstDate ?? '',
+        }
 
         if (ctrl && (range.start ?? cellId) > cellId) {
             return {

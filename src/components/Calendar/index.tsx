@@ -1,13 +1,11 @@
 import { createContext } from 'react'
-import { ThemeProvider } from 'styled-components'
 
 import { CalendarProps } from './types'
 
 import { defaultProps } from '@constants'
 import { withRange } from '@decorators'
+import ThemeProvider from '@providers/ThemeProvider'
 import calendarCreater from '@service'
-import GlobalStyle from '@styles/global'
-import theme from '@styles/theme'
 
 export const InputContext = createContext(false)
 
@@ -26,9 +24,8 @@ export const Calendar = (props: CalendarProps) => {
 
     const Calendar = calendar.getCalendar()
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider>
             <InputContext.Provider value={isWithInput}>
-                <GlobalStyle />
                 <Calendar
                     initialYear={initialYear}
                     initialMonth={initialMonth}

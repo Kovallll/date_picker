@@ -14,6 +14,8 @@ import {
     inputDaySlashIndex,
     inputMonthSlashIndex,
     maxDays,
+    NaNRegExp,
+    pickSlashRegExp,
 } from '@constants'
 import { getValidInputCell } from '@utils'
 
@@ -29,30 +31,28 @@ export const DateInput = (props: DateInputProps) => {
         isDisabled = false,
     } = props
 
+    const { isValidDate, inputYear, inputMonth, inputDay } =
+        getValidInputCell(date)
+    const isError =
+        !isValidDate && inputYear >= 0 && inputMonth >= 1 && inputDay >= 1
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target
+        const clearValue = value.replace(pickSlashRegExp, '')
+        const isNotNumber = NaNRegExp.test(clearValue)
 
-        const maskedValue = maskDateInput(value)
-        handleChangeDateInput(maskedValue)
+        if (!isNotNumber) {
+            const maskedValue = maskDateInput(value)
+            handleChangeDateInput(maskedValue)
+        }
     }
 
     const maskDateInput = (date: string) => {
         handleChangeError('')
-        const { isValidDate, inputYear, inputMonth, inputDay } =
-            getValidInputCell(date)
-        const clearValue = date.replace(/\//g, '')
-        const isNotNumber = /\D/.test(clearValue)
+
         const dateLen = date.length
-        if (
-            !isValidDate &&
-            inputYear >= 0 &&
-            inputMonth >= 1 &&
-            inputDay >= 1
-        ) {
-            handleChangeError('Такой даты не существует!')
-        }
-        if (isNotNumber) {
-            return date.slice(0, date.length - 1)
+        if (isError) {
+            handleChangeError('There is no such date!')
         }
         if (inputDay > maxDays) {
             return date.slice(0, inputDaySlashIndex)
@@ -79,20 +79,22 @@ export const DateInput = (props: DateInputProps) => {
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         handleKeyboardChange(true)
-        const dayWithSlashId = 3
-        const monthWithSlashId = 7
+
         if (e.key === 'Backspace' || e.key === 'Delete') {
             const cursorPosition = (e.target as HTMLInputElement).selectionStart
-            if (
+            const dayWithSlashId = 3
+            const monthWithSlashId = 7
+            const isCursorAfterSlash =
                 (cursorPosition === inputDaySlashIndex + 1 &&
                     date.length <= dayWithSlashId) ||
                 (cursorPosition === inputMonthSlashIndex + 1 &&
                     date.length <= monthWithSlashId)
-            ) {
-                handleChangeDateInput(
+
+            if (isCursorAfterSlash) {
+                const inputDate =
                     date.slice(0, cursorPosition - 1) +
-                        date.slice(cursorPosition)
-                )
+                    date.slice(cursorPosition)
+                handleChangeDateInput(inputDate)
             }
         }
     }

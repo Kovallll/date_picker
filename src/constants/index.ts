@@ -63,6 +63,11 @@ export const initialInputDate = {
     inputDay: 0,
 }
 
+export const initialInput = {
+    date: '',
+    prevDate: '',
+}
+
 export const daysInWeek = 7
 
 export const countMonth = 12
@@ -70,8 +75,6 @@ export const countMonth = 12
 export const maxDays = 31
 
 export const numberBaseMonth = 1
-
-export const initialPrevInputDate = ''
 
 export const initialActiveCellId = '-1'
 
@@ -86,6 +89,10 @@ export const inputMonthSlashIndex = 5
 export const inputDaySlashIndex = 2
 
 export const prevCurrentMonth = 2
+
+export const pickSlashRegExp = /\//g
+
+export const NaNRegExp = /\D|\s/
 
 export const defaultProps = {
     defaultYear: 2024,

@@ -13,13 +13,8 @@ import { DateInput } from '@components/DateInput'
 import { DaysTable } from '@components/DaysTable'
 import MonthBar from '@components/MonthBar'
 import WeekBar from '@components/WeekBar'
-import {
-    countMonth,
-    daysInWeek,
-    initialWeekDays,
-    numberBaseMonth,
-} from '@constants'
-import { useClickOutside } from '@hooks'
+import { daysInWeek, initialWeekDays } from '@constants'
+import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
     const {
@@ -30,14 +25,25 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         ...restProps
     } = props
     const isWithInput = useContext(InputContext)
-    const [currentMonth, setCurrentMonth] = useState(initialMonth)
-    const [year, setYear] = useState(initialYear)
     const [isOpen, setIsOpen] = useState(!isWithInput)
     const [error, setError] = useState('')
-    const [firstInputDate, setFirstInputDateDate] = useState('')
-    const [secondInputDate, setSecondInputDateDate] = useState('')
     const [isKeyboardChange, setIsKeyboardChange] = useState(false)
     const calendarRef = useRef(null)
+    const {
+        firstInputDate,
+        handleChangeFirstDateInput,
+        secondInputDate,
+        handleChangeSecondDateInput,
+    } = useInputDate()
+    const {
+        currentMonth,
+        year,
+        handleChangeCurrentMonth,
+        handleChangeYear,
+        handleDecrementMonth,
+        handleIncrementMonth,
+    } = useCurrentDate(initialMonth, initialYear)
+
     const isDisabled = firstInputDate.length <= daysInWeek
     const handleChangeError = (error: string) => {
         setError(error)
@@ -45,29 +51,14 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     useClickOutside(calendarRef, () => {
         if (isWithInput) {
             setError('')
-            setSecondInputDateDate('')
-            setFirstInputDateDate('')
+            handleChangeFirstDateInput('')
+            handleChangeSecondDateInput('')
             setIsOpen(false)
         }
     })
-    const handleChangeYear = (year: number) => {
-        setYear(year)
-    }
 
     const handleKeyboardChange = (isKeyboard: boolean) => {
         setIsKeyboardChange(isKeyboard)
-    }
-
-    const handleChangeCurrentMonth = (currentMonth: number) => {
-        setCurrentMonth(currentMonth)
-    }
-
-    const handleChangeFirstDateInput = (value: string) => {
-        setFirstInputDateDate(value)
-    }
-
-    const handleChangeSecondDateInput = (value: string) => {
-        if (!isDisabled) setSecondInputDateDate(value)
     }
 
     const handleFocus = () => {
@@ -78,20 +69,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         setIsOpen((prev) => !prev)
         handleChangeFirstDateInput('')
         handleChangeError('')
-    }
-
-    const handleIncrementMonth = () => {
-        if (currentMonth === countMonth) {
-            setCurrentMonth(numberBaseMonth)
-            setYear((prev) => prev + 1)
-        } else setCurrentMonth((prev) => prev + 1)
-    }
-
-    const handleDecrementMonth = () => {
-        if (currentMonth === numberBaseMonth) {
-            setCurrentMonth(countMonth)
-            setYear((prev) => prev - 1)
-        } else setCurrentMonth((prev) => prev - 1)
     }
 
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
@@ -137,7 +114,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                     />
                     <WeekBar />
                     <DaysTable
-                        error={error}
                         handleChangeError={handleChangeError}
                         firstInputDate={firstInputDate}
                         secondInputDate={secondInputDate}

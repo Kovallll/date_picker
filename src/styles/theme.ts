@@ -77,7 +77,7 @@ const theme: Theme = {
         large: {
             border: '1px solid #ddd',
             borderRadius: '10',
-            width: '260',
+            width: '270',
             rangeWidth: '400',
             errorHeight: '20',
         },
@@ -94,7 +94,7 @@ const theme: Theme = {
             border: '1px solid #e1e1e1',
         },
         large: {
-            width: '260',
+            width: '270',
             borderRadius: '10',
             border: '1px solid #e1e1e1',
         },

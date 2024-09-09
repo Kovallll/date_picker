@@ -1,10 +1,9 @@
-export { getCalendarCells } from './getCalendarCells'
 export {
     getCellsInMonth,
     getCellsNextMonth,
     getCellsPrevMonth,
     getCountCellsPrevYears,
     getAllCellsPrevMonths,
+    getCalendarCells,
 } from './getCells'
-export { getDateFormat } from './getDateFormat'
-export { getValidInputCell } from './getValidInputCell'
+export { getDateFormat, getValidInputCell } from './getDate'
