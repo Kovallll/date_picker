@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { Container } from './styled.js'
+import { Container } from './styled'
 import { DayProps } from './types'
 
 const Day = (props: DayProps) => {
@@ -11,6 +11,8 @@ const Day = (props: DayProps) => {
         $inRange,
         $isStartRange,
         $isEndRange,
+        $isHoliday,
+        $isNewMonth,
         onClickDay,
         id,
         ...restProps
@@ -30,6 +32,8 @@ const Day = (props: DayProps) => {
             $isStartRange={$isStartRange}
             $isEndRange={$isEndRange}
             $inRange={$inRange}
+            $isHoliday={$isHoliday}
+            $isNewMonth={$isNewMonth}
             onClick={handleClickDay}
         >
             {children}

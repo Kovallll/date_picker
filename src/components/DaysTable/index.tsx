@@ -1,113 +1,312 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 
-import { Container, WeekRow } from './styled.js'
+import { clickNextMonthCell } from './clickNextMonthCell'
+import { clickPrevMonthCell } from './clickPrevMonthCell'
+import { fisrtDateLongerThanSecondError } from './config'
+import { Container } from './styled'
 import { DaysTableProps } from './types'
 
-import Day from '@components/Day'
+import { InputContext } from '@components/Calendar'
+import { WeekRow } from '@components/WeekRow'
+import { daysInWeek, initialActiveCellId, prevCurrentMonth } from '@constants'
+import { useDebounce } from '@hooks'
+import { Range } from '@types'
 import {
-    countMonth,
-    initialActiveCellId,
-    initialRangeEnd,
-    initialRangeStart,
-} from '@constants'
-import { IRange, MonthCellsData } from '@types'
-import { getCalendarCells, getFalseYearArray } from '@utils'
+    getAllCellsPrevMonths,
+    getCalendarCells,
+    getCellsInMonth,
+    getCellsNextMonth,
+    getCellsPrevMonth,
+    getCountCellsPrevYears,
+    getDateFormat,
+    getValidInputCell,
+} from '@utils'
 
 export const DaysTable = (props: DaysTableProps) => {
     const {
-        currentMonth,
-        year,
+        handleChangeError,
         isWithRange,
+        isKeyboardChange,
+        handleKeyboardChange,
         onClickWithRange,
+        initialWeekDays,
+        firstInputDate,
+        secondInputDate,
+        handleChangeFirstDateInput,
+        handleChangeSecondDateInput,
+        year,
+        currentMonth,
+        handleChangeCurrentMonth,
+        handleChangeYear,
+        handleDecrementMonth,
+        handleIncrementMonth,
         startDay,
         ...restProps
     } = props
 
-    const [years, setYears] = useState([year])
-
-    const falseYearArray = getFalseYearArray(year)
-
+    const isWithInput = useContext(InputContext)
+    const [prevFirstDate, setPrevFirstDate] = useState('')
+    const [prevSecondDate, setPrevSecondDate] = useState('')
     const [activeCellId, setActiveCellId] = useState(initialActiveCellId)
-    const [monthRange, setMonthRange] =
-        useState<MonthCellsData[]>(falseYearArray)
-    const [range, setRange] = useState<IRange>({
-        start: initialRangeStart,
-        end: initialRangeEnd,
+    const [range, setRange] = useState<Range>({
+        start: null,
+        end: null,
     })
 
-    useEffect(() => {
-        if (!years.find((el) => el === year)) {
-            setMonthRange((prev) => [...prev, ...falseYearArray])
-            setYears((prev) => [...prev, year])
-        }
-    }, [falseYearArray, year, years])
+    const handleSetActiveCellId = (id: string) => {
+        setActiveCellId(id)
+    }
 
-    const activeMonthId =
-        years.findIndex((el) => el === year) * countMonth + (currentMonth - 1)
+    const handleSetRange = (range: Range) => {
+        setRange(range)
+    }
 
     const days = getCalendarCells(year, currentMonth - 1, startDay)
+    const isFisrtClick = range.end === null
+    const isRange = !!isWithRange && !!onClickWithRange
+    const waitTime = 600
 
-    const handleClickDay = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
-            const cellId = Number(id)
-            if (range.end === initialRangeEnd) {
-                if (activeCellId === id) {
-                    setActiveCellId(initialActiveCellId)
-                } else {
-                    setActiveCellId(id)
-                    if (isWithRange) {
-                        setRange((prev: IRange) => ({
-                            start: prev.start,
-                            end: cellId,
-                        }))
-                    }
-                }
+    const {
+        isValidDate: isValidFirstInput,
+        inputCellId: firstInputCellId,
+        inputYear: firstInputYear,
+        inputMonth: firstInputMonth,
+    } = getValidInputCell(firstInputDate, prevFirstDate)
+    const {
+        isValidDate: isValidSecondInput,
+        inputCellId: secondInputCellId,
+        inputYear: secondInputYear,
+        inputMonth: secondInputMonth,
+    } = getValidInputCell(secondInputDate, prevSecondDate)
+    const isValidFirstInputDate =
+        firstInputDate.length >= daysInWeek &&
+        prevFirstDate !== firstInputDate &&
+        isKeyboardChange &&
+        isValidFirstInput
+
+    const isValidSecondInputDate =
+        firstInputDate.length >= daysInWeek &&
+        secondInputDate.length >= daysInWeek &&
+        prevSecondDate !== secondInputDate &&
+        isKeyboardChange &&
+        isValidSecondInput
+    const isFirstDateLonger =
+        Number(secondInputCellId) <= Number(firstInputCellId) &&
+        secondInputDate.length >= daysInWeek
+
+    const cellsWithOutNextMonth =
+        getCellsInMonth(year, currentMonth - 1) -
+        getCellsNextMonth(year, currentMonth - 1)
+    const prevMonthCells = getCellsPrevMonth(year, currentMonth - 1) - 1
+
+    const debounceChangeFirstRange = useDebounce(() => {
+        if (isFirstDateLonger) {
+            handleChangeError(fisrtDateLongerThanSecondError)
+        }
+        if (!isFirstDateLonger && onClickWithRange) {
+            const { range: newRange } = onClickWithRange(
+                false,
+                Number(firstInputCellId),
+                range
+            )
+            setRange(newRange)
+            handleChangeCurrentMonth(firstInputMonth)
+            handleChangeYear(firstInputYear)
+        }
+    }, waitTime)
+    const debounceChangeActiveCellId = useDebounce(() => {
+        setActiveCellId(firstInputCellId)
+
+        handleChangeCurrentMonth(firstInputMonth)
+
+        handleChangeYear(firstInputYear)
+        setRange((prev) => ({
+            start: prev.start,
+            end: Number(firstInputCellId),
+        }))
+    }, waitTime)
+
+    if (isValidFirstInputDate) {
+        setPrevFirstDate(firstInputDate)
+
+        if (range.start === null) {
+            debounceChangeActiveCellId()
+        }
+        if (isRange && activeCellId !== initialActiveCellId) {
+            debounceChangeFirstRange()
+        }
+    }
+
+    if (!isFirstDateLonger) {
+        handleChangeError('')
+    }
+
+    const debounceChangeSecondDate = useDebounce(() => {
+        if (isFirstDateLonger) {
+            handleChangeError(fisrtDateLongerThanSecondError)
+        }
+        if (!isFirstDateLonger && onClickWithRange) {
+            const { range: newRange } = onClickWithRange(
+                false,
+                Number(secondInputCellId),
+                range,
+                true
+            )
+            setRange(newRange)
+            handleChangeCurrentMonth(secondInputMonth)
+            handleChangeYear(secondInputYear)
+        }
+    }, waitTime)
+    if (isValidSecondInputDate) {
+        setPrevSecondDate(secondInputDate)
+        debounceChangeSecondDate()
+    }
+
+    const handleClickDay = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        id: string
+    ) => {
+        const cellId = Number(id)
+        const dayId =
+            cellId -
+            getCountCellsPrevYears(year) -
+            getAllCellsPrevMonths(year, currentMonth - 1)
+
+        const isNextMonthCell = dayId >= cellsWithOutNextMonth
+        const isPrevMonthCell = dayId <= prevMonthCells
+
+        const isFirstClickCell =
+            isFisrtClick && !isPrevMonthCell && !isNextMonthCell
+        const isSecondClick =
+            isRange &&
+            cellId !== range.end &&
+            !isFisrtClick &&
+            !isPrevMonthCell &&
+            !isNextMonthCell
+
+        let inputDate = getDateFormat(year, currentMonth, dayId)
+
+        if (isPrevMonthCell && isWithInput) {
+            inputDate = getDateFormat(
+                year,
+                currentMonth - 1,
+                getCellsInMonth(year, currentMonth - prevCurrentMonth) -
+                    daysInWeek +
+                    dayId
+            )
+        }
+        if (isNextMonthCell && isWithInput) {
+            inputDate = getDateFormat(
+                year,
+                currentMonth + 1,
+                dayId +
+                    daysInWeek -
+                    getCellsInMonth(year, currentMonth + prevCurrentMonth)
+            )
+        }
+        if (isNextMonthCell) {
+            const nextClickProps = {
+                cellId,
+                ctrl: e.ctrlKey,
+                inputDate,
+                handleSetActiveCellId,
+                handleIncrementMonth,
+                handleChangeFirstDateInput,
+                handleChangeSecondDateInput,
+                setPrevFirstDate,
+                setPrevSecondDate,
+                isRange,
+                range,
+                onClickWithRange,
+                firstInputDate,
+                secondInputDate,
+                handleSetRange,
+                isWithInput,
+                prevFirstDate,
+                prevSecondDate,
             }
-            if (
-                isWithRange &&
-                onClickWithRange &&
-                cellId !== range.end &&
-                range.end !== initialRangeEnd
-            ) {
-                const { data: newMonthRange, range: newRange } =
-                    onClickWithRange(e.ctrlKey, cellId, range, monthRange)
-                setMonthRange(newMonthRange)
-                setRange(newRange)
+            handleIncrementMonth()
+            clickNextMonthCell(nextClickProps)
+            handleKeyboardChange(false)
+        }
+        if (isPrevMonthCell) {
+            const prevClickProps = {
+                cellId,
+                ctrl: e.ctrlKey,
+                inputDate,
+                handleSetActiveCellId,
+                handleChangeFirstDateInput,
+                handleChangeSecondDateInput,
+                setPrevFirstDate,
+                setPrevSecondDate,
+                isRange,
+                range,
+                onClickWithRange,
+                firstInputDate,
+                secondInputDate,
+                handleSetRange,
+                isWithInput,
+                prevFirstDate,
+                prevSecondDate,
             }
-        },
-        [activeCellId, isWithRange, monthRange, onClickWithRange, range]
-    )
+            handleDecrementMonth()
+            clickPrevMonthCell(prevClickProps)
+            handleKeyboardChange(false)
+        }
+        if (isFirstClickCell && activeCellId === id) {
+            setActiveCellId(initialActiveCellId)
+        }
+        if (isFirstClickCell && activeCellId !== id) {
+            setActiveCellId(id)
+            if (isWithInput) {
+                const inputDate = getDateFormat(year, currentMonth, dayId)
+                handleKeyboardChange(false)
+                handleChangeFirstDateInput(inputDate)
+                setPrevFirstDate(inputDate)
+                setPrevSecondDate(inputDate)
+            }
+            if (isRange) {
+                setRange((prev: Range) => ({
+                    start: prev.start,
+                    end: cellId,
+                }))
+            }
+        }
+        if (isSecondClick) {
+            const { range: newRange, inputRange: inputRangeData } =
+                onClickWithRange(
+                    e.ctrlKey,
+                    cellId,
+                    range,
+                    false,
+                    inputDate,
+                    prevFirstDate,
+                    prevSecondDate
+                )
+            setRange(newRange)
+
+            if (isWithInput) {
+                handleChangeSecondDateInput(inputRangeData.end)
+                setPrevSecondDate(inputRangeData.end)
+                setPrevFirstDate(inputRangeData.start)
+                handleChangeFirstDateInput(inputRangeData.start)
+            }
+        }
+    }
 
     return (
         <Container {...restProps}>
             {days.map(({ data, id: weekId }) => (
-                <WeekRow key={weekId}>
-                    {data.map(({ id: dayId, day }) => {
-                        return (
-                            <Day
-                                key={dayId}
-                                id={dayId}
-                                onClickDay={handleClickDay}
-                                $isActive={
-                                    activeCellId === dayId &&
-                                    range.start === initialRangeStart
-                                }
-                                $inRange={
-                                    monthRange[activeMonthId]?.data[
-                                        Number(dayId) -
-                                            Number(
-                                                monthRange[activeMonthId]?.id
-                                            )
-                                    ]
-                                }
-                                $isStartRange={range.start === Number(dayId)}
-                                $isEndRange={range.end === Number(dayId)}
-                            >
-                                {day}
-                            </Day>
-                        )
-                    })}
-                </WeekRow>
+                <WeekRow
+                    year={year}
+                    currentMonth={currentMonth}
+                    key={weekId}
+                    activeCellId={activeCellId}
+                    data={data}
+                    handleClickDay={handleClickDay}
+                    range={range}
+                    initialWeekDays={initialWeekDays}
+                />
             ))}
         </Container>
     )

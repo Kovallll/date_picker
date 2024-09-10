@@ -1,5 +1,5 @@
-import { DefaultCalendar } from '../components/DefaultCalendar'
-import { DefaultCalendarProps } from '../components/DefaultCalendar/types'
+import DefaultCalendar from '@components/DefaultCalendar'
+import { DefaultCalendarProps } from '@components/DefaultCalendar/types'
 
 class calendarCreater {
     private calendar: React.FC<DefaultCalendarProps>

@@ -5,7 +5,7 @@ import mixins from '@styles/mixins'
 export const Container = styled.div`
     ${mixins.flexRowSB()}
 
-    width: ${({ theme }) => theme.fullWidth};
+    width: ${({ theme }) => theme.fullSize};
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     margin: ${({ theme }) => mixins.margin(theme, '', '0px')};
     font-size: ${({ theme }) => mixins.fontSize(theme)};
@@ -22,6 +22,6 @@ export const Image = styled.button<{ disabled?: boolean }>`
     height: ${({ theme }) => theme.arrowSize.height + 'px'};
     transform: scale(${({ theme }) => mixins.arrowScale(theme)});
     cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-    border: ${({ theme }) => theme.cellsBorder.none};
+    border: ${({ theme }) => theme.noneBorder};
     background: ${({ theme }) => theme.palette.common.white};
 `

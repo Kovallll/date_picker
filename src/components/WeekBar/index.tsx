@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { Container, Text } from './styled.js'
+import { Container, Text } from './styled'
 import { WeekBarProps } from './types'
 
 const WeekBar = ({ weekDays, ...props }: WeekBarProps) => {

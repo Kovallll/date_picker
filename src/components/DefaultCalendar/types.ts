@@ -1,16 +1,15 @@
-import { IRange, MonthCellsData } from '@types'
+import { onClickWithRange } from '@types'
 
 export interface DefaultCalendarProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
-    countOfRows?: number
-    initialYear?: number
-    initialMonth?: number
     isChangeStartDay?: boolean
+    initialYear: number
+    initialMonth: number
     isWithRange?: boolean
-    onClickWithRange?: (
-        ctrl: boolean,
-        cellId: number,
-        range: IRange,
-        monthRange: MonthCellsData[]
-    ) => { data: MonthCellsData[]; range: IRange }
+    onClickWithRange?: onClickWithRange
+}
+
+export interface CalendarContainerProps {
+    $isWithRange: boolean
+    $isWithInput: boolean
 }
