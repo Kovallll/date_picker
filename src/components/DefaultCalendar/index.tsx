@@ -45,9 +45,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     } = useCurrentDate(initialMonth, initialYear)
 
     const isDisabled = firstInputDate.length <= daysInWeek
-    const handleChangeError = (error: string) => {
-        setError(error)
-    }
+
     useClickOutside(calendarRef, () => {
         if (isWithInput) {
             setError('')
@@ -56,6 +54,10 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
             setIsOpen(false)
         }
     })
+
+    const handleChangeError = (error: string) => {
+        setError(error)
+    }
 
     const handleKeyboardChange = (isKeyboard: boolean) => {
         setIsKeyboardChange(isKeyboard)

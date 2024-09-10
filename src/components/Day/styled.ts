@@ -29,21 +29,24 @@ export const Container = styled.button<DayContainerProps>`
         $isActive,
         $inRange,
         $isStartRange,
-        $isDisabled,
         $isEndRange,
         $isHoliday,
         $isNewMonth,
+        $isHigherThanMaxDate,
+        $isLowerThanMinDate,
     }) =>
         mixins.dayColor(
             theme,
             $isActive,
             $inRange,
             $isStartRange,
-            $isDisabled,
             $isEndRange,
             $isHoliday,
-            $isNewMonth
+            $isNewMonth,
+            $isHigherThanMaxDate,
+            $isLowerThanMinDate
         )};
     font-size: ${({ theme }) => mixins.fontSize(theme)};
-    cursor: pointer;
+    cursor: ${({ $isHigherThanMaxDate, $isLowerThanMinDate }) =>
+        $isHigherThanMaxDate || $isLowerThanMinDate ? 'default' : 'pointer'};
 `

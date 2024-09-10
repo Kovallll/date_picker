@@ -24,6 +24,11 @@ export interface InputRange {
     end: string
 }
 
+export interface minMaxDate {
+    minDate: string
+    maxDate: string
+}
+
 export interface CurrentDate {
     year: number
     setYear: (value: number) => void

@@ -146,12 +146,14 @@ export default {
         isActive?: boolean,
         inRange?: boolean,
         isStartRange?: boolean,
-        isDisabled?: boolean,
         isEndRange?: boolean,
         isHoliday?: boolean,
-        isNewMonth?: boolean
+        isNewMonth?: boolean,
+        isHigherThanMaxDate?: boolean,
+        isLowerThanMaxDate?: boolean
     ) => {
-        if (isDisabled) return theme.palette.disabledColor
+        if (isHigherThanMaxDate || isLowerThanMaxDate)
+            return theme.palette.disabledColor
         if (inRange) return theme.palette.blue
         if (isActive) return theme.palette.common.white
         if (isEndRange) return theme.palette.common.white

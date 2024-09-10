@@ -11,9 +11,9 @@ const theme: Theme = {
         blue: '#2f80ed',
         lightBlue: '#82b3f4',
         inRangeBackgroundColor: '#eaf2fd',
-        disabledColor: '#aaa',
+        disabledColor: '#edd',
         holidayColor: '#BB0000',
-        newMonth: '#ccc',
+        newMonth: '#aaa',
         errorColor: '#FF2222',
     },
     fontSizes: {

@@ -4,4 +4,6 @@ export interface CalendarProps
     initialYear?: number
     initialMonth?: number
     isWithRange?: boolean
+    minDate?: string
+    maxDate?: string
 }

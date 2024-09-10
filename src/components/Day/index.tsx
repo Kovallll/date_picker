@@ -13,6 +13,8 @@ const Day = (props: DayProps) => {
         $isEndRange,
         $isHoliday,
         $isNewMonth,
+        $isLowerThanMinDate,
+        $isHigherThanMaxDate,
         onClickDay,
         id,
         ...restProps
@@ -34,6 +36,8 @@ const Day = (props: DayProps) => {
             $inRange={$inRange}
             $isHoliday={$isHoliday}
             $isNewMonth={$isNewMonth}
+            $isLowerThanMinDate={$isLowerThanMinDate}
+            $isHigherThanMaxDate={$isHigherThanMaxDate}
             onClick={handleClickDay}
         >
             {children}

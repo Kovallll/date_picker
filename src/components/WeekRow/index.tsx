@@ -1,6 +1,9 @@
+import { useContext } from 'react'
+
 import { Container } from './styled'
 import { WeekRowProps } from './types'
 
+import { MinMaxContext } from '@components/Calendar'
 import Day from '@components/Day'
 import { daysInWeek, WeekDays } from '@constants'
 import {
@@ -9,6 +12,7 @@ import {
     getCellsNextMonth,
     getCellsPrevMonth,
     getCountCellsPrevYears,
+    getValidInputCell,
 } from '@utils'
 
 export const WeekRow = (props: WeekRowProps) => {
@@ -22,6 +26,9 @@ export const WeekRow = (props: WeekRowProps) => {
         currentMonth,
         ...restProps
     } = props
+    const { minDate, maxDate } = useContext(MinMaxContext)
+    const { inputCellId: minDateCellId } = getValidInputCell(minDate)
+    const { inputCellId: maxDateCellId } = getValidInputCell(maxDate)
     const SundayIndex = initialWeekDays.findIndex(
         (el) => el === WeekDays.Sunday
     )
@@ -43,7 +50,12 @@ export const WeekRow = (props: WeekRowProps) => {
                 const isHoliday =
                     index % daysInWeek === SundayIndex ||
                     index % daysInWeek === SaturdayIndex
-
+                const isLowerThanMinDate = Number.isNaN(Number(minDateCellId))
+                    ? false
+                    : Number(minDateCellId) > Number(dayId)
+                const isHigherThanMaxDate = Number.isNaN(Number(maxDateCellId))
+                    ? false
+                    : Number(maxDateCellId) < Number(dayId)
                 const isNewMonth =
                     Number(dayId) - yearId - monthId <
                         getCellsPrevMonth(year, currentMonth - 1) ||
@@ -63,6 +75,8 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isEndRange={isEndRange}
                         $isHoliday={isHoliday}
                         $isNewMonth={isNewMonth}
+                        $isLowerThanMinDate={isLowerThanMinDate}
+                        $isHigherThanMaxDate={isHigherThanMaxDate}
                     >
                         {day}
                     </Day>

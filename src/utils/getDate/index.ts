@@ -53,6 +53,6 @@ export const getValidInputCell = (
     const prevMonthCellsCount =
         getAllCellsPrevMonths(inputYear, inputMonth - 1) +
         getCellsPrevMonth(inputYear, inputMonth - 1)
-    const inputCellId = String(yearId + prevMonthCellsCount + inputDay - 1)
+    const inputCellId = yearId + prevMonthCellsCount + inputDay - 1
     return { isValidDate, inputCellId, inputYear, inputMonth, inputDay }
 }

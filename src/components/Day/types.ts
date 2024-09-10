@@ -9,6 +9,8 @@ export interface DayProps
     $isStartRange?: boolean
     $isEndRange?: boolean
     $isNewMonth?: boolean
+    $isLowerThanMinDate?: boolean
+    $isHigherThanMaxDate?: boolean
     onClickDay: (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
         id: string

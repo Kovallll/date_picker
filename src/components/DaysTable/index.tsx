@@ -2,11 +2,11 @@ import { useContext, useState } from 'react'
 
 import { clickNextMonthCell } from './clickNextMonthCell'
 import { clickPrevMonthCell } from './clickPrevMonthCell'
-import { fisrtDateLongerThanSecondError } from './config'
+import { fisrtDateLongerThanSecondError, minMaxError } from './config'
 import { Container } from './styled'
 import { DaysTableProps } from './types'
 
-import { InputContext } from '@components/Calendar'
+import { InputContext, MinMaxContext } from '@components/Calendar'
 import { WeekRow } from '@components/WeekRow'
 import { daysInWeek, initialActiveCellId, prevCurrentMonth } from '@constants'
 import { useDebounce } from '@hooks'
@@ -42,7 +42,7 @@ export const DaysTable = (props: DaysTableProps) => {
         handleIncrementMonth,
         ...restProps
     } = props
-
+    const { maxDate, minDate } = useContext(MinMaxContext)
     const isWithInput = useContext(InputContext)
     const [prevFirstDate, setPrevFirstDate] = useState('')
     const [prevSecondDate, setPrevSecondDate] = useState('')
@@ -77,12 +77,16 @@ export const DaysTable = (props: DaysTableProps) => {
         inputYear: secondInputYear,
         inputMonth: secondInputMonth,
     } = getValidInputCell(secondInputDate, prevSecondDate)
+    const { isValidDate: isValidMinDate, inputCellId: minDateCellId } =
+        getValidInputCell(minDate)
+    const { isValidDate: isValidMaxDate, inputCellId: maxDateCellId } =
+        getValidInputCell(maxDate)
+
     const isValidFirstInputDate =
         firstInputDate.length >= daysInWeek &&
         prevFirstDate !== firstInputDate &&
         isKeyboardChange &&
         isValidFirstInput
-
     const isValidSecondInputDate =
         firstInputDate.length >= daysInWeek &&
         secondInputDate.length >= daysInWeek &&
@@ -90,22 +94,46 @@ export const DaysTable = (props: DaysTableProps) => {
         isKeyboardChange &&
         isValidSecondInput
     const isFirstDateLonger =
-        Number(secondInputCellId) <= Number(firstInputCellId) &&
+        secondInputCellId <= firstInputCellId &&
         secondInputDate.length >= daysInWeek
+
+    const isMinFirstInput = !isValidMinDate
+        ? true
+        : minDateCellId <= firstInputCellId
+    const isMaxFirstInput = !isValidMaxDate
+        ? true
+        : firstInputCellId <= maxDateCellId
+    const isMinSecondInput = !isValidMinDate
+        ? true
+        : minDateCellId <= secondInputCellId
+    const isMaxSecondInput = !isValidMaxDate
+        ? true
+        : secondInputCellId <= maxDateCellId
+    const isMinMaxFirstInputValid = isMinFirstInput && isMaxFirstInput
+    const isMinMaxSecondInputValid = isMinSecondInput && isMaxSecondInput
+
+    const isMinMaxErrorFirstInput =
+        !isMinMaxFirstInputValid && isValidFirstInput
+    const isMinMaxErrorSecondInput = !isValidSecondInput
+        ? false
+        : !isMinMaxSecondInputValid
 
     const cellsWithOutNextMonth =
         getCellsInMonth(year, currentMonth - 1) -
         getCellsNextMonth(year, currentMonth - 1)
     const prevMonthCells = getCellsPrevMonth(year, currentMonth - 1) - 1
 
+    const isNoErrors =
+        !isFirstDateLonger && onClickWithRange && !isMinMaxErrorFirstInput
+
     const debounceChangeFirstRange = useDebounce(() => {
         if (isFirstDateLonger) {
             handleChangeError(fisrtDateLongerThanSecondError)
         }
-        if (!isFirstDateLonger && onClickWithRange) {
+        if (isNoErrors) {
             const { range: newRange } = onClickWithRange(
                 false,
-                Number(firstInputCellId),
+                firstInputCellId,
                 range
             )
             setRange(newRange)
@@ -114,19 +142,22 @@ export const DaysTable = (props: DaysTableProps) => {
         }
     }, waitTime)
     const debounceChangeActiveCellId = useDebounce(() => {
-        setActiveCellId(firstInputCellId)
+        if (!isMinMaxErrorFirstInput) {
+            setActiveCellId(String(firstInputCellId))
 
-        handleChangeCurrentMonth(firstInputMonth)
+            handleChangeCurrentMonth(firstInputMonth)
 
-        handleChangeYear(firstInputYear)
-        setRange((prev) => ({
-            start: prev.start,
-            end: Number(firstInputCellId),
-        }))
+            handleChangeYear(firstInputYear)
+            setRange((prev) => ({
+                start: prev.start,
+                end: firstInputCellId,
+            }))
+        }
     }, waitTime)
 
     if (isValidFirstInputDate) {
         setPrevFirstDate(firstInputDate)
+        setPrevSecondDate(firstInputDate)
 
         if (range.start === null) {
             debounceChangeActiveCellId()
@@ -136,7 +167,16 @@ export const DaysTable = (props: DaysTableProps) => {
         }
     }
 
-    if (!isFirstDateLonger) {
+    if (isMinMaxErrorFirstInput || isMinMaxErrorSecondInput) {
+        handleChangeError(minMaxError)
+    }
+
+    const isClearError =
+        !isFirstDateLonger &&
+        !isMinMaxErrorFirstInput &&
+        !isMinMaxErrorSecondInput
+
+    if (isClearError) {
         handleChangeError('')
     }
 
@@ -147,7 +187,7 @@ export const DaysTable = (props: DaysTableProps) => {
         if (!isFirstDateLonger && onClickWithRange) {
             const { range: newRange } = onClickWithRange(
                 false,
-                Number(secondInputCellId),
+                secondInputCellId,
                 range,
                 true
             )
@@ -156,7 +196,7 @@ export const DaysTable = (props: DaysTableProps) => {
             handleChangeYear(secondInputYear)
         }
     }, waitTime)
-    if (isValidSecondInputDate) {
+    if (isValidSecondInputDate && !isMinMaxErrorSecondInput) {
         setPrevSecondDate(secondInputDate)
         debounceChangeSecondDate()
     }
@@ -170,18 +210,27 @@ export const DaysTable = (props: DaysTableProps) => {
             cellId -
             getCountCellsPrevYears(year) -
             getAllCellsPrevMonths(year, currentMonth - 1)
+        const isMinValid =
+            minDate === '' || !isValidMinDate ? true : minDateCellId <= cellId
+        const isMaxValid =
+            maxDate === '' || !isValidMaxDate ? true : cellId <= maxDateCellId
+        const isMinMaxValid = isMinValid && isMaxValid
+        const isNextMonthCell = dayId >= cellsWithOutNextMonth && isMinMaxValid
 
-        const isNextMonthCell = dayId >= cellsWithOutNextMonth
-        const isPrevMonthCell = dayId <= prevMonthCells
+        const isPrevMonthCell = dayId <= prevMonthCells && isMinMaxValid
 
         const isFirstClickCell =
-            isFisrtClick && !isPrevMonthCell && !isNextMonthCell
+            isFisrtClick &&
+            !isPrevMonthCell &&
+            !isNextMonthCell &&
+            isMinMaxValid
         const isSecondClick =
             isRange &&
             cellId !== range.end &&
             !isFisrtClick &&
             !isPrevMonthCell &&
-            !isNextMonthCell
+            !isNextMonthCell &&
+            isMinMaxValid
 
         let inputDate = getDateFormat(year, currentMonth, dayId)
 
