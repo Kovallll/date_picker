@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 
 import { clickNextMonthCell } from './clickNextMonthCell'
 import { clickPrevMonthCell } from './clickPrevMonthCell'
-import { FisrtDateLongerThanSecondError } from './config'
+import { fisrtDateLongerThanSecondError } from './config'
 import { Container } from './styled'
 import { DaysTableProps } from './types'
 
@@ -100,7 +100,7 @@ export const DaysTable = (props: DaysTableProps) => {
 
     const debounceChangeFirstRange = useDebounce(() => {
         if (isFirstDateLonger) {
-            handleChangeError(FisrtDateLongerThanSecondError)
+            handleChangeError(fisrtDateLongerThanSecondError)
         }
         if (!isFirstDateLonger && onClickWithRange) {
             const { range: newRange } = onClickWithRange(
@@ -142,7 +142,7 @@ export const DaysTable = (props: DaysTableProps) => {
 
     const debounceChangeSecondDate = useDebounce(() => {
         if (isFirstDateLonger) {
-            handleChangeError(FisrtDateLongerThanSecondError)
+            handleChangeError(fisrtDateLongerThanSecondError)
         }
         if (!isFirstDateLonger && onClickWithRange) {
             const { range: newRange } = onClickWithRange(

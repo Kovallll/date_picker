@@ -22,7 +22,9 @@ export const getValidInputCell = (
     inputData: string,
     prevInputData: string = ''
 ) => {
-    let [inputDay, inputMonth, inputYear] = inputData.split('/').map(Number)
+    let [inputDay, inputMonth] = inputData.split('/').map(Number)
+    const inputYear = Number(inputData.split('/')[2])
+
     const limitYear = 1000
     const [prevInputDay, prevInputMonth] = prevInputData.split('/').map(Number)
 
