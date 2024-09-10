@@ -13,7 +13,13 @@ import { DateInput } from '@components/DateInput'
 import { DaysTable } from '@components/DaysTable'
 import MonthBar from '@components/MonthBar'
 import WeekBar from '@components/WeekBar'
-import { daysInWeek, initialWeekDays } from '@constants'
+import {
+    daysInWeek,
+    initialWeekDays,
+    startMonday,
+    startSunday,
+    WeekDays,
+} from '@constants'
 import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
@@ -29,6 +35,8 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     const [isOpen, setIsOpen] = useState(!isWithInput)
     const [error, setError] = useState('')
     const [isKeyboardChange, setIsKeyboardChange] = useState(false)
+    const [weekDays, setWeekDays] = useState(initialWeekDays)
+
     const calendarRef = useRef(null)
     const {
         firstInputDate,
@@ -45,8 +53,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         handleIncrementMonth,
     } = useCurrentDate(initialMonth, initialYear)
 
-    const [weekDays, setWeekDays] = useState(initialWeekDays)
-
     useEffect(() => {
         if (isChangeStartDay) {
             const sunday = initialWeekDays.slice(initialWeekDays.length - 1)
@@ -58,6 +64,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
             setWeekDays(newWeekDays)
         }
     }, [isChangeStartDay])
+
     const isDisabled = firstInputDate.length <= daysInWeek
     const handleChangeError = (error: string) => {
         setError(error)
@@ -78,7 +85,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     const handleFocus = () => {
         setIsOpen(true)
     }
-    const startDay = weekDays[0] === 'Mo' ? 1 : 0
+    const startDay = weekDays[0] === WeekDays.Monday ? startMonday : startSunday
 
     const handleOpenCalendar = () => {
         setIsOpen((prev) => !prev)
