@@ -9,9 +9,9 @@ import { CalendarBlock, Container, ErrorMesssage, InputBlock } from './styled'
 import { DefaultCalendarProps } from './types'
 
 import { InputContext } from '@components/Calendar'
+import DateBar from '@components/DateBar'
 import { DateInput } from '@components/DateInput'
 import { DaysTable } from '@components/DaysTable'
-import MonthBar from '@components/MonthBar'
 import WeekBar from '@components/WeekBar'
 import { daysInWeek, initialWeekDays } from '@constants'
 import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
@@ -48,6 +48,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     const handleChangeError = (error: string) => {
         setError(error)
     }
+
     useClickOutside(calendarRef, () => {
         if (isWithInput) {
             setError('')
@@ -106,11 +107,13 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
             </InputBlock>
             {isOpen && (
                 <CalendarBlock {...restProps}>
-                    <MonthBar
+                    <DateBar
                         year={year}
                         currentMonth={currentMonth}
                         increment={handleIncrementMonth}
                         decrement={handleDecrementMonth}
+                        handleChangeCurrentMonth={handleChangeCurrentMonth}
+                        handleChangeYear={handleChangeYear}
                     />
                     <WeekBar />
                     <DaysTable

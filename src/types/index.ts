@@ -43,23 +43,8 @@ export type onClickWithRange = (
     prevSecondDate?: string
 ) => { range: Range; inputRange: InputRange }
 
-export interface ElementStyle {
-    large: {
-        width: string
-        borderRadius: string
-        border: string
-        [K: string]: string
-    }
-    medium: {
-        width: string
-        borderRadius: string
-        border: string
-        [K: string]: string
-    }
-    small: {
-        width: string
-        borderRadius: string
-        border: string
-        [K: string]: string
-    }
-}
+export type onClickCell = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: string
+) => void
+

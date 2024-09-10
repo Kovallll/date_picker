@@ -1,7 +1,7 @@
 import { Container } from './styled'
 import { WeekRowProps } from './types'
 
-import Day from '@components/Day'
+import Cell from '@components/Cell'
 import { daysInWeek, WeekDays } from '@constants'
 import {
     getAllCellsPrevMonths,
@@ -53,10 +53,10 @@ export const WeekRow = (props: WeekRowProps) => {
                             1
 
                 return (
-                    <Day
+                    <Cell
                         key={dayId}
                         id={dayId}
-                        onClickDay={handleClickDay}
+                        onClickCell={handleClickDay}
                         $isActive={isActive}
                         $inRange={isRange}
                         $isStartRange={isStartRange}
@@ -65,7 +65,7 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isNewMonth={isNewMonth}
                     >
                         {day}
-                    </Day>
+                    </Cell>
                 )
             })}
         </Container>

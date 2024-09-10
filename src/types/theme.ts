@@ -1,4 +1,23 @@
-import { ElementStyle } from '.'
+export interface ElementStyle {
+    large: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
+    medium: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
+    small: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
+}
 
 export interface Theme {
     palette: {
@@ -45,6 +64,10 @@ export interface Theme {
     arrowSize: {
         width: string
         height: string
+    }
+    twelveStyles: {
+        border: string
+        top: string
     }
     arrowScale: {
         sm: number

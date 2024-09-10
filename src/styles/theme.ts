@@ -32,7 +32,10 @@ const theme: Theme = {
         lg: '1000',
     },
     noneBorder: '0',
-
+    twelveStyles: {
+        border: '1px solid #2f80ed',
+        top: '26',
+    },
     spaces: {
         sm: '6',
         md: '8',

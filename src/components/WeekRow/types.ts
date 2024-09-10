@@ -1,5 +1,5 @@
 import { WeekDays } from '@constants'
-import { CellData, Range } from '@types'
+import { CellData, onClickCell, Range } from '@types'
 
 export interface WeekRowProps {
     data: CellData[]
@@ -8,8 +8,5 @@ export interface WeekRowProps {
     range: Range
     year: number
     currentMonth: number
-    handleClickDay: (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        id: string
-    ) => void
+    handleClickDay: onClickCell
 }

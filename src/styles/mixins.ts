@@ -164,9 +164,10 @@ export default {
         theme: Theme,
         isActive?: boolean,
         isStartRange?: boolean,
-        isEndRange?: boolean
+        isEndRange?: boolean,
+        $isTwelve?: boolean
     ) => {
-        if (isActive) return theme.cellBorderRadius + 'px'
+        if (isActive || $isTwelve) return theme.cellBorderRadius + 'px'
         else if (isStartRange)
             return `${theme.cellBorderRadius + 'px'} 0px 0px ${theme.cellBorderRadius + 'px'}`
         else if (isEndRange)

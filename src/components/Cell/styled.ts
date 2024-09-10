@@ -7,9 +7,24 @@ import mixins from '@styles/mixins'
 export const Container = styled.button<DayContainerProps>`
     width: ${({ theme }) => theme.fullSize};
     height: ${({ theme }) => mixins.cellHeight(theme)};
-    border: ${({ theme }) => theme.noneBorder};
-    border-radius: ${({ theme, $isActive, $isStartRange, $isEndRange }) =>
-        mixins.dayBorderRadius(theme, $isActive, $isStartRange, $isEndRange)};
+    margin: ${({ theme, $isTwelve }) =>
+        $isTwelve ? String(+theme.spaces.sm - 5) + 'px' : '0'};
+    border: ${({ theme, $isTwelve }) =>
+        $isTwelve ? theme.twelveStyles.border : theme.noneBorder};
+    border-radius: ${({
+        theme,
+        $isActive,
+        $isStartRange,
+        $isEndRange,
+        $isTwelve,
+    }) =>
+        mixins.dayBorderRadius(
+            theme,
+            $isActive,
+            $isStartRange,
+            $isEndRange,
+            $isTwelve
+        )};
     background: ${({
         theme,
         $isActive,
