@@ -1,3 +1,4 @@
+import { noDateError } from './config'
 import {
     CalendarImageButton,
     ClearImageButton,
@@ -52,7 +53,7 @@ export const DateInput = (props: DateInputProps) => {
 
         const dateLen = date.length
         if (isError) {
-            handleChangeError('There is no such date!')
+            handleChangeError(noDateError)
         }
         if (inputDay > maxDays) {
             return date.slice(0, inputDaySlashIndex)

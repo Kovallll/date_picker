@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 
 import { clickNextMonthCell } from './clickNextMonthCell'
 import { clickPrevMonthCell } from './clickPrevMonthCell'
+import { fisrtDateLongerThanSecondError } from './config'
 import { Container } from './styled'
 import { DaysTableProps } from './types'
 
@@ -99,10 +100,9 @@ export const DaysTable = (props: DaysTableProps) => {
 
     const debounceChangeFirstRange = useDebounce(() => {
         if (isFirstDateLonger) {
-            handleChangeError(
-                'The first date cannot be longer than the second!'
-            )
-        } else if (onClickWithRange) {
+            handleChangeError(fisrtDateLongerThanSecondError)
+        }
+        if (!isFirstDateLonger && onClickWithRange) {
             const { range: newRange } = onClickWithRange(
                 false,
                 Number(firstInputCellId),
@@ -131,19 +131,20 @@ export const DaysTable = (props: DaysTableProps) => {
         if (range.start === null) {
             debounceChangeActiveCellId()
         }
-        if (isRange && activeCellId !== '-1') {
+        if (isRange && activeCellId !== initialActiveCellId) {
             debounceChangeFirstRange()
         }
     }
+
     if (!isFirstDateLonger) {
         handleChangeError('')
     }
+
     const debounceChangeSecondDate = useDebounce(() => {
         if (isFirstDateLonger) {
-            handleChangeError(
-                'The first date cannot be longer than the second!'
-            )
-        } else if (onClickWithRange) {
+            handleChangeError(fisrtDateLongerThanSecondError)
+        }
+        if (!isFirstDateLonger && onClickWithRange) {
             const { range: newRange } = onClickWithRange(
                 false,
                 Number(secondInputCellId),
@@ -165,7 +166,6 @@ export const DaysTable = (props: DaysTableProps) => {
         id: string
     ) => {
         const cellId = Number(id)
-        const isSecondClick = isRange && cellId !== range.end && !isFisrtClick
         const dayId =
             cellId -
             getCountCellsPrevYears(year) -
@@ -173,6 +173,16 @@ export const DaysTable = (props: DaysTableProps) => {
 
         const isNextMonthCell = dayId >= cellsWithOutNextMonth
         const isPrevMonthCell = dayId <= prevMonthCells
+
+        const isFirstClickCell =
+            isFisrtClick && !isPrevMonthCell && !isNextMonthCell
+        const isSecondClick =
+            isRange &&
+            cellId !== range.end &&
+            !isFisrtClick &&
+            !isPrevMonthCell &&
+            !isNextMonthCell
+
         let inputDate = getDateFormat(year, currentMonth, dayId)
 
         if (isPrevMonthCell && isWithInput) {
@@ -183,7 +193,8 @@ export const DaysTable = (props: DaysTableProps) => {
                     daysInWeek +
                     dayId
             )
-        } else if (isNextMonthCell && isWithInput) {
+        }
+        if (isNextMonthCell && isWithInput) {
             inputDate = getDateFormat(
                 year,
                 currentMonth + 1,
@@ -216,7 +227,8 @@ export const DaysTable = (props: DaysTableProps) => {
             handleIncrementMonth()
             clickNextMonthCell(nextClickProps)
             handleKeyboardChange(false)
-        } else if (isPrevMonthCell) {
+        }
+        if (isPrevMonthCell) {
             const prevClickProps = {
                 cellId,
                 ctrl: e.ctrlKey,
@@ -239,9 +251,11 @@ export const DaysTable = (props: DaysTableProps) => {
             handleDecrementMonth()
             clickPrevMonthCell(prevClickProps)
             handleKeyboardChange(false)
-        } else if (isFisrtClick && activeCellId === id) {
+        }
+        if (isFirstClickCell && activeCellId === id) {
             setActiveCellId(initialActiveCellId)
-        } else if (isFisrtClick && activeCellId !== id) {
+        }
+        if (isFirstClickCell && activeCellId !== id) {
             setActiveCellId(id)
             if (isWithInput) {
                 const inputDate = getDateFormat(year, currentMonth, dayId)
@@ -256,7 +270,8 @@ export const DaysTable = (props: DaysTableProps) => {
                     end: cellId,
                 }))
             }
-        } else if (isSecondClick) {
+        }
+        if (isSecondClick) {
             const { range: newRange, inputRange: inputRangeData } =
                 onClickWithRange(
                     e.ctrlKey,
