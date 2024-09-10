@@ -2,16 +2,15 @@ name: CI
 
 on:
     push:
-        branches: ['develop']
-    pull_request:
         branches: ['master']
-
+    pull_request:
+        types: [opened, synchronize, reopened]
 jobs:
     init:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [21.x]
+                node-version: [22.x]
         steps:
             - uses: actions/checkout@v4
             - name: Starting Node.js ${{matrix.node-version}}
@@ -21,9 +20,9 @@ jobs:
 
             - name: install modules
               run: yarn install
-            - name: build storybook
-              run: yarn build-storybook
             - name: lint code
               run: yarn lint
+            - name: build storybook
+              run: yarn build-sb
             - name: check unit tests
               run: yarn test:unit

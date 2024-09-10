@@ -1,30 +1,44 @@
-import { Container } from './styled.js'
+import { memo } from 'react'
 
-import { DayProps } from '@types'
+import { Container } from './styled'
+import { DayProps } from './types'
 
-export const Day = ({
-    children,
-    isDisabled,
-    isActive,
-    inRange,
-    isStartRange,
-    onClickDay,
-    id,
-    ...props
-}: DayProps) => {
-    const handleClickDay = () => {
-        onClickDay(id)
+const Day = (props: DayProps) => {
+    const {
+        children,
+        $isDisabled,
+        $isActive,
+        $inRange,
+        $isStartRange,
+        $isEndRange,
+        $isHoliday,
+        $isNewMonth,
+        onClickDay,
+        id,
+        ...restProps
+    } = props
+
+    const handleClickDay = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        onClickDay(e, id)
     }
+
     return (
         <Container
-            {...props}
-            isDisabled={isDisabled}
-            isActive={isActive}
-            isStartRange={isStartRange}
-            inRange={inRange}
+            {...restProps}
+            $isDisabled={$isDisabled}
+            $isActive={$isActive}
+            $isStartRange={$isStartRange}
+            $isEndRange={$isEndRange}
+            $inRange={$inRange}
+            $isHoliday={$isHoliday}
+            $isNewMonth={$isNewMonth}
             onClick={handleClickDay}
         >
             {children}
         </Container>
     )
 }
+
+export default memo(Day)

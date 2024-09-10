@@ -1,84 +1,65 @@
-export * from './props'
-
-export interface DaysTable {
+export { type Theme } from './theme'
+export interface CellsInitialData {
     id: string
-    data: DaysData[]
+    data: CellData[]
 }
 
-export interface DaysData {
+export interface CellData {
     id: string
     day: number
 }
 
-export interface Theme {
-    palette: {
-        common: {
-            black: string
-            white: string
-        }
-        activeDateBackgroundColor: string
-        activeColor: string
-        startRangeBackgroundColor: string
-        startRangeColor: string
-        inRangeColor: string
-        inRangeBackgroundColor: string
-        disabledColor: string
-    }
-    fontSizes: {
-        sm: string
-        md: string
-        lg: string
-    }
-    fontWeight: {
-        bold: string
-        medium: string
-    }
-    cellsBorder: {
-        none: string
-    }
-    fullWidth: string
-    media: {
-        sm: string
-        md: string
-        lg: string
-    }
-    spaces: {
-        sm: string
-        md: string
-        lg: string
-    }
-    dayHeight: {
-        sm: string
-        md: string
-        lg: string
-    }
-    arrowSize: {
+export interface MonthCellsData {
+    id: string
+    data: boolean[]
+}
+
+export interface Range {
+    start: number | null
+    end: number | null
+}
+
+export interface InputRange {
+    start: string
+    end: string
+}
+
+export interface CurrentDate {
+    year: number
+    setYear: (value: number) => void
+    currentMonth: number
+    setMonth: (value: number) => void
+    handleIncrementMonth: () => void
+    handleDecrementMonth: () => void
+}
+
+export type onClickWithRange = (
+    ctrl: boolean,
+    cellId: number,
+    range: Range,
+    isSecondInput?: boolean,
+    inputDate?: string,
+    prevFirstDate?: string,
+    prevSecondDate?: string
+) => { range: Range; inputRange: InputRange }
+
+export interface ElementStyle {
+    large: {
         width: string
-        height: string
+        borderRadius: string
+        border: string
+        [K: string]: string
     }
-    arrowScale: {
-        sm: number
-        md: number
-        lg: number
+    medium: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
     }
-    calendarStyles: {
-        small: {
-            width: string
-            height: string
-            borderRadius: string
-            border: string
-        }
-        medium: {
-            width: string
-            height: string
-            borderRadius: string
-            border: string
-        }
-        large: {
-            width: string
-            height: string
-            borderRadius: string
-            border: string
-        }
+    small: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
     }
 }

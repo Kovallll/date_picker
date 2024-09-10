@@ -27,9 +27,16 @@
             "@constants": ["src/constants"],
             "@providers/*": ["src/providers/*"],
             "@styles/*": ["src/styles/*"],
-            "@utils/*": ["src/utils/*"],
-            "@hooks": ["src/hooks"]
-        }
+            "@utils": ["src/utils"],
+            "@hooks": ["src/hooks"],
+            "@decorators": ["src/decorators"],
+            "@service": ["src/service"]
+        },
+        "plugins": [
+            {
+                "name": "typescript-styled-plugin"
+            }
+        ]
     },
     "include": ["src", "declare.d.ts"]
 }

@@ -1,14 +1,18 @@
-import { Container, Text } from './styled.js'
+import { memo } from 'react'
 
-import { weekDays } from '@constants'
-import { WeekBarProps } from '@types'
+import { Container, Text } from './styled'
+import { WeekBarProps } from './types'
 
-export const WeekBar = ({ ...props }: WeekBarProps) => {
+import { initialWeekDays } from '@constants'
+
+const WeekBar = ({ ...props }: WeekBarProps) => {
     return (
         <Container {...props}>
-            {weekDays.map((day) => (
-                <Text>{day}</Text>
+            {initialWeekDays.map((day) => (
+                <Text key={day}>{day}</Text>
             ))}
         </Container>
     )
 }
+
+export default memo(WeekBar)

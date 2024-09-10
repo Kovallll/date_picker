@@ -1,7 +1,8 @@
 {
     "name": "date_picker",
-    "packageManager": "yarn@4.4.0",
+    "packageManager": "yarn@1.22.22",
     "type": "module",
+    "license": "MIT",
     "scripts": {
         "sb": "storybook dev -p 6006",
         "build-sb": "storybook build",
@@ -11,7 +12,7 @@
         "format": "prettier . --write",
         "build": "rollup --config --bundleConfigAsCjs",
         "prepare": "husky",
-        "test:unit": "jest"
+        "test:unit": "jest --passWithNoTests"
     },
     "dependencies": {
         "react": "^18.3.1",
@@ -72,11 +73,14 @@
         "rollup-plugin-styles": "^4.0.0",
         "storybook": "^8.2.9",
         "storybook-react-context": "^0.6.0",
+        "ts-node": "^10.9.2",
         "tslib": "^2.7.0",
         "typescript": "^5.5.4",
         "typescript-eslint": "^8.3.0",
+        "typescript-styled-plugin": "^0.18.3",
         "vercel": "^37.1.2",
         "vite": "^5.4.2",
-        "vite-tsconfig-paths": "^5.0.1"
+        "vite-tsconfig-paths": "^5.0.1",
+        "yup": "^1.4.0"
     }
 }

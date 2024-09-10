@@ -46,6 +46,7 @@ export default [
             '@typescript-eslint/no-this-alias': 'off',
             'import/newline-after-import': 'error',
             'import/no-duplicates': 'error',
+            'prefer-const': 'warn',
             '@typescript-eslint/no-empty-object-type': 'off',
             'sort-imports': [
                 'error',
@@ -72,6 +73,6 @@ export default [
         },
     },
     {
-        ignores: ['dist/*', '.yarn', '.pnp.cjs'],
+        ignores: ['dist/*', '.yarn', '.pnp.cjs', 'storybook-static/*'],
     },
 ]
