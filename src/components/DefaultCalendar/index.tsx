@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useRef, useState } from 'react'
+import { memo, useContext, useRef, useState } from 'react'
 
 import {
     datePlaceholder,
@@ -13,13 +13,7 @@ import { DateInput } from '@components/DateInput'
 import { DaysTable } from '@components/DaysTable'
 import MonthBar from '@components/MonthBar'
 import WeekBar from '@components/WeekBar'
-import {
-    daysInWeek,
-    initialWeekDays,
-    startMonday,
-    startSunday,
-    WeekDays,
-} from '@constants'
+import { daysInWeek, initialWeekDays } from '@constants'
 import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
@@ -29,6 +23,8 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         isWithRange = false,
         onClickWithRange,
         isChangeStartDay,
+        handleChangeWeekDays,
+        startDay = 1,
         ...restProps
     } = props
     const isWithInput = useContext(InputContext)
@@ -53,17 +49,15 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         handleIncrementMonth,
     } = useCurrentDate(initialMonth, initialYear)
 
-    useEffect(() => {
-        if (isChangeStartDay) {
-            const sunday = initialWeekDays.slice(initialWeekDays.length - 1)
-            const withOutSunday = initialWeekDays.slice(
-                0,
-                initialWeekDays.length - 1
-            )
-            const newWeekDays = [...sunday, ...withOutSunday]
-            setWeekDays(newWeekDays)
-        }
-    }, [isChangeStartDay])
+    const isSunday =
+        !!isChangeStartDay &&
+        weekDays === initialWeekDays &&
+        !!handleChangeWeekDays
+
+    if (isSunday) {
+        const newWeekDays = handleChangeWeekDays()
+        setWeekDays(newWeekDays)
+    }
 
     const isDisabled = firstInputDate.length <= daysInWeek
     const handleChangeError = (error: string) => {
@@ -85,7 +79,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     const handleFocus = () => {
         setIsOpen(true)
     }
-    const startDay = weekDays[0] === WeekDays.Monday ? startMonday : startSunday
 
     const handleOpenCalendar = () => {
         setIsOpen((prev) => !prev)
