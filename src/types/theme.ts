@@ -11,6 +11,7 @@ export interface Theme {
         inRangeBackgroundColor: string
         disabledColor: string
         holidayColor: string
+        weekendColor: string
         newMonth: string
         errorColor: string
     }

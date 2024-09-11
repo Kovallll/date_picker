@@ -29,9 +29,9 @@ export const Container = styled.button<DayContainerProps>`
         $isActive,
         $inRange,
         $isStartRange,
-        $isDisabled,
         $isEndRange,
         $isHoliday,
+        $isWeekend,
         $isNewMonth,
     }) =>
         mixins.dayColor(
@@ -39,11 +39,21 @@ export const Container = styled.button<DayContainerProps>`
             $isActive,
             $inRange,
             $isStartRange,
-            $isDisabled,
             $isEndRange,
             $isHoliday,
+            $isWeekend,
             $isNewMonth
         )};
     font-size: ${({ theme }) => mixins.fontSize(theme)};
     cursor: pointer;
+    position: relative;
+`
+
+export const Wrap = styled.div``
+
+export const Holiday = styled.div`
+    bottom: 30px;
+    z-index: 10;
+    position: absolute;
+    width: ${({ theme }) => theme.fullSize};
 `

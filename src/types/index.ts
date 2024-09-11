@@ -24,6 +24,11 @@ export interface InputRange {
     end: string
 }
 
+export interface Holidays {
+    id: string
+    holiday: string | undefined
+}
+
 export interface CurrentDate {
     year: number
     setYear: (value: number) => void

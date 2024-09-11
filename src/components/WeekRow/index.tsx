@@ -22,6 +22,7 @@ export const WeekRow = (props: WeekRowProps) => {
         currentMonth,
         ...restProps
     } = props
+
     const SundayIndex = initialWeekDays.findIndex(
         (el) => el === WeekDays.Sunday
     )
@@ -31,6 +32,10 @@ export const WeekRow = (props: WeekRowProps) => {
     const yearId = getCountCellsPrevYears(year)
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
 
+    const holidaysDates = [
+        { id: '885031', holiday: 'try111111111111111111111111' },
+        { id: '885039', holiday: undefined },
+    ]
     return (
         <Container {...restProps}>
             {data.map(({ id: dayId, day }, index) => {
@@ -40,7 +45,10 @@ export const WeekRow = (props: WeekRowProps) => {
                     (range.end ?? Number(dayId)) > Number(dayId)
                 const isStartRange = range.start === Number(dayId)
                 const isEndRange = range.end === Number(dayId)
-                const isHoliday =
+                const holidayItem = holidaysDates.find(({ id }) => id === dayId)
+                const isHoliday = !!holidayItem
+                const holidatTitle = holidayItem?.holiday
+                const isWeekend =
                     index % daysInWeek === SundayIndex ||
                     index % daysInWeek === SaturdayIndex
 
@@ -62,7 +70,10 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isStartRange={isStartRange}
                         $isEndRange={isEndRange}
                         $isHoliday={isHoliday}
+                        $isWeekend={isWeekend}
                         $isNewMonth={isNewMonth}
+                        holidatTitle={holidatTitle}
+                        holidaysDates={holidaysDates}
                     >
                         {day}
                     </Day>
