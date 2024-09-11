@@ -4,4 +4,5 @@ export interface CalendarProps
     initialYear?: number
     initialMonth?: number
     isWithRange?: boolean
+    isWithStartSunday?: boolean
 }
