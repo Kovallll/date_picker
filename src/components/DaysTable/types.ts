@@ -1,10 +1,11 @@
 import { WeekDays } from '@constants'
-import { onClickWithRange, Range } from '@types'
+import { onClickWithRange, Range, StartDay } from '@types'
 
 export interface DaysTableProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
     currentMonth: number
     year: number
+    startDay: StartDay
     handleChangeError: (error: string) => void
     initialWeekDays: WeekDays[]
     isKeyboardChange: boolean

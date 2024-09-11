@@ -45,3 +45,11 @@ export const CalendarWithRangeInput: Story = {
         isWithRange: true,
     },
 }
+
+export const CalendarWithStartSunday: Story = {
+    args: {
+        isWithRange: false,
+        isWithInput: false,
+        isWithStartSunday: true,
+    },
+}

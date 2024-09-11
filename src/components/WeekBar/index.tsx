@@ -3,12 +3,10 @@ import { memo } from 'react'
 import { Container, Text } from './styled'
 import { WeekBarProps } from './types'
 
-import { initialWeekDays } from '@constants'
-
-const WeekBar = ({ ...props }: WeekBarProps) => {
+const WeekBar = ({ weekDays, ...props }: WeekBarProps) => {
     return (
         <Container {...props}>
-            {initialWeekDays.map((day) => (
+            {weekDays.map((day) => (
                 <Text key={day}>{day}</Text>
             ))}
         </Container>

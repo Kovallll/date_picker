@@ -18,7 +18,7 @@ export interface Range {
     start: number | null
     end: number | null
 }
-
+export type StartDay = 1 | 0
 export interface InputRange {
     start: string
     end: string
