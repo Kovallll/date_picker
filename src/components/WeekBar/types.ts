@@ -1,1 +1,4 @@
-export type WeekBarProps = React.ButtonHTMLAttributes<HTMLDivElement>
+export interface WeekBarProps
+    extends React.ButtonHTMLAttributes<HTMLDivElement> {
+    weekDays: string[]
+}

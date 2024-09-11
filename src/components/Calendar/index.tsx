@@ -3,7 +3,7 @@ import { createContext } from 'react'
 import { CalendarProps } from './types'
 
 import { defaultProps } from '@constants'
-import { withRange } from '@decorators'
+import { withChangeStartDay, withRange } from '@decorators'
 import ThemeProvider from '@providers/ThemeProvider'
 import calendarCreater from '@service'
 
@@ -15,13 +15,16 @@ export const Calendar = (props: CalendarProps) => {
         initialMonth = defaultProps.defaultMonth,
         isWithInput = false,
         isWithRange,
+        isWithStartSunday,
     } = props
 
     const calendar = new calendarCreater()
     if (isWithRange) {
         calendar.addFeature(withRange)
     }
-
+    if (isWithStartSunday) {
+        calendar.addFeature(withChangeStartDay)
+    }
     const Calendar = calendar.getCalendar()
     return (
         <ThemeProvider>
