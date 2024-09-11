@@ -6,4 +6,5 @@ export interface CalendarProps
     isWithRange?: boolean
     minDate?: string
     maxDate?: string
+    isWithStartSunday?: boolean
 }

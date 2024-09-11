@@ -40,6 +40,7 @@ export const DaysTable = (props: DaysTableProps) => {
         handleChangeYear,
         handleDecrementMonth,
         handleIncrementMonth,
+        startDay,
         ...restProps
     } = props
     const { maxDate, minDate } = useContext(MinMaxContext)
@@ -60,7 +61,7 @@ export const DaysTable = (props: DaysTableProps) => {
         setRange(range)
     }
 
-    const days = getCalendarCells(year, currentMonth - 1)
+    const days = getCalendarCells(year, currentMonth - 1, startDay)
     const isFisrtClick = range.end === null
     const isRange = !!isWithRange && !!onClickWithRange
     const waitTime = 600

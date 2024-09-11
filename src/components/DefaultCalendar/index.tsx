@@ -22,12 +22,17 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         initialMonth,
         isWithRange = false,
         onClickWithRange,
+        isChangeStartDay,
+        handleChangeWeekDays,
+        startDay = 1,
         ...restProps
     } = props
     const isWithInput = useContext(InputContext)
     const [isOpen, setIsOpen] = useState(!isWithInput)
     const [error, setError] = useState('')
     const [isKeyboardChange, setIsKeyboardChange] = useState(false)
+    const [weekDays, setWeekDays] = useState(initialWeekDays)
+
     const calendarRef = useRef(null)
     const {
         firstInputDate,
@@ -43,6 +48,16 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         handleDecrementMonth,
         handleIncrementMonth,
     } = useCurrentDate(initialMonth, initialYear)
+
+    const isSunday =
+        !!isChangeStartDay &&
+        weekDays === initialWeekDays &&
+        !!handleChangeWeekDays
+
+    if (isSunday) {
+        const newWeekDays = handleChangeWeekDays()
+        setWeekDays(newWeekDays)
+    }
 
     const isDisabled = firstInputDate.length <= daysInWeek
 
@@ -114,7 +129,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         increment={handleIncrementMonth}
                         decrement={handleDecrementMonth}
                     />
-                    <WeekBar />
+                    <WeekBar weekDays={weekDays} />
                     <DaysTable
                         handleChangeError={handleChangeError}
                         firstInputDate={firstInputDate}
@@ -134,6 +149,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         year={year}
                         currentMonth={currentMonth}
                         initialWeekDays={initialWeekDays}
+                        startDay={startDay}
                     />
                 </CalendarBlock>
             )}
