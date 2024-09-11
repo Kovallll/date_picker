@@ -2,7 +2,6 @@ import { createContext } from 'react'
 
 import { CalendarProps } from './types'
 
-import { defaultProps } from '@constants'
 import { withChangeStartDay, withRange } from '@decorators'
 import ThemeProvider from '@providers/ThemeProvider'
 import calendarCreater from '@service'
@@ -10,9 +9,11 @@ import calendarCreater from '@service'
 export const InputContext = createContext(false)
 
 export const Calendar = (props: CalendarProps) => {
+    const currentYear = new Date().getFullYear()
+    const currentMonth = new Date().getMonth() + 1
     const {
-        initialYear = defaultProps.defaultYear,
-        initialMonth = defaultProps.defaultMonth,
+        initialYear = currentYear,
+        initialMonth = currentMonth,
         isWithInput = false,
         isWithRange,
         isWithStartSunday,

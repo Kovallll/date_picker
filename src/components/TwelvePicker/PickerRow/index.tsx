@@ -14,9 +14,10 @@ const PickerRow = ({ data, handleSelectElement }: PickerRowProps) => {
         id: string
     ) => {
         const cellId = Number(id)
-        if (months.includes(data[0]?.data as Month)) {
+        if (months.includes(data[0]?.data as Month) && handleSelectElement) {
             handleSelectElement(cellId)
-        } else {
+        }
+        if (!months.includes(data[0]?.data as Month) && handleSelectElement) {
             handleSelectElement(
                 Number(data[(cellId - 1) % countElements]?.data)
             )

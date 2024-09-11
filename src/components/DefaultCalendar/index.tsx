@@ -15,6 +15,7 @@ import { DaysTable } from '@components/DaysTable'
 import WeekBar from '@components/WeekBar'
 import { daysInWeek, initialWeekDays } from '@constants'
 import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
+import { getAllDaysPrevMonths } from '@utils'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
     const {
@@ -87,6 +88,10 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         handleChangeError('')
     }
 
+    const weekId = Math.floor(
+        getAllDaysPrevMonths(year, currentMonth - 1) / daysInWeek
+    )
+
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
         <Container
@@ -130,7 +135,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         handleChangeCurrentMonth={handleChangeCurrentMonth}
                         handleChangeYear={handleChangeYear}
                     />
-                    <WeekBar weekDays={weekDays} />
+                    <WeekBar weekDays={weekDays} weekId={weekId} />
                     <DaysTable
                         handleChangeError={handleChangeError}
                         firstInputDate={firstInputDate}

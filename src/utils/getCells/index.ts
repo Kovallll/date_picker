@@ -59,6 +59,14 @@ const getDaysInMonth = (year: number, monthIndex: number) => {
     return days
 }
 
+export const getAllDaysPrevMonths = (year: number, monthIndex: number) => {
+    let days = 0
+    for (let i = 1; i <= monthIndex; i++) {
+        days += getDaysInMonth(year, i)
+    }
+    return days
+}
+
 const getInitialCells = <T>(
     len: number,
     array: Array<T> = [],

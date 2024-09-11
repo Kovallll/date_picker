@@ -1,6 +1,6 @@
 export interface TwelvePickerProps {
     fillData: string[]
-    handleSelectElement: (monthId: number) => void
+    handleSelectElement?: (monthId: number) => void
 }
 
 export type DataTwelvePicker = ArrayTwelvePicker[]

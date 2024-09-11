@@ -94,11 +94,6 @@ export const pickSlashRegExp = /\//g
 
 export const NaNRegExp = /\D|\s/
 
-export const defaultProps = {
-    defaultYear: 2024,
-    defaultMonth: 1,
-}
-
 export const icons = {
     prevArrowIcon,
     nextArrowIcon,
