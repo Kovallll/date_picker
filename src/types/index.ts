@@ -24,6 +24,8 @@ export interface InputRange {
     end: string
 }
 
+export type ChangeType = 'year' | 'month' | 'week'
+
 export interface CurrentDate {
     year: number
     setYear: (value: number) => void
@@ -47,4 +49,3 @@ export type onClickCell = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: string
 ) => void
-

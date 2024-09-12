@@ -1,10 +1,12 @@
 import { useCallback, useState } from 'react'
 
-import { countMonth, numberBaseMonth } from '@constants'
+import { countMonth, currentDate, numberBaseMonth } from '@constants'
+import { getWeekNumber } from '@utils'
 
-export const useCurrentDate = (initialMonth: number, initialYear: number) => {
+export const useCurrentDate = (initialYear: number, initialMonth: number) => {
     const [currentMonth, setCurrentMonth] = useState(initialMonth)
     const [year, setYear] = useState(initialYear)
+    const [weekId, setWeekId] = useState(getWeekNumber(currentDate))
 
     const handleChangeYear = useCallback((year: number) => {
         setYear(year)
@@ -12,6 +14,10 @@ export const useCurrentDate = (initialMonth: number, initialYear: number) => {
 
     const handleChangeCurrentMonth = useCallback((currentMonth: number) => {
         setCurrentMonth(currentMonth)
+    }, [])
+
+    const handleChangeWeek = useCallback((weekId: number) => {
+        setWeekId(weekId)
     }, [])
 
     const handleIncrementMonth = useCallback(() => {
@@ -31,8 +37,10 @@ export const useCurrentDate = (initialMonth: number, initialYear: number) => {
     return {
         year,
         currentMonth,
+        weekId,
         handleChangeCurrentMonth,
         handleChangeYear,
+        handleChangeWeek,
         handleDecrementMonth,
         handleIncrementMonth,
     }

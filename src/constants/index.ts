@@ -94,6 +94,8 @@ export const pickSlashRegExp = /\//g
 
 export const NaNRegExp = /\D|\s/
 
+export const currentDate = new Date()
+
 export const icons = {
     prevArrowIcon,
     nextArrowIcon,

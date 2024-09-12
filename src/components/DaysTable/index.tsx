@@ -6,7 +6,7 @@ import { fisrtDateLongerThanSecondError } from './config'
 import { Container } from './styled'
 import { DaysTableProps } from './types'
 
-import { InputContext } from '@components/Calendar'
+import { DateContext, InputContext } from '@components/Calendar'
 import { WeekRow } from '@components/WeekRow'
 import { daysInWeek, initialActiveCellId, prevCurrentMonth } from '@constants'
 import { useDebounce } from '@hooks'
@@ -34,15 +34,18 @@ export const DaysTable = (props: DaysTableProps) => {
         secondInputDate,
         handleChangeFirstDateInput,
         handleChangeSecondDateInput,
-        year,
-        currentMonth,
-        handleChangeCurrentMonth,
-        handleChangeYear,
-        handleDecrementMonth,
-        handleIncrementMonth,
         startDay,
         ...restProps
     } = props
+
+    const {
+        year,
+        currentMonth,
+        handleChangeYear,
+        handleChangeCurrentMonth,
+        handleIncrementMonth,
+        handleDecrementMonth,
+    } = useContext(DateContext)
 
     const isWithInput = useContext(InputContext)
     const [prevFirstDate, setPrevFirstDate] = useState('')
@@ -293,19 +296,19 @@ export const DaysTable = (props: DaysTableProps) => {
             }
         }
     }
-
+    const fisrtDayIndex = days[0].data.findIndex((el) => el.day === 1)
     return (
         <Container {...restProps}>
-            {days.map(({ data, id: weekId }) => (
+            {days.map(({ data, id: weekActiveId }) => (
                 <WeekRow
-                    year={year}
-                    currentMonth={currentMonth}
-                    key={weekId}
+                    key={weekActiveId}
                     activeCellId={activeCellId}
                     data={data}
                     handleClickDay={handleClickDay}
                     range={range}
                     initialWeekDays={initialWeekDays}
+                    fisrtDayIndex={fisrtDayIndex}
+                    startDay={startDay}
                 />
             ))}
         </Container>

@@ -59,25 +59,13 @@ const getDaysInMonth = (year: number, monthIndex: number) => {
     return days
 }
 
-export const getAllDaysPrevMonths = (year: number, monthIndex: number) => {
-    let days = 0
-    for (let i = 1; i <= monthIndex; i++) {
-        days += getDaysInMonth(year, i)
-    }
-    return days
-}
-
-const getInitialCells = <T>(
-    len: number,
-    array: Array<T> = [],
-    initialId: number = 0
-) => {
+const getInitialCells = (len: number) => {
     return [
         ...Array(len)
             .fill({})
             .map((_, index) => ({
-                id: String(initialId * countMonth + index + 1),
-                data: array,
+                id: String(index),
+                data: [],
             })),
     ]
 }
@@ -94,13 +82,12 @@ export const getCalendarCells = (
     const countDaysActiveMonth = getDaysInMonth(year, monthIndex + 1)
     const cellsInActiveMonth = getCellsInMonth(year, monthIndex)
     const countDaysArrays = cellsInActiveMonth / daysInWeek
-    const days: CellsInitialData[] = getInitialCells(countDaysArrays, [])
+    const prevMonthCellsCount = getAllCellsPrevMonths(year, monthIndex)
 
+    const days: CellsInitialData[] = getInitialCells(countDaysArrays)
     let arr = []
     let j = 0
-
     const yearId = getCountCellsPrevYears(year)
-    const prevMonthCellsCount = getAllCellsPrevMonths(year, monthIndex)
     const reversePrevId = 2
     let numberForReversePrevMonthIds = actualPrevMonthDays - 1
     let cellId = yearId + prevMonthCellsCount

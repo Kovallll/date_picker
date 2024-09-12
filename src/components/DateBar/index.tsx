@@ -1,25 +1,25 @@
-import { memo, useCallback, useRef, useState } from 'react'
+import { memo, useCallback, useContext, useRef, useState } from 'react'
 
 import { nextImageAlt, prevImageAlt } from './config'
 import { Container, DateBarBlock, Month, Year } from './styled'
 import { DateBarProps } from './types'
 
+import { DateContext } from '@components/Calendar'
 import MonthCalendar from '@components/MonthCalendar'
 import { SwapButton } from '@components/SwapButton'
 import YearCalendar from '@components/YearCalendar'
 import { icons, months } from '@constants'
 import { useClickOutside } from '@hooks'
 
-const DateBar = (props: DateBarProps) => {
+const DateBar = ({ ...restProps }: DateBarProps) => {
     const {
-        currentMonth,
         year,
-        increment,
-        decrement,
-        handleChangeCurrentMonth,
+        currentMonth,
         handleChangeYear,
-        ...restProps
-    } = props
+        handleChangeCurrentMonth,
+        handleDecrementMonth,
+        handleIncrementMonth,
+    } = useContext(DateContext)
     const [isMonthOpen, setIsMonthOpen] = useState(false)
     const [isYearOpen, setIsYearOpen] = useState(false)
     const [selectMonth, setSelectMonth] = useState({
@@ -30,6 +30,7 @@ const DateBar = (props: DateBarProps) => {
         currentYear: year,
         prevYear: year,
     })
+
     const calendarRef = useRef(null)
 
     useClickOutside(calendarRef, () => {
@@ -91,9 +92,13 @@ const DateBar = (props: DateBarProps) => {
     const nextIcon = disabledNextButton
         ? icons.disabledNextArrowIcon
         : icons.nextArrowIcon
+
     return (
         <Container {...restProps}>
-            <SwapButton onClick={decrement} disabled={disabledPrevButton}>
+            <SwapButton
+                onClick={handleDecrementMonth}
+                disabled={disabledPrevButton}
+            >
                 <img src={prevIcon} aria-hidden="true" alt={prevImageAlt} />
             </SwapButton>
             <DateBarBlock>
@@ -104,6 +109,7 @@ const DateBar = (props: DateBarProps) => {
                     <Year onClick={handleOpenYear}>{year}</Year>
                     {isMonthOpen && (
                         <MonthCalendar
+                            month={currentMonth}
                             handleSelectMonth={handleSelectMonth}
                             ref={calendarRef}
                         />
@@ -118,7 +124,10 @@ const DateBar = (props: DateBarProps) => {
                 </>
             </DateBarBlock>
 
-            <SwapButton onClick={increment} disabled={disabledNextButton}>
+            <SwapButton
+                onClick={handleIncrementMonth}
+                disabled={disabledNextButton}
+            >
                 <img src={nextIcon} aria-hidden="true" alt={nextImageAlt} />
             </SwapButton>
         </Container>

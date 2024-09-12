@@ -15,6 +15,9 @@ const theme: Theme = {
         holidayColor: '#BB0000',
         newMonth: '#ccc',
         errorColor: '#FF2222',
+        lightHoverColor: '#eee',
+        darkHoverColor: '#faefaf',
+        selectedWeekColor: '#c2eceb	',
     },
     fontSizes: {
         sm: '10',

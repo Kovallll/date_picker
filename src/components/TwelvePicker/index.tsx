@@ -1,13 +1,13 @@
 import { memo } from 'react'
 
-import PickerRow from './PickerRow'
+import TableRow from './PickerRow'
 import { Container } from './styled'
-import { DataTwelvePicker, TwelvePickerProps } from './types'
+import { DataTwelveTable, TwelveTableProps } from './types'
 
-const TwelvePicker = (props: TwelvePickerProps) => {
-    const { fillData, handleSelectElement } = props
+const TwelveTable = (props: TwelveTableProps) => {
+    const { fillData, handleSelectElement, changeType, activeId } = props
 
-    const dataTwelvePicker: DataTwelvePicker[] = []
+    const dataTwelvePicker: DataTwelveTable[] = []
     const countElementInRow = 3
     const countElementInColumn = 4
 
@@ -26,14 +26,16 @@ const TwelvePicker = (props: TwelvePickerProps) => {
     return (
         <Container>
             {dataTwelvePicker.map((data, index) => (
-                <PickerRow
+                <TableRow
                     key={index}
                     data={data}
                     handleSelectElement={handleSelectElement}
+                    changeType={changeType}
+                    activeId={activeId}
                 />
             ))}
         </Container>
     )
 }
 
-export default memo(TwelvePicker)
+export default memo(TwelveTable)

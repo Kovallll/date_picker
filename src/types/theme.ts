@@ -32,6 +32,9 @@ export interface Theme {
         holidayColor: string
         newMonth: string
         errorColor: string
+        lightHoverColor: string
+        darkHoverColor: string
+        selectedWeekColor: string
     }
     fontSizes: {
         sm: string

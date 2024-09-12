@@ -14,13 +14,10 @@ import { DateInput } from '@components/DateInput'
 import { DaysTable } from '@components/DaysTable'
 import WeekBar from '@components/WeekBar'
 import { daysInWeek, initialWeekDays } from '@constants'
-import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
-import { getAllDaysPrevMonths } from '@utils'
+import { useClickOutside, useInputDate } from '@hooks'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
     const {
-        initialYear,
-        initialMonth,
         isWithRange = false,
         onClickWithRange,
         isChangeStartDay,
@@ -41,14 +38,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         secondInputDate,
         handleChangeSecondDateInput,
     } = useInputDate()
-    const {
-        currentMonth,
-        year,
-        handleChangeCurrentMonth,
-        handleChangeYear,
-        handleDecrementMonth,
-        handleIncrementMonth,
-    } = useCurrentDate(initialMonth, initialYear)
 
     const isSunday =
         !!isChangeStartDay &&
@@ -88,10 +77,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         handleChangeError('')
     }
 
-    const weekId = Math.floor(
-        getAllDaysPrevMonths(year, currentMonth - 1) / daysInWeek
-    )
-
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
         <Container
@@ -127,15 +112,8 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
             </InputBlock>
             {isOpen && (
                 <CalendarBlock {...restProps}>
-                    <DateBar
-                        year={year}
-                        currentMonth={currentMonth}
-                        increment={handleIncrementMonth}
-                        decrement={handleDecrementMonth}
-                        handleChangeCurrentMonth={handleChangeCurrentMonth}
-                        handleChangeYear={handleChangeYear}
-                    />
-                    <WeekBar weekDays={weekDays} weekId={weekId} />
+                    <DateBar />
+                    <WeekBar weekDays={weekDays} />
                     <DaysTable
                         handleChangeError={handleChangeError}
                         firstInputDate={firstInputDate}
@@ -143,17 +121,11 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         isWithRange={isWithRange}
                         handleKeyboardChange={handleKeyboardChange}
                         isKeyboardChange={isKeyboardChange}
-                        handleDecrementMonth={handleDecrementMonth}
-                        handleIncrementMonth={handleIncrementMonth}
-                        handleChangeCurrentMonth={handleChangeCurrentMonth}
-                        handleChangeYear={handleChangeYear}
                         onClickWithRange={onClickWithRange}
                         handleChangeFirstDateInput={handleChangeFirstDateInput}
                         handleChangeSecondDateInput={
                             handleChangeSecondDateInput
                         }
-                        year={year}
-                        currentMonth={currentMonth}
                         initialWeekDays={initialWeekDays}
                         startDay={startDay}
                     />

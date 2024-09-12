@@ -5,6 +5,11 @@ export {
     getCountCellsPrevYears,
     getAllCellsPrevMonths,
     getCalendarCells,
-    getAllDaysPrevMonths,
 } from './getCells'
-export { getDateFormat, getValidInputCell } from './getDate'
+export {
+    getDateFormat,
+    getValidInputCell,
+    getMonthAndDaysByWeek,
+    getWeekNumber,
+    getMonthByWeek,
+} from './getDate'

@@ -31,13 +31,17 @@ export const Container = styled.button<DayContainerProps>`
         $inRange,
         $isStartRange,
         $isEndRange,
+        $isSelectWeek,
+        $isTwelveActive,
     }) =>
         mixins.dayBackgroundColor(
             theme,
             $isActive,
             $inRange,
             $isStartRange,
-            $isEndRange
+            $isEndRange,
+            $isSelectWeek,
+            $isTwelveActive
         )};
     color: ${({
         theme,
@@ -61,4 +65,25 @@ export const Container = styled.button<DayContainerProps>`
         )};
     font-size: ${({ theme }) => mixins.fontSize(theme)};
     cursor: pointer;
+    @media (hover: hover) and (pointer: fine) {
+        &:hover {
+            border-radius: ${({ theme }) => theme.cellBorderRadius + 'px'};
+            background: ${({
+                theme,
+                $isActive,
+                $inRange,
+                $isStartRange,
+                $isEndRange,
+                $isHoliday,
+            }) =>
+                mixins.hoverBackgroundColor(
+                    theme,
+                    $isActive,
+                    $inRange,
+                    $isStartRange,
+                    $isEndRange,
+                    $isHoliday
+                )};
+        }
+    }
 `

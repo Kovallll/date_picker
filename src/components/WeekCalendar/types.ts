@@ -1,3 +1,3 @@
 export interface WeekCalendarProps {
-    initialCurrentWeek: number
+    handleOpenCalendar: () => void
 }

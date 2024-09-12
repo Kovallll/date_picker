@@ -179,12 +179,29 @@ export default {
         isActive?: boolean,
         inRange?: boolean,
         isStartRange?: boolean,
-        isEndRange?: boolean
+        isEndRange?: boolean,
+        isSelectWeek?: boolean,
+        isTwelveActive?: boolean
     ) => {
+        if (isTwelveActive) return theme.palette.selectedWeekColor
         if (inRange) return theme.palette.inRangeBackgroundColor
         if (isActive) return theme.palette.blue
         if (isEndRange) return theme.palette.blue
         if (isStartRange) return theme.palette.lightBlue
+        if (isSelectWeek) return theme.palette.selectedWeekColor
         else return theme.palette.common.white
+    },
+    hoverBackgroundColor: (
+        theme: Theme,
+        isActive?: boolean,
+        inRange?: boolean,
+        isStartRange?: boolean,
+        isEndRange?: boolean,
+        isHoliday?: boolean
+    ) => {
+        if (inRange || isActive || isEndRange || isStartRange)
+            return theme.palette.darkHoverColor
+        if (isHoliday) return theme.palette.lightHoverColor
+        else return theme.palette.lightHoverColor
     },
 }

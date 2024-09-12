@@ -1,6 +1,10 @@
-import { DataTwelvePicker } from '../types'
+import { DataTwelveTable } from '../types'
 
-export interface PickerRowProps {
-    data: DataTwelvePicker
-    handleSelectElement?: (monthId: number) => void
+import { ChangeType } from '@types'
+
+export interface TableRowProps {
+    data: DataTwelveTable
+    handleSelectElement: (monthId: number) => void
+    changeType: ChangeType
+    activeId: number
 }

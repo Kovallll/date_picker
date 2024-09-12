@@ -6,12 +6,14 @@ export interface DayProps
     children: React.ReactNode
     $isHoliday?: boolean
     $isTwelve?: boolean
+    $isTwelveActive?: boolean
     $isDisabled?: boolean
     $isActive?: boolean
     $inRange?: boolean
     $isStartRange?: boolean
     $isEndRange?: boolean
     $isNewMonth?: boolean
+    $isSelectWeek?: boolean
     onClickCell: onClickCell
 }
 

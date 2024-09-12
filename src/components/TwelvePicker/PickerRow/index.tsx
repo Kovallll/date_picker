@@ -1,12 +1,16 @@
 import { memo } from 'react'
 
 import { Container } from './styled'
-import { PickerRowProps } from './types'
+import { TableRowProps } from './types'
 
 import Cell from '@components/Cell'
-import { Month, months } from '@constants'
 
-const PickerRow = ({ data, handleSelectElement }: PickerRowProps) => {
+const TableRow = ({
+    data,
+    handleSelectElement,
+    changeType,
+    activeId,
+}: TableRowProps) => {
     const countElements = 3
 
     const onClickCell = (
@@ -14,10 +18,15 @@ const PickerRow = ({ data, handleSelectElement }: PickerRowProps) => {
         id: string
     ) => {
         const cellId = Number(id)
-        if (months.includes(data[0]?.data as Month) && handleSelectElement) {
+        if (changeType === 'month') {
             handleSelectElement(cellId)
         }
-        if (!months.includes(data[0]?.data as Month) && handleSelectElement) {
+        if (changeType === 'year') {
+            handleSelectElement(
+                Number(data[(cellId - 1) % countElements]?.data)
+            )
+        }
+        if (changeType === 'week') {
             handleSelectElement(
                 Number(data[(cellId - 1) % countElements]?.data)
             )
@@ -25,18 +34,25 @@ const PickerRow = ({ data, handleSelectElement }: PickerRowProps) => {
     }
     return (
         <Container>
-            {data.map(({ id, data }) => (
-                <Cell
-                    $isTwelve={true}
-                    key={id}
-                    id={id}
-                    onClickCell={onClickCell}
-                >
-                    {data}
-                </Cell>
-            ))}
+            {data.map(({ id, data }) => {
+                const isTwelveActive =
+                    changeType === 'month'
+                        ? activeId === Number(id)
+                        : activeId === Number(data)
+                return (
+                    <Cell
+                        $isTwelve={true}
+                        $isTwelveActive={isTwelveActive}
+                        key={id}
+                        id={id}
+                        onClickCell={onClickCell}
+                    >
+                        {data}
+                    </Cell>
+                )
+            })}
         </Container>
     )
 }
 
-export default memo(PickerRow)
+export default memo(TableRow)

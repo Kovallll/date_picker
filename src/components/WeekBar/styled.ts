@@ -7,6 +7,7 @@ export const Container = styled.div`
 
     width: ${({ theme }) => theme.fullSize};
     position: relative;
+    z-index: 9;
 `
 
 export const Week = styled.div`

@@ -1,11 +1,15 @@
-export interface TwelvePickerProps {
+import { ChangeType } from '@types'
+
+export interface TwelveTableProps {
     fillData: string[]
-    handleSelectElement?: (monthId: number) => void
+    handleSelectElement: (monthId: number) => void
+    changeType: ChangeType
+    activeId: number
 }
 
-export type DataTwelvePicker = ArrayTwelvePicker[]
+export type DataTwelveTable = ArrayTwelveTable[]
 
-export interface ArrayTwelvePicker {
+export interface ArrayTwelveTable {
     id: string
     data: string
 }

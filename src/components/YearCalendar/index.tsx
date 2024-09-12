@@ -1,6 +1,6 @@
 import { forwardRef, memo, useState } from 'react'
 
-import { nextImageAlt, prevImageAlt } from './config'
+import { changeType, nextImageAlt, prevImageAlt } from './config'
 import { Buttons, Container } from './styled'
 import { YearCalendarProps } from './types'
 
@@ -13,15 +13,12 @@ const YearCalendar = forwardRef(function YearCalendar(
     ref: React.ForwardedRef<HTMLElement | null>
 ) {
     const countElementInTable = 12
-    const remain = year % countElementInTable
 
     const initialYearData = (year: number) => {
         const yearData = [
             ...Array(countElementInTable)
                 .fill({})
-                .map((_, index) =>
-                    String(year - Math.ceil(remain / 2) + index)
-                ),
+                .map((_, index) => String(year + index)),
         ]
         return yearData
     }
@@ -29,9 +26,7 @@ const YearCalendar = forwardRef(function YearCalendar(
     const [currentYear, setCurrentYear] = useState(year)
     const [yearData, setYearData] = useState(initialYearData(currentYear))
 
-    const isDisabled =
-        currentYear - countElementInTable <= 0 ||
-        currentYear === countElementInTable
+    const isDisabled = currentYear === 0
 
     const handleClickNextButton = () => {
         setCurrentYear((prev) => prev + countElementInTable)
@@ -39,7 +34,11 @@ const YearCalendar = forwardRef(function YearCalendar(
     }
 
     const handleClickPrevButton = () => {
-        if (!isDisabled) {
+        if (currentYear <= countElementInTable && currentYear > 0) {
+            setCurrentYear(0)
+            setYearData(initialYearData(0))
+        }
+        if (currentYear > countElementInTable) {
             setCurrentYear((prev) => prev - countElementInTable)
             setYearData(initialYearData(currentYear - countElementInTable))
         }
@@ -66,6 +65,8 @@ const YearCalendar = forwardRef(function YearCalendar(
             <TwelvePicker
                 fillData={yearData}
                 handleSelectElement={handleSelectYear}
+                changeType={changeType}
+                activeId={year}
             />
         </Container>
     )

@@ -14,6 +14,7 @@ const Cell = (props: DayProps) => {
         $isEndRange,
         $isHoliday,
         $isNewMonth,
+        $isTwelveActive,
         onClickCell,
         id,
         ...restProps
@@ -28,6 +29,7 @@ const Cell = (props: DayProps) => {
     return (
         <Container
             {...restProps}
+            $isTwelveActive={$isTwelveActive}
             $isTwelve={$isTwelve}
             $isDisabled={$isDisabled}
             $isActive={$isActive}
