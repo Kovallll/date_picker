@@ -7,6 +7,7 @@ import { YearCalendarProps } from './types'
 import { SwapButton } from '@components/SwapButton'
 import TwelvePicker from '@components/TwelvePicker'
 import { icons } from '@constants'
+import { getInitialCells } from '@utils'
 
 const YearCalendar = forwardRef(function YearCalendar(
     { year, handleSelectYear }: YearCalendarProps,
@@ -14,33 +15,36 @@ const YearCalendar = forwardRef(function YearCalendar(
 ) {
     const countElementInTable = 12
 
-    const initialYearData = (year: number) => {
-        const yearData = [
-            ...Array(countElementInTable)
-                .fill({})
-                .map((_, index) => String(year + index)),
-        ]
-        return yearData
-    }
-
     const [currentYear, setCurrentYear] = useState(year)
-    const [yearData, setYearData] = useState(initialYearData(currentYear))
+    const [yearData, setYearData] = useState(
+        getInitialCells(countElementInTable, currentYear)
+    )
 
     const isDisabled = currentYear === 0
 
     const handleClickNextButton = () => {
         setCurrentYear((prev) => prev + countElementInTable)
-        setYearData(initialYearData(currentYear + countElementInTable))
+        setYearData(
+            getInitialCells(
+                countElementInTable,
+                currentYear + countElementInTable
+            )
+        )
     }
 
     const handleClickPrevButton = () => {
         if (currentYear <= countElementInTable && currentYear > 0) {
             setCurrentYear(0)
-            setYearData(initialYearData(0))
+            setYearData(getInitialCells(countElementInTable, 0))
         }
         if (currentYear > countElementInTable) {
             setCurrentYear((prev) => prev - countElementInTable)
-            setYearData(initialYearData(currentYear - countElementInTable))
+            setYearData(
+                getInitialCells(
+                    countElementInTable,
+                    currentYear - countElementInTable
+                )
+            )
         }
     }
 

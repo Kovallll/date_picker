@@ -49,3 +49,11 @@ export type onClickCell = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: string
 ) => void
+
+export type InitialCells = (
+    | string
+    | {
+          id: string
+          data: never[]
+      }
+)[]

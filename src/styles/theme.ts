@@ -40,6 +40,7 @@ const theme: Theme = {
         top: '26',
     },
     spaces: {
+        xs: '1',
         sm: '6',
         md: '8',
         lg: '10',

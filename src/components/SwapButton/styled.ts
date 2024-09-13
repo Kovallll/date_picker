@@ -1,8 +1,10 @@
 import styled from 'styled-components'
 
+import { SwapButtonContainer } from './types'
+
 import mixins from '@styles/mixins'
 
-export const Button = styled.button<{ disabled?: boolean }>`
+export const Button = styled.button<SwapButtonContainer>`
     ${mixins.flexRowCenter()}
 
     ${({ theme }) => mixins.arrowScale(theme)};

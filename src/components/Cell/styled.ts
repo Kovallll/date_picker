@@ -8,7 +8,7 @@ export const Container = styled.button<DayContainerProps>`
     width: ${({ theme }) => theme.fullSize};
     height: ${({ theme }) => mixins.cellHeight(theme)};
     margin: ${({ theme, $isTwelve }) =>
-        $isTwelve ? String(+theme.spaces.sm - 5) + 'px' : '0'};
+        $isTwelve ? theme.spaces.xs + 'px' : '0'};
     border: ${({ theme, $isTwelve }) =>
         $isTwelve ? theme.twelveStyles.border : theme.noneBorder};
     border-radius: ${({

@@ -53,6 +53,7 @@ export interface Theme {
         lg: string
     }
     spaces: {
+        xs: string
         sm: string
         md: string
         lg: string
