@@ -1,11 +1,11 @@
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 
 import { Container } from './styled'
 import { WeekRowProps } from './types'
 
-import { DateContext } from '@components/Calendar'
 import Cell from '@components/Cell'
 import { daysInWeek, WeekDays } from '@constants'
+import { DateContext } from '@context'
 import {
     getAllCellsPrevMonths,
     getCellsInMonth,
@@ -22,7 +22,7 @@ export const WeekRow = (props: WeekRowProps) => {
         range,
         initialWeekDays,
         handleClickDay,
-        fisrtDayIndex,
+        firstDayIndex,
         startDay,
         ...restProps
     } = props
@@ -38,8 +38,11 @@ export const WeekRow = (props: WeekRowProps) => {
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
 
     const { days, monthStart, monthEnd } = getMonthAndDaysByWeek(year, weekId)
-    const currectDay = startDay ? 1 : 2
-    const newDays = days.map((el) => el + fisrtDayIndex - currectDay)
+    const corectDay = startDay ? 1 : 2
+
+    const newDays = useMemo(() => {
+        return days.map((el) => el + firstDayIndex - corectDay)
+    }, [days, firstDayIndex, corectDay])
 
     const cellsInMonth = getCellsInMonth(year, currentMonth - 1)
     const cellsPrevMonth = getCellsPrevMonth(year, currentMonth - 1)

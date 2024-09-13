@@ -1,15 +1,15 @@
 import { ChangeType } from '@types'
 
-export interface TwelveTableProps {
+export interface PopupTableCellsProps {
     fillData: string[]
     handleSelectElement: (monthId: number) => void
     changeType: ChangeType
     activeId: number
 }
 
-export type DataTwelveTable = ArrayTwelveTable[]
+export type DataPopupTableCells = PopupCellData[]
 
-export interface ArrayTwelveTable {
+export interface PopupCellData {
     id: string
-    data: string
+    data: string | never[]
 }

@@ -1,4 +1,4 @@
-import { daysInWeek } from '@constants'
+import { countMsInDay, daysInWeek, thursdayIndex } from '@constants'
 import {
     getAllCellsPrevMonths,
     getCellsPrevMonth,
@@ -106,10 +106,11 @@ export const getMonthByWeek = (year: number, weekNumber: number) => {
 
 export const getWeekNumber = (date: Date) => {
     const tempDate = new Date(date.getTime())
-    const countMsInDay = 86400000
 
     tempDate.setHours(0, 0, 0, 0)
-    tempDate.setDate(tempDate.getDate() + 4 - (tempDate.getDay() || daysInWeek))
+    tempDate.setDate(
+        tempDate.getDate() + thursdayIndex - (tempDate.getDay() || daysInWeek)
+    )
     const yearStart = new Date(tempDate.getFullYear(), 0, 1)
     const weekNumber = Math.ceil(
         ((Number(tempDate) - Number(yearStart)) / countMsInDay + 1) / daysInWeek

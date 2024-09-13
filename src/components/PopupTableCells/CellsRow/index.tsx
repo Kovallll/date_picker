@@ -1,16 +1,16 @@
 import { memo } from 'react'
 
 import { Container } from './styled'
-import { TableRowProps } from './types'
+import { CellsRowProps } from './types'
 
 import Cell from '@components/Cell'
 
-const TableRow = ({
+const CellsRow = ({
     data,
     handleSelectElement,
     changeType,
     activeId,
-}: TableRowProps) => {
+}: CellsRowProps) => {
     const countElements = 3
 
     const onClickCell = (
@@ -35,14 +35,14 @@ const TableRow = ({
     return (
         <Container>
             {data.map(({ id, data }) => {
-                const isTwelveActive =
+                const isPopupActive =
                     changeType === 'month'
                         ? activeId === Number(id)
                         : activeId === Number(data)
                 return (
                     <Cell
-                        $isTwelve={true}
-                        $isTwelveActive={isTwelveActive}
+                        $isPopup={true}
+                        $isPopupActive={isPopupActive}
                         key={id}
                         id={id}
                         onClickCell={onClickCell}
@@ -55,4 +55,4 @@ const TableRow = ({
     )
 }
 
-export default memo(TableRow)
+export default memo(CellsRow)

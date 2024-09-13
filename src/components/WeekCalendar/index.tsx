@@ -1,14 +1,21 @@
 import { forwardRef, memo, useContext, useState } from 'react'
 
 import { changeType, nextImageAlt, prevImageAlt } from './config'
-import { Buttons, Container } from './styled'
+import { ButtonsWrap, Section } from './styled'
 import { WeekCalendarProps } from './types'
 
-import { DateContext } from '@components/Calendar'
+import PopupTableCells from '@components/PopupTableCells'
 import { SwapButton } from '@components/SwapButton'
-import TwelvePicker from '@components/TwelvePicker'
-import { icons } from '@constants'
-import { getMonthByWeek } from '@utils'
+import {
+    countElementInPopupTable,
+    icons,
+    maxCountWeeks,
+    maxWeekInPopupTable,
+    minBarrierWeek,
+    minWeekInPopupTable,
+} from '@constants'
+import { DateContext } from '@context'
+import { getMonthByWeek, getPopupTableCells } from '@utils'
 
 const WeekCalendar = forwardRef(function WeekCalendar(
     { handleOpenCalendar }: WeekCalendarProps,
@@ -17,54 +24,61 @@ const WeekCalendar = forwardRef(function WeekCalendar(
     const { year, weekId, handleChangeCurrentMonth, handleChangeWeek } =
         useContext(DateContext)
 
-    const countElementInTable = 12
-    const countWeeks = 52
-    const minBarrier = 29
-    const maxWeekInTable = 41
-    const minWeekInTable = 1
     const [week, setWeek] = useState(weekId)
-    const initialYearData = (weekId: number) => {
-        let weekData = []
-        if (week > maxWeekInTable) {
-            weekData = [
-                ...Array(countElementInTable)
-                    .fill({})
-                    .map((_, index) => String(maxWeekInTable + index)),
-            ]
-        } else {
-            weekData = [
-                ...Array(countElementInTable)
-                    .fill({})
-                    .map((_, index) => String(weekId + index)),
-            ]
-        }
-        return weekData
+
+    const getWeekData = () => {
+        if (week > maxWeekInPopupTable) {
+            return getPopupTableCells(
+                countElementInPopupTable,
+                maxWeekInPopupTable
+            )
+        } else return getPopupTableCells(countElementInPopupTable, weekId)
     }
 
-    const [weekData, setWeekData] = useState(initialYearData(weekId))
+    const [weekData, setWeekData] = useState(getWeekData())
 
-    const isDisabledPrevButton = week === minWeekInTable
-    const isDisabledNextButton = week >= maxWeekInTable
+    const isDisabledPrevButton = week === minWeekInPopupTable
+    const isDisabledNextButton = week >= maxWeekInPopupTable
 
     const handleClickNextButton = () => {
-        if (week >= minBarrier && week < countWeeks) {
-            setWeek(maxWeekInTable)
-            setWeekData(initialYearData(maxWeekInTable))
+        if (week >= minBarrierWeek && week < maxCountWeeks) {
+            setWeek(maxWeekInPopupTable)
+            setWeekData(
+                getPopupTableCells(
+                    countElementInPopupTable,
+                    maxWeekInPopupTable
+                )
+            )
         }
-        if (week < minBarrier) {
-            setWeek((prev) => prev + countElementInTable)
-            setWeekData(initialYearData(week + countElementInTable))
+        if (week < minBarrierWeek) {
+            setWeek((prev) => prev + countElementInPopupTable)
+            setWeekData(
+                getPopupTableCells(
+                    countElementInPopupTable,
+                    week + countElementInPopupTable
+                )
+            )
         }
     }
 
     const handleClickPrevButton = () => {
-        if (week <= countElementInTable && week > minWeekInTable) {
-            setWeek(minWeekInTable)
-            setWeekData(initialYearData(minWeekInTable))
+        if (week <= countElementInPopupTable && week > minWeekInPopupTable) {
+            setWeek(minWeekInPopupTable)
+            setWeekData(
+                getPopupTableCells(
+                    countElementInPopupTable,
+                    minWeekInPopupTable
+                )
+            )
         }
-        if (week > countElementInTable) {
-            setWeek((prev) => prev - countElementInTable)
-            setWeekData(initialYearData(week - countElementInTable))
+        if (week > countElementInPopupTable) {
+            setWeek((prev) => prev - countElementInPopupTable)
+            setWeekData(
+                getPopupTableCells(
+                    countElementInPopupTable,
+                    week - countElementInPopupTable
+                )
+            )
         }
     }
 
@@ -83,22 +97,26 @@ const WeekCalendar = forwardRef(function WeekCalendar(
         : icons.nextArrowIcon
 
     return (
-        <Container ref={ref}>
-            <Buttons>
-                <SwapButton onClick={handleClickPrevButton}>
-                    <img src={prevIcon} aria-hidden="true" alt={prevImageAlt} />
-                </SwapButton>
-                <SwapButton onClick={handleClickNextButton}>
-                    <img src={nextIcon} aria-hidden="true" alt={nextImageAlt} />
-                </SwapButton>
-            </Buttons>
-            <TwelvePicker
+        <Section ref={ref}>
+            <ButtonsWrap>
+                <SwapButton
+                    onClick={handleClickPrevButton}
+                    src={prevIcon}
+                    alt={prevImageAlt}
+                />
+                <SwapButton
+                    onClick={handleClickNextButton}
+                    src={nextIcon}
+                    alt={nextImageAlt}
+                />
+            </ButtonsWrap>
+            <PopupTableCells
                 fillData={weekData}
                 handleSelectElement={handleChangeWeekId}
                 changeType={changeType}
                 activeId={weekId}
             />
-        </Container>
+        </Section>
     )
 })
 

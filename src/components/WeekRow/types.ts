@@ -7,6 +7,6 @@ export interface WeekRowProps {
     initialWeekDays: WeekDays[]
     range: Range
     handleClickDay: onClickCell
-    fisrtDayIndex: number
+    firstDayIndex: number
     startDay: StartDay
 }

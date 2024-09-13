@@ -1,12 +1,12 @@
 import { onClickCell } from '@types'
 
-export interface DayProps
+export interface CellProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     id: string
     children: React.ReactNode
     $isHoliday?: boolean
-    $isTwelve?: boolean
-    $isTwelveActive?: boolean
+    $isPopup?: boolean
+    $isPopupActive?: boolean
     $isDisabled?: boolean
     $isActive?: boolean
     $inRange?: boolean
@@ -17,7 +17,15 @@ export interface DayProps
     onClickCell: onClickCell
 }
 
-export type DayContainerProps = Omit<
-    DayProps,
-    'onClickCell' | 'children' | 'id'
->
+export interface CellItemProps {
+    $isHoliday?: boolean
+    $isPopup?: boolean
+    $isPopupActive?: boolean
+    $isDisabled?: boolean
+    $isActive?: boolean
+    $inRange?: boolean
+    $isStartRange?: boolean
+    $isEndRange?: boolean
+    $isNewMonth?: boolean
+    $isSelectWeek?: boolean
+}

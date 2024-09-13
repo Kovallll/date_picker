@@ -2,19 +2,21 @@ import { noDateError } from './config'
 import {
     CalendarImageButton,
     ClearImageButton,
-    Container,
     Image,
     Input,
     InputBlock,
+    Section,
 } from './styled'
 import { DateInputProps } from './types'
 
 import {
     countMonth,
+    dayWithSlashId,
     icons,
     inputDaySlashIndex,
     inputMonthSlashIndex,
     maxDays,
+    monthWithSlashId,
     NaNRegExp,
     pickSlashRegExp,
 } from '@constants'
@@ -83,8 +85,7 @@ export const DateInput = (props: DateInputProps) => {
 
         if (e.key === 'Backspace' || e.key === 'Delete') {
             const cursorPosition = (e.target as HTMLInputElement).selectionStart
-            const dayWithSlashId = 3
-            const monthWithSlashId = 7
+
             const isCursorAfterSlash =
                 (cursorPosition === inputDaySlashIndex + 1 &&
                     date.length <= dayWithSlashId) ||
@@ -106,7 +107,7 @@ export const DateInput = (props: DateInputProps) => {
     }
     const maxLenInput = 10
     return (
-        <Container>
+        <Section>
             <InputBlock>
                 <CalendarImageButton onClick={handleOpenCalendar}>
                     <Image src={icons.calendarIcon} />
@@ -125,6 +126,6 @@ export const DateInput = (props: DateInputProps) => {
                     <Image src={icons.clearIcon} />
                 </ClearImageButton>
             </InputBlock>
-        </Container>
+        </Section>
     )
 }

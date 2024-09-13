@@ -1,48 +1,46 @@
 import { forwardRef, memo, useState } from 'react'
 
 import { changeType, nextImageAlt, prevImageAlt } from './config'
-import { Buttons, Container } from './styled'
+import { ButtonsWrap, Section } from './styled'
 import { YearCalendarProps } from './types'
 
+import PopupTableCells from '@components/PopupTableCells'
 import { SwapButton } from '@components/SwapButton'
-import TwelvePicker from '@components/TwelvePicker'
-import { icons } from '@constants'
-import { getInitialCells } from '@utils'
+import { countElementInPopupTable, icons } from '@constants'
+import { getPopupTableCells } from '@utils'
 
 const YearCalendar = forwardRef(function YearCalendar(
     { year, handleSelectYear }: YearCalendarProps,
     ref: React.ForwardedRef<HTMLElement | null>
 ) {
-    const countElementInTable = 12
-
     const [currentYear, setCurrentYear] = useState(year)
     const [yearData, setYearData] = useState(
-        getInitialCells(countElementInTable, currentYear)
+        getPopupTableCells(countElementInPopupTable, currentYear)
     )
 
     const isDisabled = currentYear === 0
 
     const handleClickNextButton = () => {
-        setCurrentYear((prev) => prev + countElementInTable)
+        setCurrentYear((prev) => prev + countElementInPopupTable)
         setYearData(
-            getInitialCells(
-                countElementInTable,
-                currentYear + countElementInTable
+            getPopupTableCells(
+                countElementInPopupTable,
+                currentYear + countElementInPopupTable
             )
         )
     }
 
     const handleClickPrevButton = () => {
-        if (currentYear <= countElementInTable && currentYear > 0) {
+        if (currentYear <= countElementInPopupTable && currentYear > 0) {
             setCurrentYear(0)
-            setYearData(getInitialCells(countElementInTable, 0))
+            setYearData(getPopupTableCells(countElementInPopupTable, 0))
         }
-        if (currentYear > countElementInTable) {
-            setCurrentYear((prev) => prev - countElementInTable)
+        if (currentYear > countElementInPopupTable) {
+            setCurrentYear((prev) => prev - countElementInPopupTable)
             setYearData(
-                getInitialCells(
-                    countElementInTable,
-                    currentYear - countElementInTable
+                getPopupTableCells(
+                    countElementInPopupTable,
+                    currentYear - countElementInPopupTable
                 )
             )
         }
@@ -53,26 +51,26 @@ const YearCalendar = forwardRef(function YearCalendar(
         : icons.prevArrowIcon
 
     return (
-        <Container ref={ref}>
-            <Buttons>
-                <SwapButton onClick={handleClickPrevButton}>
-                    <img src={prevIcon} aria-hidden="true" alt={prevImageAlt} />
-                </SwapButton>
-                <SwapButton onClick={handleClickNextButton}>
-                    <img
-                        src={icons.nextArrowIcon}
-                        aria-hidden="true"
-                        alt={nextImageAlt}
-                    />
-                </SwapButton>
-            </Buttons>
-            <TwelvePicker
+        <Section ref={ref}>
+            <ButtonsWrap>
+                <SwapButton
+                    onClick={handleClickPrevButton}
+                    src={prevIcon}
+                    alt={prevImageAlt}
+                />
+                <SwapButton
+                    onClick={handleClickNextButton}
+                    src={icons.nextArrowIcon}
+                    alt={nextImageAlt}
+                />
+            </ButtonsWrap>
+            <PopupTableCells
                 fillData={yearData}
                 handleSelectElement={handleSelectYear}
                 changeType={changeType}
                 activeId={year}
             />
-        </Container>
+        </Section>
     )
 })
 

@@ -1,14 +1,18 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import mixins from '@styles/mixins'
 
 export const Container = styled.div`
-    ${mixins.flexRowSB()}
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowSB()}
 
-    width: ${({ theme }) => theme.fullSize};
-    font-weight: ${({ theme }) => theme.fontWeight.bold};
-    margin: ${({ theme }) => mixins.margin(theme, '', '0px')};
-    font-size: ${({ theme }) => mixins.fontSize(theme)};
+            width: ${theme.fullSize};
+            font-weight: ${theme.fontWeight.bold};
+            margin: ${mixins.margin(theme, '', '0px')};
+            font-size: ${mixins.fontSize(theme)};
+        `
+    }}
 `
 
 export const DateBarBlock = styled.div`

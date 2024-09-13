@@ -1,9 +1,9 @@
-import { DataTwelveTable } from '../types'
+import { DataPopupTableCells } from '../types'
 
 import { ChangeType } from '@types'
 
-export interface TableRowProps {
-    data: DataTwelveTable
+export interface CellsRowProps {
+    data: DataPopupTableCells
     handleSelectElement: (monthId: number) => void
     changeType: ChangeType
     activeId: number

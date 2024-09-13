@@ -69,7 +69,7 @@ export interface Theme {
         width: string
         height: string
     }
-    twelveStyles: {
+    popupStyles: {
         border: string
         top: string
     }

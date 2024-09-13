@@ -1,59 +1,41 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-import { DayContainerProps } from './types'
+import { CellItemProps } from './types'
 
 import mixins from '@styles/mixins'
 
-export const Container = styled.button<DayContainerProps>`
-    width: ${({ theme }) => theme.fullSize};
-    height: ${({ theme }) => mixins.cellHeight(theme)};
-    margin: ${({ theme, $isTwelve }) =>
-        $isTwelve ? theme.spaces.xs + 'px' : '0'};
-    border: ${({ theme, $isTwelve }) =>
-        $isTwelve ? theme.twelveStyles.border : theme.noneBorder};
-    border-radius: ${({
-        theme,
-        $isActive,
-        $isStartRange,
-        $isEndRange,
-        $isTwelve,
-    }) =>
-        mixins.dayBorderRadius(
-            theme,
-            $isActive,
-            $isStartRange,
-            $isEndRange,
-            $isTwelve
-        )};
-    background: ${({
+export const CellItem = styled.button<CellItemProps>`
+    ${({
         theme,
         $isActive,
         $inRange,
         $isStartRange,
         $isEndRange,
+        $isPopup,
+        $isPopupActive,
+        $isDisabled,
+        $isHoliday,
+        $isNewMonth,
         $isSelectWeek,
-        $isTwelveActive,
-    }) =>
-        mixins.dayBackgroundColor(
+    }) => {
+        const cellHeight = mixins.cellHeight(theme)
+        const borderRadius = mixins.dayBorderRadius(
+            theme,
+            $isActive,
+            $isStartRange,
+            $isEndRange,
+            $isPopup
+        )
+        const backgroundColor = mixins.dayBackgroundColor(
             theme,
             $isActive,
             $inRange,
             $isStartRange,
             $isEndRange,
-            $isSelectWeek,
-            $isTwelveActive
-        )};
-    color: ${({
-        theme,
-        $isActive,
-        $inRange,
-        $isStartRange,
-        $isDisabled,
-        $isEndRange,
-        $isHoliday,
-        $isNewMonth,
-    }) =>
-        mixins.dayColor(
+            $isPopupActive,
+            $isSelectWeek
+        )
+        const color = mixins.dayColor(
             theme,
             $isActive,
             $inRange,
@@ -62,28 +44,34 @@ export const Container = styled.button<DayContainerProps>`
             $isEndRange,
             $isHoliday,
             $isNewMonth
-        )};
-    font-size: ${({ theme }) => mixins.fontSize(theme)};
-    cursor: pointer;
-    @media (hover: hover) and (pointer: fine) {
-        &:hover {
-            border-radius: ${({ theme }) => theme.cellBorderRadius + 'px'};
-            background: ${({
-                theme,
-                $isActive,
-                $inRange,
-                $isStartRange,
-                $isEndRange,
-                $isHoliday,
-            }) =>
-                mixins.hoverBackgroundColor(
-                    theme,
-                    $isActive,
-                    $inRange,
-                    $isStartRange,
-                    $isEndRange,
-                    $isHoliday
-                )};
-        }
-    }
+        )
+        const hoverBackground = mixins.hoverBackgroundColor(
+            theme,
+            $isActive,
+            $inRange,
+            $isStartRange,
+            $isEndRange
+        )
+
+        return css`
+            width: ${theme.fullSize};
+            height: ${cellHeight};
+            margin: ${$isPopup ? theme.spaces.xs + 'px' : '0'};
+            border: ${$isPopup
+                ? theme.popupStyles.border + theme.palette.blue
+                : theme.noneBorder};
+            border-radius: ${borderRadius};
+            background: ${backgroundColor};
+            color: ${color};
+            font-size: ${mixins.fontSize(theme)};
+            cursor: pointer;
+
+            @media (hover: hover) and (pointer: fine) {
+                &:hover {
+                    border-radius: ${theme.cellBorderRadius + 'px'};
+                    background: ${hoverBackground};
+                }
+            }
+        `
+    }}
 `

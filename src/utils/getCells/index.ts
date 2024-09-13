@@ -1,4 +1,9 @@
-import { countMonth, daysInWeek } from '@constants'
+import {
+    countMonth,
+    dateNumberForCurrentDays,
+    daysInWeek,
+    reversePrevId,
+} from '@constants'
 import { CellsInitialData, StartDay } from '@types'
 
 export const getCountCellsPrevYears = (year: number) => {
@@ -39,10 +44,10 @@ export const getCellsNextMonth = (year: number, monthIndex: number) => {
 
 export const getCellsInMonth = (year: number, monthIndex: number) => {
     let daysInMonth = 0
-    const dateNumber = 33
 
     const currentDays =
-        dateNumber - new Date(year, monthIndex, dateNumber).getDate()
+        dateNumberForCurrentDays -
+        new Date(year, monthIndex, dateNumberForCurrentDays).getDate()
     const prevDays = getCellsPrevMonth(year, monthIndex)
 
     const nextDays = getCellsNextMonth(year, monthIndex)
@@ -59,13 +64,17 @@ const getDaysInMonth = (year: number, monthIndex: number) => {
     return days
 }
 
-const getInitialCells = (len: number) => {
+export const getInitialCells = <T>(
+    len: number,
+    data: T[] = [],
+    initialIndex: number = 0
+) => {
     return [
         ...Array(len)
             .fill({})
             .map((_, index) => ({
-                id: String(index),
-                data: [],
+                id: String(index + 1 + initialIndex),
+                data: data[initialIndex + index] ?? [],
             })),
     ]
 }
@@ -85,10 +94,11 @@ export const getCalendarCells = (
     const prevMonthCellsCount = getAllCellsPrevMonths(year, monthIndex)
 
     const days: CellsInitialData[] = getInitialCells(countDaysArrays)
+
     let arr = []
     let j = 0
     const yearId = getCountCellsPrevYears(year)
-    const reversePrevId = 2
+
     let numberForReversePrevMonthIds = actualPrevMonthDays - 1
     let cellId = yearId + prevMonthCellsCount
     for (
@@ -126,4 +136,12 @@ export const getCalendarCells = (
         }
     }
     return days
+}
+
+export const getPopupTableCells = (len: number, id: number) => {
+    return [
+        ...Array(len)
+            .fill({})
+            .map((_, index) => String(id + index)),
+    ]
 }

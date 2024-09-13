@@ -5,15 +5,15 @@ import {
     endRangePlaceholder,
     startRangePlaceholder,
 } from './config'
-import { CalendarBlock, Container, ErrorMesssage, InputBlock } from './styled'
+import { Article, ErrorMesssage, InputBlock, Section } from './styled'
 import { DefaultCalendarProps } from './types'
 
-import { InputContext } from '@components/Calendar'
 import DateBar from '@components/DateBar'
 import { DateInput } from '@components/DateInput'
 import { DaysTable } from '@components/DaysTable'
 import WeekBar from '@components/WeekBar'
 import { daysInWeek, initialWeekDays } from '@constants'
+import { InputContext } from '@context'
 import { useClickOutside, useInputDate } from '@hooks'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
@@ -79,7 +79,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
 
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
-        <Container
+        <Section
             $isWithRange={isWithRange}
             $isWithInput={isWithInput}
             ref={calendarRef}
@@ -111,7 +111,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                 )}
             </InputBlock>
             {isOpen && (
-                <CalendarBlock {...restProps}>
+                <Article {...restProps}>
                     <DateBar />
                     <WeekBar weekDays={weekDays} />
                     <DaysTable
@@ -129,9 +129,9 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         initialWeekDays={initialWeekDays}
                         startDay={startDay}
                     />
-                </CalendarBlock>
+                </Article>
             )}
-        </Container>
+        </Section>
     )
 }
 

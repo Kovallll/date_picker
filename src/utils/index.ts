@@ -5,6 +5,8 @@ export {
     getCountCellsPrevYears,
     getAllCellsPrevMonths,
     getCalendarCells,
+    getPopupTableCells,
+    getInitialCells,
 } from './getCells'
 export {
     getDateFormat,

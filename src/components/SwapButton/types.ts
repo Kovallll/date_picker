@@ -1,7 +1,8 @@
 export interface SwapButtonProps {
     onClick: () => void
     disabled?: boolean
-    children: React.ReactNode
+    src: string
+    alt: string
 }
 
 export type SwapButtonContainer = Pick<SwapButtonProps, 'disabled'>

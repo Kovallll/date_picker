@@ -94,11 +94,11 @@ export default {
         ${theme.spaces.lg + 'px'} ${theme.spaces.xl + 'px'};
         @media (max-width: ${theme.media.md + 'px'}) {
             padding: ${theme.spaces.md + 'px'}
-                ${String(+theme.spaces.xl - 4) + 'px'};
+                ${String(Number(theme.spaces.xl) - 4) + 'px'};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
             padding: ${theme.spaces.sm + 'px'}
-                ${String(+theme.spaces.xl - 8) + 'px'};
+                ${String(Number(theme.spaces.xl) - 8) + 'px'};
         }
     `,
     elementBorderRadius: (theme: Theme, elementStyle: ElementStyle) => css`
@@ -111,12 +111,12 @@ export default {
         }
     `,
     elementBorder: (theme: Theme, elementStyle: ElementStyle) => css`
-        ${elementStyle.large.border};
+        ${elementStyle.large.border + theme.palette.newMonth};
         @media (max-width: ${theme.media.md + 'px'}) {
-            border: ${elementStyle.medium.border};
+            border: ${elementStyle.medium.border + theme.palette.newMonth};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            border: ${elementStyle.small.border};
+            border: ${elementStyle.small.border + theme.palette.newMonth};
         }
     `,
     elementMaxWidth: (theme: Theme, elementStyle: ElementStyle) => css`
@@ -165,9 +165,9 @@ export default {
         isActive?: boolean,
         isStartRange?: boolean,
         isEndRange?: boolean,
-        $isTwelve?: boolean
+        $isPopup?: boolean
     ) => {
-        if (isActive || $isTwelve) return theme.cellBorderRadius + 'px'
+        if (isActive || $isPopup) return theme.cellBorderRadius + 'px'
         else if (isStartRange)
             return `${theme.cellBorderRadius + 'px'} 0px 0px ${theme.cellBorderRadius + 'px'}`
         else if (isEndRange)
@@ -181,9 +181,9 @@ export default {
         isStartRange?: boolean,
         isEndRange?: boolean,
         isSelectWeek?: boolean,
-        isTwelveActive?: boolean
+        isPopupActive?: boolean
     ) => {
-        if (isTwelveActive) return theme.palette.selectedWeekColor
+        if (isPopupActive) return theme.palette.selectedWeekColor
         if (inRange) return theme.palette.inRangeBackgroundColor
         if (isActive) return theme.palette.blue
         if (isEndRange) return theme.palette.blue
@@ -196,12 +196,11 @@ export default {
         isActive?: boolean,
         inRange?: boolean,
         isStartRange?: boolean,
-        isEndRange?: boolean,
-        isHoliday?: boolean
+        isEndRange?: boolean
     ) => {
-        if (inRange || isActive || isEndRange || isStartRange)
-            return theme.palette.darkHoverColor
-        if (isHoliday) return theme.palette.lightHoverColor
+        const isDarkHover = inRange || isActive || isEndRange || isStartRange
+
+        if (isDarkHover) return theme.palette.darkHoverColor
         else return theme.palette.lightHoverColor
     },
 }

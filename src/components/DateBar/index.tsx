@@ -4,11 +4,11 @@ import { nextImageAlt, prevImageAlt } from './config'
 import { Container, DateBarBlock, Month, Year } from './styled'
 import { DateBarProps } from './types'
 
-import { DateContext } from '@components/Calendar'
 import MonthCalendar from '@components/MonthCalendar'
 import { SwapButton } from '@components/SwapButton'
 import YearCalendar from '@components/YearCalendar'
 import { icons, months } from '@constants'
+import { DateContext } from '@context'
 import { useClickOutside } from '@hooks'
 
 const DateBar = ({ ...restProps }: DateBarProps) => {
@@ -98,9 +98,9 @@ const DateBar = ({ ...restProps }: DateBarProps) => {
             <SwapButton
                 onClick={handleDecrementMonth}
                 disabled={disabledPrevButton}
-            >
-                <img src={prevIcon} aria-hidden="true" alt={prevImageAlt} />
-            </SwapButton>
+                src={prevIcon}
+                alt={prevImageAlt}
+            />
             <DateBarBlock>
                 <>
                     <Month onClick={handleOpenMonth}>
@@ -123,13 +123,12 @@ const DateBar = ({ ...restProps }: DateBarProps) => {
                     )}
                 </>
             </DateBarBlock>
-
             <SwapButton
                 onClick={handleIncrementMonth}
                 disabled={disabledNextButton}
-            >
-                <img src={nextIcon} aria-hidden="true" alt={nextImageAlt} />
-            </SwapButton>
+                src={nextIcon}
+                alt={nextImageAlt}
+            />
         </Container>
     )
 }

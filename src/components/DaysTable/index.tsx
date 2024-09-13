@@ -3,12 +3,17 @@ import { useContext, useState } from 'react'
 import { clickNextMonthCell } from './clickNextMonthCell'
 import { clickPrevMonthCell } from './clickPrevMonthCell'
 import { fisrtDateLongerThanSecondError } from './config'
-import { Container } from './styled'
+import { Article } from './styled'
 import { DaysTableProps } from './types'
 
-import { DateContext, InputContext } from '@components/Calendar'
 import { WeekRow } from '@components/WeekRow'
-import { daysInWeek, initialActiveCellId, prevCurrentMonth } from '@constants'
+import {
+    daysInWeek,
+    initialActiveCellId,
+    prevCurrentMonth,
+    waitTime,
+} from '@constants'
+import { DateContext, InputContext } from '@context'
 import { useDebounce } from '@hooks'
 import { Range } from '@types'
 import {
@@ -67,7 +72,6 @@ export const DaysTable = (props: DaysTableProps) => {
     const days = getCalendarCells(year, currentMonth - 1, startDay)
     const isFisrtClick = range.end === null
     const isRange = !!isWithRange && !!onClickWithRange
-    const waitTime = 600
 
     const {
         isValidDate: isValidFirstInput,
@@ -296,9 +300,9 @@ export const DaysTable = (props: DaysTableProps) => {
             }
         }
     }
-    const fisrtDayIndex = days[0].data.findIndex((el) => el.day === 1)
+    const firstDayIndex = days[0].data.findIndex((el) => el.day === 1)
     return (
-        <Container {...restProps}>
+        <Article {...restProps}>
             {days.map(({ data, id: weekActiveId }) => (
                 <WeekRow
                     key={weekActiveId}
@@ -307,10 +311,10 @@ export const DaysTable = (props: DaysTableProps) => {
                     handleClickDay={handleClickDay}
                     range={range}
                     initialWeekDays={initialWeekDays}
-                    fisrtDayIndex={fisrtDayIndex}
+                    firstDayIndex={firstDayIndex}
                     startDay={startDay}
                 />
             ))}
-        </Container>
+        </Article>
     )
 }

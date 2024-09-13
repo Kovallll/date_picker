@@ -1,4 +1,4 @@
-export { type Theme } from './theme'
+export { type Theme, type ElementStyle } from './theme'
 export interface CellsInitialData {
     id: string
     data: CellData[]

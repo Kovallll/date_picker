@@ -1,8 +1,12 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const Container = styled.section`
-    background-color: ${({ theme }) => theme.palette.common.white};
-    position: absolute;
-    top: ${({ theme }) => theme.twelveStyles.top + 'px'};
-    z-index: 10;
+export const Section = styled.section`
+    ${({ theme }) => {
+        return css`
+            background-color: ${theme.palette.common.white};
+            position: absolute;
+            top: ${theme.popupStyles.top + 'px'};
+            z-index: 10;
+        `
+    }}
 `

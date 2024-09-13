@@ -1,12 +1,12 @@
 import { memo } from 'react'
 
-import { Container } from './styled'
-import { DayProps } from './types'
+import { CellItem } from './styled'
+import { CellProps } from './types'
 
-const Cell = (props: DayProps) => {
+const Cell = (props: CellProps) => {
     const {
         children,
-        $isTwelve,
+        $isPopup,
         $isDisabled,
         $isActive,
         $inRange,
@@ -14,7 +14,7 @@ const Cell = (props: DayProps) => {
         $isEndRange,
         $isHoliday,
         $isNewMonth,
-        $isTwelveActive,
+        $isPopupActive,
         onClickCell,
         id,
         ...restProps
@@ -27,10 +27,10 @@ const Cell = (props: DayProps) => {
     }
 
     return (
-        <Container
+        <CellItem
             {...restProps}
-            $isTwelveActive={$isTwelveActive}
-            $isTwelve={$isTwelve}
+            $isPopupActive={$isPopupActive}
+            $isPopup={$isPopup}
             $isDisabled={$isDisabled}
             $isActive={$isActive}
             $isStartRange={$isStartRange}
@@ -41,7 +41,7 @@ const Cell = (props: DayProps) => {
             onClick={handleClickDay}
         >
             {children}
-        </Container>
+        </CellItem>
     )
 }
 
