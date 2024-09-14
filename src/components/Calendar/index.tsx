@@ -4,6 +4,7 @@ import { CalendarProps } from './types'
 
 import { defaultProps } from '@constants'
 import { withChangeStartDay, withRange } from '@decorators'
+import { HolidaysProvider } from '@providers/HolidaysProvider'
 import ThemeProvider from '@providers/ThemeProvider'
 import calendarCreater from '@service'
 
@@ -16,6 +17,7 @@ export const Calendar = (props: CalendarProps) => {
         isWithInput = false,
         isWithRange,
         isWithStartSunday,
+        holidaysData = [],
     } = props
 
     const calendar = new calendarCreater()
@@ -29,10 +31,12 @@ export const Calendar = (props: CalendarProps) => {
     return (
         <ThemeProvider>
             <InputContext.Provider value={isWithInput}>
-                <Calendar
-                    initialYear={initialYear}
-                    initialMonth={initialMonth}
-                />
+                <HolidaysProvider data={holidaysData}>
+                    <Calendar
+                        initialYear={initialYear}
+                        initialMonth={initialMonth}
+                    />
+                </HolidaysProvider>
             </InputContext.Provider>
         </ThemeProvider>
     )

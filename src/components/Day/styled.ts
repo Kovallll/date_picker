@@ -52,8 +52,13 @@ export const Container = styled.button<DayContainerProps>`
 export const Wrap = styled.div``
 
 export const Holiday = styled.div`
+    ${mixins.flexRowCenter}
+    justify-content: start;
+
     bottom: 30px;
     z-index: 10;
     position: absolute;
-    width: ${({ theme }) => theme.fullSize};
+    width: ${({ theme }) =>
+        mixins.elementWidth(theme, theme.holidayTextWidth, 'width')};
+    white-space: nowrap;
 `

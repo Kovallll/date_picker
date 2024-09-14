@@ -1,7 +1,10 @@
 import { memo, useState } from 'react'
 
+import { defaultHoliday } from './config'
 import { Container, Holiday, Wrap } from './styled'
 import { DayProps } from './types'
+
+import { maxLenHolidayText } from '@constants'
 
 const Day = (props: DayProps) => {
     const {
@@ -13,8 +16,7 @@ const Day = (props: DayProps) => {
         $isHoliday,
         $isWeekend,
         $isNewMonth,
-        holidatTitle,
-        holidaysDates,
+        holidayTitle,
         onClickDay,
         id,
         ...restProps
@@ -26,22 +28,24 @@ const Day = (props: DayProps) => {
     ) => {
         onClickDay(e, id)
     }
+    let holiday = holidayTitle === '' ? defaultHoliday : holidayTitle
+    if ((holiday?.length ?? 0) >= maxLenHolidayText) {
+        holiday = holiday?.slice(0, maxLenHolidayText) + '...'
+    }
     const unhover = $isActive || $isStartRange || $inRange || $isEndRange
-    const showHoliday = (cellId: number) => {
-        const isHover =
-            !!holidaysDates.find(({ id }) => cellId === Number(id)) && !unhover
-
+    const showHoliday = () => {
+        const isHover = !!holiday && !unhover
         setIsHover(isHover)
     }
 
     const handleShowHoliday = () => {
-        showHoliday(Number(id))
+        showHoliday()
     }
 
     const handleHideHoliday = () => {
         setIsHover(false)
     }
-    console.log(isHover, 'isHover')
+
     return (
         <Container
             {...restProps}
@@ -56,7 +60,7 @@ const Day = (props: DayProps) => {
             $isNewMonth={$isNewMonth}
             onClick={handleClickDay}
         >
-            {isHover && <Holiday>{holidatTitle ?? 'Some holiday'}</Holiday>}
+            {isHover && <Holiday>{holiday}</Holiday>}
             <Wrap>{children}</Wrap>
         </Container>
     )

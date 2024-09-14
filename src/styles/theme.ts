@@ -33,7 +33,20 @@ const theme: Theme = {
         lg: '1000',
     },
     noneBorder: '0',
-
+    holidayTextWidth: {
+        small: {
+            height: '20',
+            width: '100',
+        },
+        medium: {
+            height: '20',
+            width: '120',
+        },
+        large: {
+            height: '20',
+            width: '140',
+        },
+    },
     spaces: {
         sm: '6',
         md: '8',

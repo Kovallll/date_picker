@@ -1,10 +1,8 @@
-import { Holidays } from '@types'
-
 export interface DayProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     id: string
     children: React.ReactNode
-    holidatTitle: string | undefined
+    holidayTitle: string | undefined
     $isHoliday: boolean
     $isWeekend: boolean
     $isActive: boolean
@@ -12,7 +10,6 @@ export interface DayProps
     $isStartRange: boolean
     $isEndRange: boolean
     $isNewMonth: boolean
-    holidaysDates: Holidays[]
     onClickDay: (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
         id: string
@@ -25,7 +22,7 @@ export type DayContainerProps = Omit<
     | 'children'
     | 'id'
     | '$isHover'
-    | 'holidatTitle'
+    | 'holidayTitle'
     | 'handleChangeHover'
     | 'holidaysDates'
 >

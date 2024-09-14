@@ -53,3 +53,16 @@ export const CalendarWithStartSunday: Story = {
         isWithStartSunday: true,
     },
 }
+
+export const CalendarWithCustomHolidays: Story = {
+    args: {
+        isWithRange: false,
+        isWithInput: false,
+        holidaysData: [
+            { date: '07/01/2024', holiday: 'title' },
+            { date: '12/01/2024', holiday: '' },
+            { date: '14/01/2024', holiday: 'Any holiday' },
+            { date: '09/010/2024', holiday: 'value' },
+        ],
+    },
+}

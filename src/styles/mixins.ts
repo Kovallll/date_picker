@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-import { ElementStyle, Theme } from '@types'
+import { ElementStyle, SizeStyles, Theme } from '@types'
 
 export default {
     flexRowSE: () => css`
@@ -130,7 +130,7 @@ export default {
     `,
     elementWidth: (
         theme: Theme,
-        elementStyle: ElementStyle,
+        elementStyle: SizeStyles,
         typeWidth: string
     ) => css`
         ${elementStyle.large[typeWidth] + 'px'};

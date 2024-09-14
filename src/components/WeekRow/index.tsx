@@ -1,8 +1,16 @@
+import { useContext } from 'react'
+
 import { Container } from './styled'
 import { WeekRowProps } from './types'
 
 import Day from '@components/Day'
-import { daysInWeek, WeekDays } from '@constants'
+import {
+    daysInWeek,
+    inputDaySlashIndex,
+    inputMonthSlashIndex,
+    WeekDays,
+} from '@constants'
+import { HolidayContext } from '@context'
 import {
     getAllCellsPrevMonths,
     getCellsInMonth,
@@ -22,6 +30,7 @@ export const WeekRow = (props: WeekRowProps) => {
         currentMonth,
         ...restProps
     } = props
+    const holidaysDates = useContext(HolidayContext)
 
     const SundayIndex = initialWeekDays.findIndex(
         (el) => el === WeekDays.Sunday
@@ -31,11 +40,6 @@ export const WeekRow = (props: WeekRowProps) => {
     )
     const yearId = getCountCellsPrevYears(year)
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
-
-    const holidaysDates = [
-        { id: '885031', holiday: 'try111111111111111111111111' },
-        { id: '885039', holiday: undefined },
-    ]
     return (
         <Container {...restProps}>
             {data.map(({ id: dayId, day }, index) => {
@@ -45,9 +49,34 @@ export const WeekRow = (props: WeekRowProps) => {
                     (range.end ?? Number(dayId)) > Number(dayId)
                 const isStartRange = range.start === Number(dayId)
                 const isEndRange = range.end === Number(dayId)
-                const holidayItem = holidaysDates.find(({ id }) => id === dayId)
+
+                const holidayItem = holidaysDates.find((item) => {
+                    const isEveryYearHoliday =
+                        item?.id[0] === '*' &&
+                        day ===
+                            Number(
+                                item?.id.slice(
+                                    inputDaySlashIndex - 1,
+                                    inputDaySlashIndex + 1
+                                )
+                            ) &&
+                        currentMonth ===
+                            Number(
+                                item?.id.slice(
+                                    inputMonthSlashIndex - 1,
+                                    inputMonthSlashIndex + 1
+                                )
+                            )
+
+                    if (isEveryYearHoliday) {
+                        return true
+                    } else {
+                        return item?.id === dayId
+                    }
+                })
                 const isHoliday = !!holidayItem
-                const holidatTitle = holidayItem?.holiday
+                const holidayTitle = holidayItem?.holiday
+
                 const isWeekend =
                     index % daysInWeek === SundayIndex ||
                     index % daysInWeek === SaturdayIndex
@@ -72,8 +101,7 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isHoliday={isHoliday}
                         $isWeekend={isWeekend}
                         $isNewMonth={isNewMonth}
-                        holidatTitle={holidatTitle}
-                        holidaysDates={holidaysDates}
+                        holidayTitle={holidayTitle}
                     >
                         {day}
                     </Day>

@@ -1,3 +1,5 @@
+import { CustomHolidays } from '@types'
+
 export interface CalendarProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
     isWithInput?: boolean
@@ -5,4 +7,5 @@ export interface CalendarProps
     initialMonth?: number
     isWithRange?: boolean
     isWithStartSunday?: boolean
+    holidaysData?: CustomHolidays[]
 }

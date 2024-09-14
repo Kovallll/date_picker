@@ -6,4 +6,4 @@ export {
     getAllCellsPrevMonths,
     getCalendarCells,
 } from './getCells'
-export { getDateFormat, getValidInputCell } from './getDate'
+export { getDateFormat, getValidInputCell, getHolidaysData } from './getDate'

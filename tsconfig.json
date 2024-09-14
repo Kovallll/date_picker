@@ -30,7 +30,8 @@
             "@utils": ["src/utils"],
             "@hooks": ["src/hooks"],
             "@decorators": ["src/decorators"],
-            "@service": ["src/service"]
+            "@service": ["src/service"],
+            "@context": ["src/context"]
         },
         "plugins": [
             {
