@@ -1,4 +1,4 @@
-import { memo, useContext, useRef, useState } from 'react'
+import { memo, useCallback, useContext, useRef, useState } from 'react'
 
 import {
     datePlaceholder,
@@ -10,11 +10,12 @@ import { DefaultCalendarProps } from './types'
 
 import { InputContext } from '@components/Calendar'
 import { DateInput } from '@components/DateInput'
-import { DaysTable } from '@components/DaysTable'
+import DaysTable from '@components/DaysTable'
 import MonthBar from '@components/MonthBar'
 import WeekBar from '@components/WeekBar'
-import { daysInWeek, initialWeekDays } from '@constants'
+import { initialWeekDays } from '@constants'
 import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
+import { getValidInputCell } from '@utils'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
     const {
@@ -40,6 +41,12 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         secondInputDate,
         handleChangeSecondDateInput,
     } = useInputDate()
+    const { isValidDate: isValidFirstInput } = getValidInputCell(firstInputDate)
+    const validFirstInput = isValidFirstInput ? firstInputDate : ''
+    const { isValidDate: isValidSecondInput } =
+        getValidInputCell(secondInputDate)
+    const validSecondInput = isValidSecondInput ? secondInputDate : ''
+
     const {
         currentMonth,
         year,
@@ -59,10 +66,10 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         setWeekDays(newWeekDays)
     }
 
-    const isDisabled = firstInputDate.length <= daysInWeek
-    const handleChangeError = (error: string) => {
+    const isDisabled = !validFirstInput
+    const handleChangeError = useCallback((error: string) => {
         setError(error)
-    }
+    }, [])
     useClickOutside(calendarRef, () => {
         if (isWithInput) {
             setError('')
@@ -72,9 +79,9 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         }
     })
 
-    const handleKeyboardChange = (isKeyboard: boolean) => {
+    const handleKeyboardChange = useCallback((isKeyboard: boolean) => {
         setIsKeyboardChange(isKeyboard)
-    }
+    }, [])
 
     const handleFocus = () => {
         setIsOpen(true)
@@ -130,8 +137,8 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                     <WeekBar weekDays={weekDays} />
                     <DaysTable
                         handleChangeError={handleChangeError}
-                        firstInputDate={firstInputDate}
-                        secondInputDate={secondInputDate}
+                        firstInputDate={validFirstInput}
+                        secondInputDate={validSecondInput}
                         isWithRange={isWithRange}
                         handleKeyboardChange={handleKeyboardChange}
                         isKeyboardChange={isKeyboardChange}
