@@ -29,7 +29,7 @@ export const DaysTable = (props: DaysTableProps) => {
         isKeyboardChange,
         handleKeyboardChange,
         onClickWithRange,
-        initialWeekDays,
+        weekDays,
         firstInputDate,
         secondInputDate,
         handleChangeFirstDateInput,
@@ -305,7 +305,7 @@ export const DaysTable = (props: DaysTableProps) => {
                     data={data}
                     handleClickDay={handleClickDay}
                     range={range}
-                    initialWeekDays={initialWeekDays}
+                    weekDays={weekDays}
                 />
             ))}
         </Container>

@@ -7,7 +7,7 @@ export interface DaysTableProps
     year: number
     startDay: StartDay
     handleChangeError: (error: string) => void
-    initialWeekDays: WeekDays[]
+    weekDays: WeekDays[]
     isKeyboardChange: boolean
     isWithRange?: boolean
     handleKeyboardChange: (isKeyboard: boolean) => void

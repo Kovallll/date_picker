@@ -16,18 +16,15 @@ export const WeekRow = (props: WeekRowProps) => {
         data,
         activeCellId,
         range,
-        initialWeekDays,
+        weekDays,
         handleClickDay,
         year,
         currentMonth,
         ...restProps
     } = props
-    const SundayIndex = initialWeekDays.findIndex(
-        (el) => el === WeekDays.Sunday
-    )
-    const SaturdayIndex = initialWeekDays.findIndex(
-        (el) => el === WeekDays.Saturday
-    )
+    const SundayIndex = weekDays.findIndex((el) => el === WeekDays.Sunday)
+    const SaturdayIndex = weekDays.findIndex((el) => el === WeekDays.Saturday)
+    console.log(SundayIndex, SaturdayIndex, 'sda')
     const yearId = getCountCellsPrevYears(year)
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
 

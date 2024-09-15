@@ -4,7 +4,7 @@ import { CellData, Range } from '@types'
 export interface WeekRowProps {
     data: CellData[]
     activeCellId: string
-    initialWeekDays: WeekDays[]
+    weekDays: WeekDays[]
     range: Range
     year: number
     currentMonth: number

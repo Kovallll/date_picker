@@ -146,7 +146,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         }
                         year={year}
                         currentMonth={currentMonth}
-                        initialWeekDays={initialWeekDays}
+                        weekDays={weekDays}
                         startDay={startDay}
                     />
                 </CalendarBlock>
