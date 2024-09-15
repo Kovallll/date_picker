@@ -4,7 +4,7 @@ import { CalendarContainerProps } from './types'
 
 import mixins from '@styles/mixins'
 
-export const Section = styled.section<CalendarContainerProps>`
+export const CalendarSection = styled.section<CalendarContainerProps>`
     ${mixins.flexColumnCenter()}
 
     justify-content: start;

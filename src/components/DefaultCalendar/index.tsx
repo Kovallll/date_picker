@@ -5,7 +5,7 @@ import {
     endRangePlaceholder,
     startRangePlaceholder,
 } from './config'
-import { Article, ErrorMesssage, InputBlock, Section } from './styled'
+import { Article, CalendarSection, ErrorMesssage, InputBlock } from './styled'
 import { DefaultCalendarProps } from './types'
 
 import DateBar from '@components/DateBar'
@@ -79,7 +79,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
 
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
-        <Section
+        <CalendarSection
             $isWithRange={isWithRange}
             $isWithInput={isWithInput}
             ref={calendarRef}
@@ -131,7 +131,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                     />
                 </Article>
             )}
-        </Section>
+        </CalendarSection>
     )
 }
 

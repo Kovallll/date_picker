@@ -3,10 +3,16 @@ import { useCallback, useState } from 'react'
 import { countMonth, currentDate, numberBaseMonth } from '@constants'
 import { getWeekNumber } from '@utils'
 
-export const useCurrentDate = (initialYear: number, initialMonth: number) => {
+export const useCurrentDate = (
+    initialYear: number,
+    initialMonth: number,
+    isWithStartSunday: boolean
+) => {
     const [currentMonth, setCurrentMonth] = useState(initialMonth)
     const [year, setYear] = useState(initialYear)
-    const [weekId, setWeekId] = useState(getWeekNumber(currentDate))
+    const [weekId, setWeekId] = useState(
+        getWeekNumber(currentDate) + Number(isWithStartSunday)
+    )
 
     const handleChangeYear = useCallback((year: number) => {
         setYear(year)

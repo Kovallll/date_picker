@@ -1,7 +1,7 @@
 import { forwardRef, memo, useContext, useState } from 'react'
 
 import { changeType, nextImageAlt, prevImageAlt } from './config'
-import { ButtonsWrap, Section } from './styled'
+import { ButtonsWrap, WeekSection } from './styled'
 import { WeekCalendarProps } from './types'
 
 import PopupTableCells from '@components/PopupTableCells'
@@ -97,7 +97,7 @@ const WeekCalendar = forwardRef(function WeekCalendar(
         : icons.nextArrowIcon
 
     return (
-        <Section ref={ref}>
+        <WeekSection ref={ref}>
             <ButtonsWrap>
                 <SwapButton
                     onClick={handleClickPrevButton}
@@ -116,7 +116,7 @@ const WeekCalendar = forwardRef(function WeekCalendar(
                 changeType={changeType}
                 activeId={weekId}
             />
-        </Section>
+        </WeekSection>
     )
 })
 

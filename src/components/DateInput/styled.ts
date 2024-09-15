@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import mixins from '@styles/mixins'
 
-export const Section = styled.section`
+export const DateSection = styled.section`
     ${({ theme }) => {
         return css`
             ${mixins.flexColumnCenter}
@@ -64,7 +64,7 @@ export const ClearImageButton = styled.button`
             cursor: pointer;
             height: ${theme.fullSize};
             position: absolute;
-            left: ${mixins.inputShift(theme, 'right')};
+            right: ${mixins.inputShift(theme, 'right')};
             border: ${theme.noneBorder};
             background-color: transparent;
         `

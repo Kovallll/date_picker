@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { CellItem } from './styled'
+import { CellData } from './styled'
 import { CellProps } from './types'
 
 const Cell = (props: CellProps) => {
@@ -27,7 +27,7 @@ const Cell = (props: CellProps) => {
     }
 
     return (
-        <CellItem
+        <CellData
             {...restProps}
             $isPopupActive={$isPopupActive}
             $isPopup={$isPopup}
@@ -41,7 +41,7 @@ const Cell = (props: CellProps) => {
             onClick={handleClickDay}
         >
             {children}
-        </CellItem>
+        </CellData>
     )
 }
 

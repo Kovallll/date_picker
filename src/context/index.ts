@@ -6,17 +6,11 @@ export const DateContext = createContext({
     year: initialProps.year,
     currentMonth: initialProps.month,
     weekId: initialProps.weekId,
-    handleChangeCurrentMonth: (value: number) => {
-        return value
-    },
-    handleChangeYear: (year: number) => {
-        return year
-    },
+    handleChangeCurrentMonth: (_: number) => {},
+    handleChangeYear: (_: number) => {},
     handleDecrementMonth: () => {},
     handleIncrementMonth: () => {},
-    handleChangeWeek: (weekId: number) => {
-        return weekId
-    },
+    handleChangeWeek: (_: number) => {},
 })
 
 export const InputContext = createContext(false)

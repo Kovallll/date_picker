@@ -12,7 +12,7 @@ export const Calendar = (props: CalendarProps) => {
         initialMonth,
         isWithInput = false,
         isWithRange,
-        isWithStartSunday,
+        isWithStartSunday = false,
     } = props
 
     const calendar = new calendarCreater()
@@ -25,7 +25,11 @@ export const Calendar = (props: CalendarProps) => {
     const Calendar = calendar.getCalendar()
     return (
         <ThemeProvider>
-            <DateProvider initialMonth={initialMonth} initialYear={initialYear}>
+            <DateProvider
+                initialMonth={initialMonth}
+                initialYear={initialYear}
+                isWithStartSunday={isWithStartSunday}
+            >
                 <InputProvider isWithInput={isWithInput}>
                     <Calendar />
                 </InputProvider>

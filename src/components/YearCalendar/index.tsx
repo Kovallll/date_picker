@@ -1,7 +1,7 @@
 import { forwardRef, memo, useState } from 'react'
 
 import { changeType, nextImageAlt, prevImageAlt } from './config'
-import { ButtonsWrap, Section } from './styled'
+import { ButtonsWrap, YearSection } from './styled'
 import { YearCalendarProps } from './types'
 
 import PopupTableCells from '@components/PopupTableCells'
@@ -51,7 +51,7 @@ const YearCalendar = forwardRef(function YearCalendar(
         : icons.prevArrowIcon
 
     return (
-        <Section ref={ref}>
+        <YearSection ref={ref}>
             <ButtonsWrap>
                 <SwapButton
                     onClick={handleClickPrevButton}
@@ -70,7 +70,7 @@ const YearCalendar = forwardRef(function YearCalendar(
                 changeType={changeType}
                 activeId={year}
             />
-        </Section>
+        </YearSection>
     )
 })
 

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-export const Section = styled.section`
+export const MonthSection = styled.section`
     ${({ theme }) => {
         return css`
             background-color: ${theme.palette.common.white};

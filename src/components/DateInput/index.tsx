@@ -2,10 +2,10 @@ import { noDateError } from './config'
 import {
     CalendarImageButton,
     ClearImageButton,
+    DateSection,
     Image,
     Input,
     InputBlock,
-    Section,
 } from './styled'
 import { DateInputProps } from './types'
 
@@ -107,7 +107,7 @@ export const DateInput = (props: DateInputProps) => {
     }
     const maxLenInput = 10
     return (
-        <Section>
+        <DateSection>
             <InputBlock>
                 <CalendarImageButton onClick={handleOpenCalendar}>
                     <Image src={icons.calendarIcon} />
@@ -126,6 +126,6 @@ export const DateInput = (props: DateInputProps) => {
                     <Image src={icons.clearIcon} />
                 </ClearImageButton>
             </InputBlock>
-        </Section>
+        </DateSection>
     )
 }

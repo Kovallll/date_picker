@@ -17,7 +17,7 @@ export interface CellProps
     onClickCell: onClickCell
 }
 
-export interface CellItemProps {
+export interface CellDataProps {
     $isHoliday?: boolean
     $isPopup?: boolean
     $isPopupActive?: boolean

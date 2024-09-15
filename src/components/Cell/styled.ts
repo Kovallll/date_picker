@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components'
 
-import { CellItemProps } from './types'
+import { CellDataProps } from './types'
 
 import mixins from '@styles/mixins'
 
-export const CellItem = styled.button<CellItemProps>`
+export const CellData = styled.button<CellDataProps>`
     ${({
         theme,
         $isActive,
@@ -32,8 +32,8 @@ export const CellItem = styled.button<CellItemProps>`
             $inRange,
             $isStartRange,
             $isEndRange,
-            $isPopupActive,
-            $isSelectWeek
+            $isSelectWeek,
+            $isPopupActive
         )
         const color = mixins.dayColor(
             theme,

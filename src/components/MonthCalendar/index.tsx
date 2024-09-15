@@ -1,7 +1,7 @@
 import { forwardRef, memo } from 'react'
 
 import { changeType } from './config'
-import { Section } from './styled'
+import { MonthSection } from './styled'
 import { MonthCalendarProps } from './types'
 
 import PopupTableCells from '@components/PopupTableCells'
@@ -12,14 +12,14 @@ const MonthCalendar = forwardRef(function MonthCalendar(
     ref: React.ForwardedRef<HTMLElement | null>
 ) {
     return (
-        <Section ref={ref}>
+        <MonthSection ref={ref}>
             <PopupTableCells
                 fillData={months}
                 handleSelectElement={handleSelectMonth}
                 changeType={changeType}
                 activeId={month}
             />
-        </Section>
+        </MonthSection>
     )
 })
 

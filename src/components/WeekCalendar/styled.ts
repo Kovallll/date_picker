@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import mixins from '@styles/mixins'
 
-export const Section = styled.section`
+export const WeekSection = styled.section`
     background-color: ${({ theme }) => theme.palette.common.white};
     position: absolute;
     top: 0;
