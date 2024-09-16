@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { Container } from './styled'
 import { WeekRowProps } from './types'
 
@@ -22,9 +24,13 @@ export const WeekRow = (props: WeekRowProps) => {
         currentMonth,
         ...restProps
     } = props
-    const SundayIndex = weekDays.findIndex((el) => el === WeekDays.Sunday)
-    const SaturdayIndex = weekDays.findIndex((el) => el === WeekDays.Saturday)
-    console.log(SundayIndex, SaturdayIndex, 'sda')
+    const SundayIndex = useMemo(() => {
+        return weekDays.findIndex((el) => el === WeekDays.Sunday)
+    }, [weekDays])
+    const SaturdayIndex = useMemo(() => {
+        return weekDays.findIndex((el) => el === WeekDays.Saturday)
+    }, [weekDays])
+
     const yearId = getCountCellsPrevYears(year)
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
 
