@@ -4,7 +4,7 @@ import { CellData, onClickCell, Range, StartDay } from '@types'
 export interface WeekRowProps {
     data: CellData[]
     activeCellId: string
-    initialWeekDays: WeekDays[]
+    weekDays: WeekDays[]
     range: Range
     handleClickDay: onClickCell
     firstDayIndex: number

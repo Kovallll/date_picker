@@ -30,7 +30,6 @@ export const Calendar = (props: CalendarProps) => {
             <DateProvider
                 initialMonth={initialMonth}
                 initialYear={initialYear}
-                isWithStartSunday={isWithStartSunday}
             >
                 <InputProvider isWithInput={isWithInput}>
                     <HolidaysProvider data={holidaysData}>

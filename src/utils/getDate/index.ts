@@ -73,8 +73,12 @@ export const getValidInputCell = (
     return { isValidDate, inputCellId, inputYear, inputMonth, inputDay }
 }
 
-export const getMonthAndDaysByWeek = (year: number, weekNumber: number) => {
-    const firstDayOfYear = new Date(year, 0, 1)
+export const getMonthAndDaysByWeek = (
+    year: number,
+    weekNumber: number,
+    startDay: number
+) => {
+    const firstDayOfYear = new Date(year, 0, 1 - startDay)
 
     const firstMonday = new Date(firstDayOfYear)
     firstMonday.setDate(

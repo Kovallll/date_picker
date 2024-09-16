@@ -10,7 +10,7 @@ import {
     inputMonthSlashIndex,
     WeekDays,
 } from '@constants'
-import { DateContext,HolidayContext  } from '@context'
+import { DateContext, HolidayContext } from '@context'
 import {
     getAllCellsPrevMonths,
     getCellsInMonth,
@@ -25,25 +25,27 @@ export const WeekRow = (props: WeekRowProps) => {
         data,
         activeCellId,
         range,
-        initialWeekDays,
+        weekDays,
         handleClickDay,
         firstDayIndex,
         startDay,
         ...restProps
     } = props
     const holidaysDates = useContext(HolidayContext)
+
+    const SundayIndex = useMemo(() => {
+        return weekDays.findIndex((el) => el === WeekDays.Sunday)
+    }, [weekDays])
+    const SaturdayIndex = useMemo(() => {
+        return weekDays.findIndex((el) => el === WeekDays.Saturday)
+    }, [weekDays])
+
     const { year, currentMonth, weekId } = useContext(DateContext)
 
-    const SundayIndex = initialWeekDays.findIndex(
-        (el) => el === WeekDays.Sunday
-    )
-    const SaturdayIndex = initialWeekDays.findIndex(
-        (el) => el === WeekDays.Saturday
-    )
     const yearId = getCountCellsPrevYears(year)
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
 
-    const { days, monthStart, monthEnd } = getMonthAndDaysByWeek(year, weekId)
+    const { days, monthStart, monthEnd } = getMonthAndDaysByWeek(year, weekId, startDay)
     const corectDay = startDay ? 1 : 2
 
     const newDays = useMemo(() => {

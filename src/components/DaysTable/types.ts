@@ -5,7 +5,7 @@ export interface DaysTableProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
     startDay: StartDay
     handleChangeError: (error: string) => void
-    initialWeekDays: WeekDays[]
+    weekDays: WeekDays[]
     isKeyboardChange: boolean
     isWithRange?: boolean
     handleKeyboardChange: (isKeyboard: boolean) => void
