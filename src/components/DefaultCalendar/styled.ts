@@ -1,10 +1,10 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { CalendarContainerProps } from './types'
 
 import mixins from '@styles/mixins'
 
-export const Container = styled.section<CalendarContainerProps>`
+export const CalendarSection = styled.section<CalendarContainerProps>`
     ${mixins.flexColumnCenter()}
 
     justify-content: start;
@@ -12,16 +12,20 @@ export const Container = styled.section<CalendarContainerProps>`
     width: ${({ theme, $isWithRange, $isWithInput }) =>
         mixins.elementWidth(
             theme,
-            theme.inputStyles,
+            theme.calendarStyles,
             $isWithRange && $isWithInput ? 'rangeWidth' : 'width'
         )};
 `
 
 export const ErrorMesssage = styled.div`
-    font-size: ${({ theme }) => theme.fontSizes.md + 'px'};
-    color: ${({ theme }) => theme.palette.errorColor};
-    margin-bottom: ${({ theme }) => theme.spaces.lg + 'px'};
-    height: ${({ theme }) => theme.inputStyles.medium.errorHeight + 'px'};
+    ${({ theme }) => {
+        return css`
+            font-size: ${theme.fontSizes.md + 'px'};
+            color: ${theme.palette.errorColor};
+            margin-bottom: ${theme.spaces.lg + 'px'};
+            height: ${theme.inputStyles.medium.errorHeight + 'px'};
+        `
+    }}
 `
 
 export const InputBlock = styled.div`
@@ -33,13 +37,19 @@ export const InputBlock = styled.div`
     }
 `
 
-export const CalendarBlock = styled.article`
-    ${mixins.flexColumnCenter()}
+export const Article = styled.article`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexColumnCenter()}
 
-    width: ${({ theme }) => theme.fullSize};
-    font-size: ${({ theme }) => mixins.fontSize(theme)};
-    padding: ${({ theme }) => mixins.padding(theme)};
-    border: ${({ theme }) => mixins.elementBorder(theme, theme.calendarStyles)};
-    border-radius: ${({ theme }) =>
-        mixins.elementBorderRadius(theme, theme.calendarStyles)};
+            width: ${theme.fullSize};
+            font-size: ${mixins.fontSize(theme)};
+            padding: ${mixins.padding(theme)};
+            border: ${mixins.elementBorder(theme, theme.calendarStyles)};
+            border-radius: ${mixins.elementBorderRadius(
+                theme,
+                theme.calendarStyles
+            )};
+        `
+    }}
 `

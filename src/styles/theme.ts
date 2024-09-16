@@ -15,6 +15,9 @@ const theme: Theme = {
         holidayColor: '#BB0000',
         newMonth: '#ccc',
         errorColor: '#FF2222',
+        lightHoverColor: '#eee',
+        darkHoverColor: '#faefaf',
+        selectedWeekColor: '#c2eceb',
     },
     fontSizes: {
         sm: '10',
@@ -32,8 +35,12 @@ const theme: Theme = {
         lg: '1000',
     },
     noneBorder: '0',
-
+    popupStyles: {
+        border: '1px solid',
+        top: '26',
+    },
     spaces: {
+        xs: '1',
         sm: '6',
         md: '8',
         lg: '10',
@@ -61,21 +68,21 @@ const theme: Theme = {
     },
     inputStyles: {
         small: {
-            border: '1px solid #ddd',
+            border: '1px solid',
             borderRadius: '6',
             width: '180',
             rangeWidth: '320',
             errorHeight: '20',
         },
         medium: {
-            border: '1px solid #ddd',
+            border: '1px solid',
             borderRadius: '8',
             width: '220',
             rangeWidth: '360',
             errorHeight: '20',
         },
         large: {
-            border: '1px solid #ddd',
+            border: '1px solid',
             borderRadius: '10',
             width: '270',
             rangeWidth: '400',
@@ -85,18 +92,21 @@ const theme: Theme = {
     calendarStyles: {
         small: {
             width: '180',
+            rangeWidth: '320',
             borderRadius: '6',
-            border: '1px solid #e1e1e1',
+            border: '1px solid',
         },
         medium: {
             width: '220',
+            rangeWidth: '360',
             borderRadius: '8',
-            border: '1px solid #e1e1e1',
+            border: '1px solid',
         },
         large: {
             width: '270',
+            rangeWidth: '400',
             borderRadius: '10',
-            border: '1px solid #e1e1e1',
+            border: '1px solid',
         },
     },
 }

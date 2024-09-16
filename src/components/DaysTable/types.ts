@@ -3,8 +3,6 @@ import { onClickWithRange, Range, StartDay } from '@types'
 
 export interface DaysTableProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
-    currentMonth: number
-    year: number
     startDay: StartDay
     handleChangeError: (error: string) => void
     weekDays: WeekDays[]
@@ -12,10 +10,6 @@ export interface DaysTableProps
     isWithRange?: boolean
     handleKeyboardChange: (isKeyboard: boolean) => void
     onClickWithRange?: onClickWithRange
-    handleChangeYear: (year: number) => void
-    handleDecrementMonth: () => void
-    handleIncrementMonth: () => void
-    handleChangeCurrentMonth: (value: number) => void
     firstInputDate: string
     secondInputDate: string
     handleChangeFirstDateInput: (date: string) => void

@@ -1,15 +1,18 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import mixins from '@styles/mixins'
 
-export const Container = styled.section`
-    ${mixins.flexColumnCenter}
+export const DateSection = styled.section`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexColumnCenter}
 
-    width: ${({ theme }) => theme.fullSize};
-    max-width: ${({ theme }) =>
-        mixins.elementMaxWidth(theme, theme.inputStyles)};
-    margin-bottom: ${({ theme }) => theme.spaces.sm + 'px'};
-    margin-right: ${({ theme }) => theme.spaces.sm + 'px'};
+            width: ${theme.fullSize};
+            max-width: ${mixins.elementMaxWidth(theme, theme.inputStyles)};
+            margin-bottom: ${theme.spaces.sm + 'px'};
+            margin-right: ${theme.spaces.sm + 'px'};
+        `
+    }}
 `
 
 export const InputBlock = styled.div`
@@ -20,23 +23,33 @@ export const InputBlock = styled.div`
 `
 
 export const Input = styled.input`
-    width: ${({ theme }) => theme.fullSize};
-    border: ${({ theme }) => mixins.elementBorder(theme, theme.inputStyles)};
-    border-radius: ${({ theme }) =>
-        mixins.elementBorderRadius(theme, theme.inputStyles)};
-    padding: ${({ theme }) => mixins.inputPadding(theme)};
-    font-size: ${({ theme }) => mixins.fontSize(theme)};
+    ${({ theme }) => {
+        return css`
+            width: ${theme.fullSize};
+            border: ${mixins.elementBorder(theme, theme.inputStyles)};
+            border-radius: ${mixins.elementBorderRadius(
+                theme,
+                theme.inputStyles
+            )};
+            padding: ${mixins.inputPadding(theme)};
+            font-size: ${mixins.fontSize(theme)};
+        `
+    }}
 `
 
 export const CalendarImageButton = styled.button`
-    ${mixins.flexRowCenter}
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowCenter}
 
-    cursor: pointer;
-    height: ${({ theme }) => theme.fullSize};
-    position: absolute;
-    left: ${({ theme }) => mixins.inputShift(theme, 'left')};
-    border: ${({ theme }) => theme.noneBorder};
-    background-color: transparent;
+            cursor: pointer;
+            height: ${theme.fullSize};
+            position: absolute;
+            left: ${mixins.inputShift(theme, 'left')};
+            border: ${theme.noneBorder};
+            background-color: transparent;
+        `
+    }}
 `
 
 export const Image = styled.img`
@@ -44,12 +57,16 @@ export const Image = styled.img`
 `
 
 export const ClearImageButton = styled.button`
-    ${mixins.flexRowCenter}
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowCenter}
 
-    cursor: pointer;
-    height: ${({ theme }) => theme.fullSize};
-    position: absolute;
-    right: ${({ theme }) => mixins.inputShift(theme, 'right')};
-    border: ${({ theme }) => theme.noneBorder};
-    background-color: transparent;
+            cursor: pointer;
+            height: ${theme.fullSize};
+            position: absolute;
+            right: ${mixins.inputShift(theme, 'right')};
+            border: ${theme.noneBorder};
+            background-color: transparent;
+        `
+    }}
 `
