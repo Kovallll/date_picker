@@ -1,11 +1,12 @@
 import { memo } from 'react'
 
-import { Container } from './styled'
-import { DayProps } from './types'
+import { CellData } from './styled'
+import { CellProps } from './types'
 
-const Day = (props: DayProps) => {
+const Cell = (props: CellProps) => {
     const {
         children,
+        $isPopup,
         $isDisabled,
         $isActive,
         $inRange,
@@ -13,7 +14,8 @@ const Day = (props: DayProps) => {
         $isEndRange,
         $isHoliday,
         $isNewMonth,
-        onClickDay,
+        $isPopupActive,
+        onClickCell,
         id,
         ...restProps
     } = props
@@ -21,12 +23,14 @@ const Day = (props: DayProps) => {
     const handleClickDay = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
-        onClickDay(e, id)
+        onClickCell(e, id)
     }
 
     return (
-        <Container
+        <CellData
             {...restProps}
+            $isPopupActive={$isPopupActive}
+            $isPopup={$isPopup}
             $isDisabled={$isDisabled}
             $isActive={$isActive}
             $isStartRange={$isStartRange}
@@ -37,8 +41,8 @@ const Day = (props: DayProps) => {
             onClick={handleClickDay}
         >
             {children}
-        </Container>
+        </CellData>
     )
 }
 
-export default memo(Day)
+export default memo(Cell)

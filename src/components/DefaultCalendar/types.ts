@@ -4,8 +4,6 @@ import { onClickWithRange, StartDay } from '@types'
 export interface DefaultCalendarProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
     isChangeStartDay?: boolean
-    initialYear: number
-    initialMonth: number
     isWithRange?: boolean
     startDay?: StartDay
     onClickWithRange?: onClickWithRange
