@@ -1,4 +1,4 @@
-export { type Theme, type SizeStyles } from './theme'
+export { type Theme, type ElementStyle, type SizeStyles } from './theme'
 export interface CellsInitialData {
     id: string
     data: CellData[]
@@ -35,6 +35,7 @@ export interface CustomHolidays {
     date: string
     holiday: string
 }
+export type ChangeType = 'year' | 'month' | 'week'
 
 export interface CurrentDate {
     year: number
@@ -55,23 +56,15 @@ export type onClickWithRange = (
     prevSecondDate?: string
 ) => { range: Range; inputRange: InputRange }
 
-export interface ElementStyle {
-    large: {
-        width: string
-        borderRadius: string
-        border: string
-        [K: string]: string
-    }
-    medium: {
-        width: string
-        borderRadius: string
-        border: string
-        [K: string]: string
-    }
-    small: {
-        width: string
-        borderRadius: string
-        border: string
-        [K: string]: string
-    }
-}
+export type onClickCell = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: string
+) => void
+
+export type InitialCells = (
+    | string
+    | {
+          id: string
+          data: never[]
+      }
+)[]

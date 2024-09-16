@@ -3,12 +3,17 @@ import { memo, useContext, useState } from 'react'
 import { clickNextMonthCell } from './clickNextMonthCell'
 import { clickPrevMonthCell } from './clickPrevMonthCell'
 import { fisrtDateLongerThanSecondError } from './config'
-import { Container } from './styled'
+import { Article } from './styled'
 import { DaysTableProps } from './types'
 
-import { InputContext } from '@components/Calendar'
 import { WeekRow } from '@components/WeekRow'
-import { daysInWeek, initialActiveCellId, prevCurrentMonth } from '@constants'
+import {
+    daysInWeek,
+    initialActiveCellId,
+    prevCurrentMonth,
+    waitTime,
+} from '@constants'
+import { DateContext, InputContext } from '@context'
 import { useDebounce } from '@hooks'
 import { Range } from '@types'
 import {
@@ -34,15 +39,18 @@ const DaysTable = (props: DaysTableProps) => {
         secondInputDate,
         handleChangeFirstDateInput,
         handleChangeSecondDateInput,
-        year,
-        currentMonth,
-        handleChangeCurrentMonth,
-        handleChangeYear,
-        handleDecrementMonth,
-        handleIncrementMonth,
         startDay,
         ...restProps
     } = props
+
+    const {
+        year,
+        currentMonth,
+        handleChangeYear,
+        handleChangeCurrentMonth,
+        handleIncrementMonth,
+        handleDecrementMonth,
+    } = useContext(DateContext)
 
     const isWithInput = useContext(InputContext)
     const [prevFirstDate, setPrevFirstDate] = useState('')
@@ -63,7 +71,6 @@ const DaysTable = (props: DaysTableProps) => {
     const days = getCalendarCells(year, currentMonth - 1, startDay)
     const isFisrtClick = range.end === null
     const isRange = !!isWithRange && !!onClickWithRange
-    const waitTime = 600
 
     const {
         inputCellId: firstInputCellId,
@@ -285,22 +292,22 @@ const DaysTable = (props: DaysTableProps) => {
             }
         }
     }
-
+    const firstDayIndex = days[0].data.findIndex((el) => el.day === 1)
     return (
-        <Container {...restProps}>
-            {days.map(({ data, id: weekId }) => (
+        <Article {...restProps}>
+            {days.map(({ data, id: weekActiveId }) => (
                 <WeekRow
-                    year={year}
-                    currentMonth={currentMonth}
-                    key={weekId}
+                    key={weekActiveId}
                     activeCellId={activeCellId}
                     data={data}
                     handleClickDay={handleClickDay}
                     range={range}
                     initialWeekDays={initialWeekDays}
+                    firstDayIndex={firstDayIndex}
+                    startDay={startDay}
                 />
             ))}
-        </Container>
+        </Article>
     )
 }
 

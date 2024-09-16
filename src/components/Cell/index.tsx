@@ -1,14 +1,15 @@
 import { memo, useState } from 'react'
 
 import { defaultHoliday } from './config'
-import { Container, Holiday, Wrap } from './styled'
-import { DayProps } from './types'
+import { CellData, Holiday, Wrap } from './styled'
+import { CellProps } from './types'
 
 import { maxLenHolidayText } from '@constants'
 
-const Day = (props: DayProps) => {
+const Cell = (props: CellProps) => {
     const {
         children,
+        $isPopup,
         $isActive,
         $inRange,
         $isStartRange,
@@ -17,7 +18,8 @@ const Day = (props: DayProps) => {
         $isWeekend,
         $isNewMonth,
         holidayTitle,
-        onClickDay,
+        $isPopupActive,
+        onClickCell,
         id,
         ...restProps
     } = props
@@ -26,7 +28,7 @@ const Day = (props: DayProps) => {
     const handleClickDay = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
-        onClickDay(e, id)
+        onClickCell(e, id)
     }
     let holiday = holidayTitle === '' ? defaultHoliday : holidayTitle
     if ((holiday?.length ?? 0) >= maxLenHolidayText) {
@@ -47,10 +49,12 @@ const Day = (props: DayProps) => {
     }
 
     return (
-        <Container
+        <CellData
             {...restProps}
             onMouseOver={handleShowHoliday}
             onMouseLeave={handleHideHoliday}
+            $isPopupActive={$isPopupActive}
+            $isPopup={$isPopup}
             $isActive={$isActive}
             $isStartRange={$isStartRange}
             $isEndRange={$isEndRange}
@@ -62,8 +66,8 @@ const Day = (props: DayProps) => {
         >
             {isHover && <Holiday>{holiday}</Holiday>}
             <Wrap>{children}</Wrap>
-        </Container>
+        </CellData>
     )
 }
 
-export default memo(Day)
+export default memo(Cell)

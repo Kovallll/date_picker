@@ -5,5 +5,14 @@ export {
     getCountCellsPrevYears,
     getAllCellsPrevMonths,
     getCalendarCells,
+    getPopupTableCells,
+    getInitialCells,
 } from './getCells'
-export { getDateFormat, getValidInputCell, getHolidaysData } from './getDate'
+export {
+    getDateFormat,
+    getValidInputCell,
+    getMonthAndDaysByWeek,
+    getWeekNumber,
+    getMonthByWeek,
+    getHolidaysData,
+} from './getDate'

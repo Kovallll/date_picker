@@ -5,22 +5,20 @@ import {
     endRangePlaceholder,
     startRangePlaceholder,
 } from './config'
-import { CalendarBlock, Container, ErrorMesssage, InputBlock } from './styled'
+import { Article, CalendarSection, ErrorMesssage, InputBlock } from './styled'
 import { DefaultCalendarProps } from './types'
 
-import { InputContext } from '@components/Calendar'
+import DateBar from '@components/DateBar'
 import { DateInput } from '@components/DateInput'
 import DaysTable from '@components/DaysTable'
-import MonthBar from '@components/MonthBar'
 import WeekBar from '@components/WeekBar'
 import { initialWeekDays } from '@constants'
-import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
+import { InputContext } from '@context'
+import { useClickOutside, useInputDate } from '@hooks'
 import { getValidInputCell } from '@utils'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
     const {
-        initialYear,
-        initialMonth,
         isWithRange = false,
         onClickWithRange,
         isChangeStartDay,
@@ -47,15 +45,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         getValidInputCell(secondInputDate)
     const validSecondInput = isValidSecondInput ? secondInputDate : ''
 
-    const {
-        currentMonth,
-        year,
-        handleChangeCurrentMonth,
-        handleChangeYear,
-        handleDecrementMonth,
-        handleIncrementMonth,
-    } = useCurrentDate(initialMonth, initialYear)
-
     const isSunday =
         !!isChangeStartDay &&
         weekDays === initialWeekDays &&
@@ -70,6 +59,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     const handleChangeError = useCallback((error: string) => {
         setError(error)
     }, [])
+
     useClickOutside(calendarRef, () => {
         if (isWithInput) {
             setError('')
@@ -95,7 +85,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
 
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
-        <Container
+        <CalendarSection
             $isWithRange={isWithRange}
             $isWithInput={isWithInput}
             ref={calendarRef}
@@ -127,13 +117,8 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                 )}
             </InputBlock>
             {isOpen && (
-                <CalendarBlock {...restProps}>
-                    <MonthBar
-                        year={year}
-                        currentMonth={currentMonth}
-                        increment={handleIncrementMonth}
-                        decrement={handleDecrementMonth}
-                    />
+                <Article {...restProps}>
+                    <DateBar />
                     <WeekBar weekDays={weekDays} />
                     <DaysTable
                         handleChangeError={handleChangeError}
@@ -142,23 +127,17 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         isWithRange={isWithRange}
                         handleKeyboardChange={handleKeyboardChange}
                         isKeyboardChange={isKeyboardChange}
-                        handleDecrementMonth={handleDecrementMonth}
-                        handleIncrementMonth={handleIncrementMonth}
-                        handleChangeCurrentMonth={handleChangeCurrentMonth}
-                        handleChangeYear={handleChangeYear}
                         onClickWithRange={onClickWithRange}
                         handleChangeFirstDateInput={handleChangeFirstDateInput}
                         handleChangeSecondDateInput={
                             handleChangeSecondDateInput
                         }
-                        year={year}
-                        currentMonth={currentMonth}
                         initialWeekDays={initialWeekDays}
                         startDay={startDay}
                     />
-                </CalendarBlock>
+                </Article>
             )}
-        </Container>
+        </CalendarSection>
     )
 }
 

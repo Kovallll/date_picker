@@ -4,6 +4,7 @@ import disabledNextArrowIcon from '@assets/icons/disabledNextArrow.svg'
 import disabledPrevArrowIcon from '@assets/icons/disabledPrevArrow.svg'
 import nextArrowIcon from '@assets/icons/nextArrow.svg'
 import prevArrowIcon from '@assets/icons/prevArrow.svg'
+import { getWeekNumber } from '@utils'
 
 export enum Month {
     January = 'January',
@@ -72,6 +73,20 @@ export const daysInWeek = 7
 
 export const countMonth = 12
 
+export const countElementInPopupTableRow = 3
+
+export const countElementInPopupTableColumn = 4
+
+export const countElementInPopupTable = 12
+
+export const maxCountWeeks = 52
+
+export const minBarrierWeek = 29
+
+export const maxWeekInPopupTable = 41
+
+export const minWeekInPopupTable = 1
+
 export const maxDays = 31
 
 export const numberBaseMonth = 1
@@ -90,6 +105,20 @@ export const inputDaySlashIndex = 2
 
 export const prevCurrentMonth = 2
 
+export const reversePrevId = 2
+
+export const dateNumberForCurrentDays = 33
+
+export const dayWithSlashId = 3
+
+export const countMsInDay = 86400000
+
+export const thursdayIndex = 4
+
+export const monthWithSlashId = 7
+
+export const waitTime = 600
+
 export const pickSlashRegExp = /\//g
 
 export const NaNRegExp = /\D|\s/
@@ -102,6 +131,7 @@ export const defaultProps = {
     defaultYear: 2024,
     defaultMonth: 1,
 }
+export const currentDate = new Date()
 
 export const icons = {
     prevArrowIcon,
@@ -144,3 +174,8 @@ export const holidays = [
             'Fatherland Defenders and Armed Forces day of the Republic of Belarus',
     },
 ]
+export const initialProps = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    weekId: getWeekNumber(currentDate),
+}
