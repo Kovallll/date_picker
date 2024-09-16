@@ -126,7 +126,9 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         handleChangeSecondDateInput={
                             handleChangeSecondDateInput
                         }
-                        initialWeekDays={initialWeekDays}
+                        year={year}
+                        currentMonth={currentMonth}
+                        weekDays={weekDays}
                         startDay={startDay}
                     />
                 </Article>

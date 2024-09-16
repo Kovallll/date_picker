@@ -20,20 +20,22 @@ export const WeekRow = (props: WeekRowProps) => {
         data,
         activeCellId,
         range,
-        initialWeekDays,
+        weekDays,
         handleClickDay,
         firstDayIndex,
         startDay,
         ...restProps
     } = props
+
+    const SundayIndex = useMemo(() => {
+        return weekDays.findIndex((el) => el === WeekDays.Sunday)
+    }, [weekDays])
+    const SaturdayIndex = useMemo(() => {
+        return weekDays.findIndex((el) => el === WeekDays.Saturday)
+    }, [weekDays])
+
     const { year, currentMonth, weekId } = useContext(DateContext)
 
-    const SundayIndex = initialWeekDays.findIndex(
-        (el) => el === WeekDays.Sunday
-    )
-    const SaturdayIndex = initialWeekDays.findIndex(
-        (el) => el === WeekDays.Saturday
-    )
     const yearId = getCountCellsPrevYears(year)
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
 
