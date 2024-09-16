@@ -15,3 +15,4 @@ export {
     getWeekNumber,
     getMonthByWeek,
 } from './getDate'
+export { LocalStorage } from './localStorage'

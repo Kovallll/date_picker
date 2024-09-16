@@ -9,4 +9,5 @@ export interface WeekRowProps {
     handleClickDay: onClickCell
     firstDayIndex: number
     startDay: StartDay
+    isTodoEmpty: boolean
 }

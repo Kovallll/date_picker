@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components'
 
-import { CalendarContainerProps } from './types'
+import {
+    CalendarArticleProps,
+    CalendarContainerProps,
+    TodoButtonProps,
+} from './types'
 
 import mixins from '@styles/mixins'
 
@@ -37,8 +41,8 @@ export const InputBlock = styled.div`
     }
 `
 
-export const Article = styled.article`
-    ${({ theme }) => {
+export const CalendarArticle = styled.article<CalendarArticleProps>`
+    ${({ theme, $isWithTodos }) => {
         return css`
             ${mixins.flexColumnCenter()}
 
@@ -48,8 +52,27 @@ export const Article = styled.article`
             border: ${mixins.elementBorder(theme, theme.calendarStyles)};
             border-radius: ${mixins.elementBorderRadius(
                 theme,
-                theme.calendarStyles
+                theme.calendarStyles,
+                $isWithTodos
             )};
+        `
+    }}
+`
+
+export const TodoButton = styled.button<TodoButtonProps>`
+    ${({ theme, $isDisabled }) => {
+        return css`
+            width: ${theme.fullSize};
+            font-size: ${mixins.fontSize(theme)};
+            padding: ${mixins.padding(theme)};
+            border-radius: ${`0px 0px ${theme.cellBorderRadius}px ${theme.cellBorderRadius}px`};
+            border: ${mixins.elementBorder(theme, theme.calendarStyles, true)};
+            border-top: ${theme.noneBorder};
+            color: ${$isDisabled
+                ? theme.palette.newMonth
+                : theme.palette.common.black};
+            background: ${theme.palette.common.white};
+            cursor: ${$isDisabled ? 'default' : 'pointer'};
         `
     }}
 `

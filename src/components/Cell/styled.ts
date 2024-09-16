@@ -75,3 +75,5 @@ export const CellData = styled.button<CellDataProps>`
         `
     }}
 `
+
+export const TodoCircle = styled.div``

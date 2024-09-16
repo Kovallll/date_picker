@@ -24,6 +24,7 @@ export const WeekRow = (props: WeekRowProps) => {
         handleClickDay,
         firstDayIndex,
         startDay,
+        isTodoEmpty,
         ...restProps
     } = props
 
@@ -94,6 +95,7 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isHoliday={isHoliday}
                         $isNewMonth={isNewMonth}
                         $isSelectWeek={isSelectWeek}
+                        $isTodoEmpty={isTodoEmpty}
                     >
                         {day}
                     </Cell>

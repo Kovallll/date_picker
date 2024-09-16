@@ -1,4 +1,4 @@
-export { type Theme, type ElementStyle } from './theme'
+export { type Theme, type ElementStyle, type SizeStyles } from './theme'
 export interface CellsInitialData {
     id: string
     data: CellData[]
@@ -57,3 +57,13 @@ export type InitialCells = (
           data: never[]
       }
 )[]
+
+export interface Todo {
+    id: string
+    data: TodoData[]
+}
+
+export interface TodoData {
+    id: string
+    data: string
+}

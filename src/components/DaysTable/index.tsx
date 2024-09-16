@@ -40,6 +40,9 @@ export const DaysTable = (props: DaysTableProps) => {
         handleChangeFirstDateInput,
         handleChangeSecondDateInput,
         startDay,
+        activeCellId,
+        handleChangeActiveCellId,
+        isTodoEmpty,
         ...restProps
     } = props
 
@@ -55,14 +58,13 @@ export const DaysTable = (props: DaysTableProps) => {
     const isWithInput = useContext(InputContext)
     const [prevFirstDate, setPrevFirstDate] = useState('')
     const [prevSecondDate, setPrevSecondDate] = useState('')
-    const [activeCellId, setActiveCellId] = useState(initialActiveCellId)
     const [range, setRange] = useState<Range>({
         start: null,
         end: null,
     })
 
     const handleSetActiveCellId = (id: string) => {
-        setActiveCellId(id)
+        handleChangeActiveCellId(id)
     }
 
     const handleSetRange = (range: Range) => {
@@ -122,7 +124,7 @@ export const DaysTable = (props: DaysTableProps) => {
         }
     }, waitTime)
     const debounceChangeActiveCellId = useDebounce(() => {
-        setActiveCellId(firstInputCellId)
+        handleChangeActiveCellId(firstInputCellId)
 
         handleChangeCurrentMonth(firstInputMonth)
 
@@ -261,10 +263,10 @@ export const DaysTable = (props: DaysTableProps) => {
             handleKeyboardChange(false)
         }
         if (isFirstClickCell && activeCellId === id) {
-            setActiveCellId(initialActiveCellId)
+            handleChangeActiveCellId(initialActiveCellId)
         }
         if (isFirstClickCell && activeCellId !== id) {
-            setActiveCellId(id)
+            handleChangeActiveCellId(id)
             if (isWithInput) {
                 const inputDate = getDateFormat(year, currentMonth, dayId)
                 handleKeyboardChange(false)
@@ -313,6 +315,7 @@ export const DaysTable = (props: DaysTableProps) => {
                     weekDays={weekDays}
                     firstDayIndex={firstDayIndex}
                     startDay={startDay}
+                    isTodoEmpty={isTodoEmpty}
                 />
             ))}
         </Article>

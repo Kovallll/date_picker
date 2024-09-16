@@ -39,6 +39,17 @@ const theme: Theme = {
         border: '1px solid',
         top: '26',
     },
+    modalStyles: {
+        large: {
+            width: '700',
+        },
+        medium: {
+            width: '540',
+        },
+        small: {
+            width: '360',
+        },
+    },
     spaces: {
         xs: '1',
         sm: '6',

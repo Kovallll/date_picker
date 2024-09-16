@@ -5,4 +5,5 @@ export interface CalendarProps
     initialMonth?: number
     isWithRange?: boolean
     isWithStartSunday?: boolean
+    isWithTodos?: boolean
 }

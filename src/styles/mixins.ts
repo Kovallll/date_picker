@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-import { ElementStyle, Theme } from '@types'
+import { ElementStyle, SizeStyles, Theme } from '@types'
 
 export default {
     flexRowSE: () => css`
@@ -101,22 +101,42 @@ export default {
                 ${String(Number(theme.spaces.xl) - 8) + 'px'};
         }
     `,
-    elementBorderRadius: (theme: Theme, elementStyle: ElementStyle) => css`
-        ${elementStyle.large.borderRadius + 'px'};
+    elementBorderRadius: (
+        theme: Theme,
+        elementStyle: ElementStyle,
+        $isWithTodos?: boolean
+    ) => css`
+        ${$isWithTodos
+            ? `${elementStyle.large.borderRadius + 'px'} ${elementStyle.large.borderRadius + 'px'} 0px 0px `
+            : elementStyle.large.borderRadius + 'px'};
         @media (max-width: ${theme.media.md + 'px'}) {
-            border-radius: ${elementStyle.medium.borderRadius + 'px'};
+            ${$isWithTodos
+                ? `${elementStyle.medium.borderRadius + 'px'} ${elementStyle.medium.borderRadius + 'px'} 0px 0px `
+                : elementStyle.medium.borderRadius + 'px'};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            border-radius: ${elementStyle.small.borderRadius + 'px'};
+            ${$isWithTodos
+                ? `${elementStyle.small.borderRadius + 'px'} ${elementStyle.small.borderRadius + 'px'} 0px 0px `
+                : elementStyle.small.borderRadius + 'px'};
         }
     `,
-    elementBorder: (theme: Theme, elementStyle: ElementStyle) => css`
+    elementBorder: (
+        theme: Theme,
+        elementStyle: ElementStyle,
+        topNone?: boolean
+    ) => css`
         ${elementStyle.large.border + theme.palette.newMonth};
         @media (max-width: ${theme.media.md + 'px'}) {
             border: ${elementStyle.medium.border + theme.palette.newMonth};
+            border-top: ${topNone
+                ? 0
+                : elementStyle.medium.border + theme.palette.newMonth};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
             border: ${elementStyle.small.border + theme.palette.newMonth};
+            border-top: ${topNone
+                ? 0
+                : elementStyle.small.border + theme.palette.newMonth};
         }
     `,
     elementMaxWidth: (theme: Theme, elementStyle: ElementStyle) => css`
@@ -130,7 +150,7 @@ export default {
     `,
     elementWidth: (
         theme: Theme,
-        elementStyle: ElementStyle,
+        elementStyle: SizeStyles,
         typeWidth: string
     ) => css`
         ${elementStyle.large[typeWidth] + 'px'};

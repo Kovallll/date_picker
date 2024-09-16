@@ -14,6 +14,7 @@ export interface CellProps
     $isEndRange?: boolean
     $isNewMonth?: boolean
     $isSelectWeek?: boolean
+    $isTodoEmpty: boolean
     onClickCell: onClickCell
 }
 

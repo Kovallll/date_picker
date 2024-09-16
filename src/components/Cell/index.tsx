@@ -15,6 +15,7 @@ const Cell = (props: CellProps) => {
         $isHoliday,
         $isNewMonth,
         $isPopupActive,
+        $isTodoEmpty,
         onClickCell,
         id,
         ...restProps

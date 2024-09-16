@@ -64,6 +64,17 @@ export interface Theme {
         md: string
         lg: string
     }
+    modalStyles: {
+        large: {
+            width: string
+        }
+        medium: {
+            width: string
+        }
+        small: {
+            width: string
+        }
+    }
     cellBorderRadius: string
     arrowSize: {
         width: string
@@ -85,4 +96,16 @@ export interface Theme {
     }
     inputStyles: ElementStyle
     calendarStyles: ElementStyle
+}
+
+export interface SizeStyles {
+    small: {
+        [K: string]: string
+    }
+    medium: {
+        [K: string]: string
+    }
+    large: {
+        [K: string]: string
+    }
 }

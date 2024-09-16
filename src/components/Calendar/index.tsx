@@ -1,6 +1,6 @@
 import { CalendarProps } from './types'
 
-import { withChangeStartDay, withRange } from '@decorators'
+import { withChangeStartDay, withRange, withTodos } from '@decorators'
 import { DateProvider } from '@providers/DateProvider'
 import { InputProvider } from '@providers/InputProvider'
 import ThemeProvider from '@providers/ThemeProvider'
@@ -13,6 +13,7 @@ export const Calendar = (props: CalendarProps) => {
         isWithInput = false,
         isWithRange,
         isWithStartSunday = false,
+        isWithTodos,
     } = props
 
     const calendar = new calendarCreater()
@@ -22,6 +23,10 @@ export const Calendar = (props: CalendarProps) => {
     if (isWithStartSunday) {
         calendar.addFeature(withChangeStartDay)
     }
+    if (isWithTodos) {
+        calendar.addFeature(withTodos)
+    }
+
     const Calendar = calendar.getCalendar()
     return (
         <ThemeProvider>

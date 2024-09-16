@@ -53,3 +53,11 @@ export const CalendarWithStartSunday: Story = {
         isWithStartSunday: true,
     },
 }
+
+export const CalendarWithTodos: Story = {
+    args: {
+        isWithRange: false,
+        isWithInput: false,
+        isWithTodos: true,
+    },
+}

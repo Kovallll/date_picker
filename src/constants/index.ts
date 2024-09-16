@@ -139,3 +139,5 @@ export const initialProps = {
     month: new Date().getMonth() + 1,
     weekId: getWeekNumber(currentDate),
 }
+
+export const todosKey = 'todos'
