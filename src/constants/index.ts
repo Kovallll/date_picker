@@ -130,3 +130,36 @@ export const initialProps = {
     month: new Date().getMonth() + 1,
     weekId: getWeekNumber(currentDate),
 }
+
+export const holidays = [
+    { date: '15/03/*', holiday: 'Constitution Day' },
+    {
+        date: '2/04/*',
+        holiday: 'Union Day of Belarus and Russia',
+    },
+    {
+        date: '09/05/*',
+        holiday: 'Victory Day',
+    },
+    {
+        date: '03/07/*',
+        holiday: 'Independence Day',
+    },
+    {
+        date: '17/09/*',
+        holiday: 'Day of People’s Unity',
+    },
+    {
+        date: '01/01/*',
+        holiday: 'New Year',
+    },
+    {
+        date: '07/01/*',
+        holiday: 'Orthodox Christmas',
+    },
+    {
+        date: '23/02/*',
+        holiday:
+            'Fatherland Defenders and Armed Forces day of the Republic of Belarus',
+    },
+]
