@@ -23,6 +23,8 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         onClickWithRange,
         isChangeStartDay,
         handleChangeWeekDays,
+        handleGetHoliday,
+        handleGetAllHolidays,
         startDay = 1,
         ...restProps
     } = props
@@ -134,6 +136,8 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         }
                         weekDays={weekDays}
                         startDay={startDay}
+                        handleGetHoliday={handleGetHoliday}
+                        handleGetAllHolidays={handleGetAllHolidays}
                     />
                 </Article>
             )}

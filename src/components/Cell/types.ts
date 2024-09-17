@@ -4,7 +4,7 @@ export interface CellProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     id: string
     children: React.ReactNode
-    holidayTitle: string | undefined
+    holidayTitle: string
     $isHoliday: boolean
     $isPopup?: boolean
     $isPopupActive?: boolean

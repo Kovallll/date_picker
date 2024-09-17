@@ -4,13 +4,9 @@ import { Container } from './styled'
 import { WeekRowProps } from './types'
 
 import Cell from '@components/Cell'
-import {
-    daysInWeek,
-    inputDaySlashIndex,
-    inputMonthSlashIndex,
-    WeekDays,
-} from '@constants'
-import { DateContext, HolidayContext } from '@context'
+import { daysInWeek, defaultGetHoliday, WeekDays } from '@constants'
+import { DateContext } from '@context'
+import { GetHoliday, Holidays } from '@types'
 import {
     getAllCellsPrevMonths,
     getCellsInMonth,
@@ -27,11 +23,16 @@ export const WeekRow = (props: WeekRowProps) => {
         range,
         weekDays,
         handleClickDay,
+        handleGetHoliday,
+        handleGetAllHolidays,
         firstDayIndex,
         startDay,
         ...restProps
     } = props
-    const holidaysDates = useContext(HolidayContext)
+    let holidaysDates: Holidays[] = []
+    if (handleGetAllHolidays) {
+        holidaysDates = handleGetAllHolidays()
+    }
 
     const SundayIndex = useMemo(() => {
         return weekDays.findIndex((el) => el === WeekDays.Sunday)
@@ -45,7 +46,11 @@ export const WeekRow = (props: WeekRowProps) => {
     const yearId = getCountCellsPrevYears(year)
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
 
-    const { days, monthStart, monthEnd } = getMonthAndDaysByWeek(year, weekId, startDay)
+    const { days, monthStart, monthEnd } = getMonthAndDaysByWeek(
+        year,
+        weekId,
+        startDay
+    )
     const corectDay = startDay ? 1 : 2
 
     const newDays = useMemo(() => {
@@ -63,6 +68,12 @@ export const WeekRow = (props: WeekRowProps) => {
     const isNextMonths =
         monthEnd === currentMonth + 1 && monthStart === currentMonth
 
+    const getHolidayData = (day: number, dayId: string): GetHoliday => {
+        if (handleGetHoliday) {
+            return handleGetHoliday(holidaysDates, day, currentMonth, dayId)
+        } else return defaultGetHoliday
+    }
+
     return (
         <Container {...restProps}>
             {data.map(({ id: dayId, day }, index) => {
@@ -75,32 +86,7 @@ export const WeekRow = (props: WeekRowProps) => {
                 const isStartRange = range.start === Number(dayId)
                 const isEndRange = range.end === Number(dayId)
 
-                const holidayItem = holidaysDates.find((item) => {
-                    const isEveryYearHoliday =
-                        item?.id[0] === '*' &&
-                        day ===
-                            Number(
-                                item?.id.slice(
-                                    inputDaySlashIndex - 1,
-                                    inputDaySlashIndex + 1
-                                )
-                            ) &&
-                        currentMonth ===
-                            Number(
-                                item?.id.slice(
-                                    inputMonthSlashIndex - 1,
-                                    inputMonthSlashIndex + 1
-                                )
-                            )
-
-                    if (isEveryYearHoliday) {
-                        return true
-                    } else {
-                        return item?.id === dayId
-                    }
-                })
-                const isHoliday = !!holidayItem
-                const holidayTitle = holidayItem?.holiday
+                const { isHoliday, holidayTitle } = getHolidayData(day, dayId)
 
                 const isWeekend =
                     index % daysInWeek === SundayIndex ||

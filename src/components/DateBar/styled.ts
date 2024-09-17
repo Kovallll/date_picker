@@ -17,6 +17,7 @@ export const Container = styled.div`
 
 export const DateBarBlock = styled.div`
     ${mixins.flexRowCenter()}
+
     position: relative;
 `
 

@@ -56,19 +56,6 @@ export const months = [
     Month.December,
 ]
 
-export const initialInputDate = {
-    isValidDate: true,
-    inputCellId: '0',
-    inputYear: 0,
-    inputMonth: 0,
-    inputDay: 0,
-}
-
-export const initialInput = {
-    date: '',
-    prevDate: '',
-}
-
 export const daysInWeek = 7
 
 export const countMonth = 12
@@ -97,8 +84,6 @@ export const startMonday = 1
 
 export const startSunday = 0
 
-export const maxInputLen = 10
-
 export const inputMonthSlashIndex = 5
 
 export const inputDaySlashIndex = 2
@@ -123,14 +108,12 @@ export const pickSlashRegExp = /\//g
 
 export const NaNRegExp = /\D|\s/
 
-export const defaultHoliday = [{ id: '0', holiday: '' }]
+export const defaultHoliday = { id: '0', holiday: '' }
+
+export const defaultGetHoliday = { isHoliday: false, holidayTitle: '' }
 
 export const maxLenHolidayText = 25
 
-export const defaultProps = {
-    defaultYear: 2024,
-    defaultMonth: 1,
-}
 export const currentDate = new Date()
 
 export const icons = {
@@ -142,38 +125,6 @@ export const icons = {
     clearIcon,
 }
 
-export const holidays = [
-    { date: '15/03/*', holiday: 'Constitution Day' },
-    {
-        date: '2/04/*',
-        holiday: 'Union Day of Belarus and Russia',
-    },
-    {
-        date: '09/05/*',
-        holiday: 'Victory Day',
-    },
-    {
-        date: '03/07/*',
-        holiday: 'Independence Day',
-    },
-    {
-        date: '17/09/*',
-        holiday: 'Day of People’s Unity',
-    },
-    {
-        date: '01/01/*',
-        holiday: 'New Year',
-    },
-    {
-        date: '07/01/*',
-        holiday: 'Orthodox Christmas',
-    },
-    {
-        date: '23/02/*',
-        holiday:
-            'Fatherland Defenders and Armed Forces day of the Republic of Belarus',
-    },
-]
 export const initialProps = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,

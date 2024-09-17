@@ -1,7 +1,6 @@
 import { memo, useState } from 'react'
 
-import { defaultHoliday } from './config'
-import { CellData, Holiday, Wrap } from './styled'
+import { CellData, Holiday } from './styled'
 import { CellProps } from './types'
 
 import { maxLenHolidayText } from '@constants'
@@ -30,9 +29,9 @@ const Cell = (props: CellProps) => {
     ) => {
         onClickCell(e, id)
     }
-    let holiday = holidayTitle === '' ? defaultHoliday : holidayTitle
-    if ((holiday?.length ?? 0) >= maxLenHolidayText) {
-        holiday = holiday?.slice(0, maxLenHolidayText) + '...'
+    let holiday = holidayTitle
+    if ((holidayTitle.length) >= maxLenHolidayText) {
+        holiday = holidayTitle.slice(0, maxLenHolidayText) + '...'
     }
     const unhover = $isActive || $isStartRange || $inRange || $isEndRange
     const showHoliday = () => {
@@ -65,7 +64,7 @@ const Cell = (props: CellProps) => {
             onClick={handleClickDay}
         >
             {isHover && <Holiday>{holiday}</Holiday>}
-            <Wrap>{children}</Wrap>
+            <>{children}</>
         </CellData>
     )
 }

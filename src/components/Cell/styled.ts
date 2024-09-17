@@ -77,12 +77,10 @@ export const CellData = styled.button<CellDataProps>`
     }}
 `
 
-export const Wrap = styled.div``
-
 export const Holiday = styled.div`
     ${mixins.flexRowCenter}
-    justify-content: start;
 
+    justify-content: start;
     bottom: ${({ theme }) => theme.holidayTextWidth.bottom + 'px'};
     z-index: 10;
     position: absolute;

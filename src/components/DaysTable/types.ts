@@ -1,5 +1,5 @@
 import { WeekDays } from '@constants'
-import { onClickWithRange, Range, StartDay } from '@types'
+import { GetHoliday, Holidays, onClickWithRange, Range, StartDay } from '@types'
 
 export interface DaysTableProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
@@ -14,6 +14,13 @@ export interface DaysTableProps
     secondInputDate: string
     handleChangeFirstDateInput: (date: string) => void
     handleChangeSecondDateInput: (date: string) => void
+    handleGetHoliday?: (
+        holidaysDates: Holidays[],
+        day: number,
+        currentMonth: number,
+        dayId: string
+    ) => GetHoliday
+    handleGetAllHolidays?: () => Holidays[]
 }
 
 export type ClickNextMonthCell = Pick<

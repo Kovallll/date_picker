@@ -1,9 +1,6 @@
 import { createContext } from 'react'
 
-import { defaultHoliday, initialProps } from '@constants'
-import { Holidays } from '@types'
-
-export const HolidayContext = createContext<Holidays[]>(defaultHoliday)
+import { initialProps } from '@constants'
 
 export const DateContext = createContext({
     year: initialProps.year,

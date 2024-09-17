@@ -40,6 +40,8 @@ const DaysTable = (props: DaysTableProps) => {
         handleChangeFirstDateInput,
         handleChangeSecondDateInput,
         startDay,
+        handleGetHoliday,
+        handleGetAllHolidays,
         ...restProps
     } = props
 
@@ -304,6 +306,8 @@ const DaysTable = (props: DaysTableProps) => {
                     range={range}
                     weekDays={weekDays}
                     firstDayIndex={firstDayIndex}
+                    handleGetHoliday={handleGetHoliday}
+                    handleGetAllHolidays={handleGetAllHolidays}
                     startDay={startDay}
                 />
             ))}

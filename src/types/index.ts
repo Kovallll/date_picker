@@ -68,3 +68,8 @@ export type InitialCells = (
           data: never[]
       }
 )[]
+
+export interface GetHoliday {
+    isHoliday: boolean
+    holidayTitle: string
+}
