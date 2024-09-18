@@ -8,6 +8,11 @@ export default {
         justify-content: space-evenly;
         align-items: center;
     `,
+    flexRowEnd: () => css`
+        display: flex;
+        justify-content: end;
+        align-items: center;
+    `,
     flexRowSB: () => css`
         display: flex;
         justify-content: space-between;
@@ -58,6 +63,20 @@ export default {
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
             padding: ${fisrtPos} ${theme.spaces.sm + 'px'} ${lastPos};
+        }
+    `,
+    modalPadding: (
+        theme: Theme,
+        fisrtPos: string,
+        elementStyle: SizeStyles,
+        type: string
+    ) => css`
+        ${fisrtPos} ${elementStyle.large[type] + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            padding: ${fisrtPos} ${elementStyle.medium[type] + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            padding: ${fisrtPos} ${elementStyle.small[type] + 'px'};
         }
     `,
     arrowScale: (theme: Theme) => css`
@@ -122,21 +141,18 @@ export default {
     `,
     elementBorder: (
         theme: Theme,
-        elementStyle: ElementStyle,
+        border: string,
+        color: string,
         topNone?: boolean
     ) => css`
-        ${elementStyle.large.border + theme.palette.newMonth};
+        ${border + color};
         @media (max-width: ${theme.media.md + 'px'}) {
-            border: ${elementStyle.medium.border + theme.palette.newMonth};
-            border-top: ${topNone
-                ? 0
-                : elementStyle.medium.border + theme.palette.newMonth};
+            border: ${border + color};
+            border-top: ${topNone ? 0 : border + color};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            border: ${elementStyle.small.border + theme.palette.newMonth};
-            border-top: ${topNone
-                ? 0
-                : elementStyle.small.border + theme.palette.newMonth};
+            border: ${border + color};
+            border-top: ${topNone ? 0 : border + color};
         }
     `,
     elementMaxWidth: (theme: Theme, elementStyle: ElementStyle) => css`
@@ -159,6 +175,32 @@ export default {
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
             width: ${elementStyle.small[typeWidth] + 'px'};
+        }
+    `,
+    elementHeight: (
+        theme: Theme,
+        elementStyle: SizeStyles,
+        typeHeight: string
+    ) => css`
+        ${elementStyle.large[typeHeight] + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            height: ${elementStyle.medium[typeHeight] + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            height: ${elementStyle.small[typeHeight] + 'px'};
+        }
+    `,
+    elementMaxHeight: (
+        theme: Theme,
+        elementStyle: SizeStyles,
+        typeHeight: string
+    ) => css`
+        ${elementStyle.large[typeHeight] + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            height: ${elementStyle.medium[typeHeight] + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            height: ${elementStyle.small[typeHeight] + 'px'};
         }
     `,
     dayColor: (

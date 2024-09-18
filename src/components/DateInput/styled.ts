@@ -26,7 +26,7 @@ export const Input = styled.input`
     ${({ theme }) => {
         return css`
             width: ${theme.fullSize};
-            border: ${mixins.elementBorder(theme, theme.inputStyles)};
+            border: ${mixins.elementBorder(theme, theme.baseBorder, theme.palette.newMonth)};
             border-radius: ${mixins.elementBorderRadius(
                 theme,
                 theme.inputStyles

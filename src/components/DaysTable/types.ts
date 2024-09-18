@@ -16,7 +16,7 @@ export interface DaysTableProps
     handleChangeSecondDateInput: (date: string) => void
     activeCellId: string
     handleChangeActiveCellId: (id: string) => void
-    isTodoEmpty: boolean
+    isWithTodos?: boolean
 }
 
 export type ClickNextMonthCell = Pick<

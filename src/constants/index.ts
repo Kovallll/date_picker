@@ -125,6 +125,8 @@ export const NaNRegExp = /\D|\s/
 
 export const currentDate = new Date()
 
+export const maxLenTodo = 24
+
 export const icons = {
     prevArrowIcon,
     nextArrowIcon,

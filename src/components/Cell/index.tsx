@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { CellData } from './styled'
+import { CellData, TodoCircle } from './styled'
 import { CellProps } from './types'
 
 const Cell = (props: CellProps) => {
@@ -15,7 +15,7 @@ const Cell = (props: CellProps) => {
         $isHoliday,
         $isNewMonth,
         $isPopupActive,
-        $isTodoEmpty,
+        $isWithTodo,
         onClickCell,
         id,
         ...restProps
@@ -41,7 +41,8 @@ const Cell = (props: CellProps) => {
             $isNewMonth={$isNewMonth}
             onClick={handleClickDay}
         >
-            {children}
+            {$isWithTodo && <TodoCircle />}
+            <>{children}</>
         </CellData>
     )
 }

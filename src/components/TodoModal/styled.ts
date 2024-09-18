@@ -1,65 +1,110 @@
 import styled, { css } from 'styled-components'
 
+import { ButtonProps, TodoTextProps } from './types'
+
 import mixins from '@styles/mixins'
 
-export const Container = styled.div`
-    ${mixins.flexColumnCenter}
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    overflow: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    flex-flow: column nowrap;
-    z-index: 10;
+export const Title = styled.h1`
+    margin-bottom: ${({ theme }) => theme.modalStyles.titleMargin + 'px'};
 `
 
-export const Window = styled.div`
+export const Input = styled.input`
     ${({ theme }) => {
         return css`
-            ${mixins.flexColumnCenter}
-            position: relative;
-            width: ${mixins.elementWidth(theme, theme.modalStyles, 'width')};
+            padding: ${mixins.modalPadding(
+                theme,
+                '4px',
+                theme.modalStyles,
+                'inputPadding'
+            )};
             font-size: ${mixins.fontSize(theme)};
-            padding: ${mixins.padding(theme)};
-            border-radius: ${theme.cellBorderRadius + 'px'};
-            border: ${mixins.elementBorder(theme, theme.calendarStyles)};
-            color: ${theme.palette.common.black};
-            background: ${theme.palette.common.white};
+            border-radius: ${theme.modalStyles.borderRadius + 'px'};
+            border: ${mixins.elementBorder(
+                theme,
+                theme.baseBorder,
+                theme.palette.blue
+            )};
         `
     }}
 `
-
-export const CloseButton = styled.button`
-    position: absolute;
-    background: transparent;
-    border: ${({ theme }) => theme.noneBorder};
-    cursor: pointer;
-    right: 10px;
-    top: 8px;
-`
-
-export const Title = styled.h1``
-
-export const Image = styled.img``
-
-export const Input = styled.input``
 
 export const TodoCreater = styled.div`
     ${({ theme }) => {
         return css`
             ${mixins.flexRowSE}
+
             width: ${theme.fullSize};
         `
     }}
 `
 
-export const Buttons = styled.div``
+export const Buttons = styled.div`
+    ${({ theme }) => {
+        return css`
+            ${mixins.flexRowSB}
 
-export const Button = styled.button``
+            width: ${mixins.elementWidth(
+                theme,
+                theme.modalStyles,
+                'buttonsWidth'
+            )};
+            margin-left: ${theme.modalStyles.buttonsMarginLeft + 'px'};
+        `
+    }}
+`
 
-export const TodoList = styled.div``
+export const Button = styled.button<ButtonProps>`
+    ${({ theme, $isDisabled }) => {
+        return css`
+            padding: ${mixins.modalPadding(
+                theme,
+                '4px',
+                theme.modalStyles,
+                'buttonPadding'
+            )};
+            background-color: ${
+                $isDisabled
+                    ? theme.palette.common.white
+                    : theme.palette.lightBlue
+            };
+             border: ${mixins.elementBorder(theme, theme.baseBorder, theme.palette.blue)}
+            border-radius: ${theme.modalStyles.borderRadius + 'px'};
+            cursor: ${$isDisabled ? 'default' : 'pointer'};
+            color: ${
+                $isDisabled
+                    ? theme.palette.newMonth
+                    : theme.palette.common.white
+            };
+            font-size: ${mixins.fontSize(theme)};
+        `
+    }}
+`
 
-export const Todo = styled.div``
+export const TodoList = styled.div`
+    ${({ theme }) => {
+        return css`
+            margin-top: ${mixins.margin(theme)};
+            max-height: ${mixins.elementMaxHeight(
+                theme,
+                theme.modalStyles,
+                'todoMaxHeight'
+            )};
+            overflow-y: auto;
+        `
+    }}
+`
+
+export const TodoText = styled.p<TodoTextProps>`
+    ${({ theme, $isChecked }) => {
+        return css`
+            padding: ${mixins.padding(theme, '0px')};
+            text-decoration: ${$isChecked ? 'line-through' : 'none'};
+        `
+    }}
+`
+
+export const Todo = styled.div`
+    ${mixins.flexRowEnd}
+
+    margin-bottom: ${({ theme }) => mixins.margin(theme)};
+`

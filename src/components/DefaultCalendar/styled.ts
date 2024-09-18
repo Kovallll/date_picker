@@ -49,7 +49,11 @@ export const CalendarArticle = styled.article<CalendarArticleProps>`
             width: ${theme.fullSize};
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};
-            border: ${mixins.elementBorder(theme, theme.calendarStyles)};
+            border: ${mixins.elementBorder(
+                theme,
+                theme.baseBorder,
+                theme.palette.newMonth
+            )};
             border-radius: ${mixins.elementBorderRadius(
                 theme,
                 theme.calendarStyles,
@@ -66,7 +70,12 @@ export const TodoButton = styled.button<TodoButtonProps>`
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};
             border-radius: ${`0px 0px ${theme.cellBorderRadius}px ${theme.cellBorderRadius}px`};
-            border: ${mixins.elementBorder(theme, theme.calendarStyles, true)};
+            border: ${mixins.elementBorder(
+                theme,
+                theme.baseBorder,
+                theme.palette.newMonth,
+                true
+            )};
             border-top: ${theme.noneBorder};
             color: ${$isDisabled
                 ? theme.palette.newMonth

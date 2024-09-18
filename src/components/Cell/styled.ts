@@ -65,6 +65,7 @@ export const CellData = styled.button<CellDataProps>`
             color: ${color};
             font-size: ${mixins.fontSize(theme)};
             cursor: pointer;
+            position: relative;
 
             @media (hover: hover) and (pointer: fine) {
                 &:hover {
@@ -76,4 +77,24 @@ export const CellData = styled.button<CellDataProps>`
     }}
 `
 
-export const TodoCircle = styled.div``
+export const TodoCircle = styled.div`
+    ${({ theme }) => {
+        return css`
+            top: ${theme.todoCircleStyles.top + 'px'};
+            right: ${theme.todoCircleStyles.right + 'px'};
+            width: ${mixins.elementWidth(
+                theme,
+                theme.todoCircleStyles,
+                'width'
+            )};
+            height: ${mixins.elementHeight(
+                theme,
+                theme.todoCircleStyles,
+                'height'
+            )};
+            background-color: ${theme.palette.holidayColor};
+            border-radius: ${theme.todoCircleStyles.borderRadius};
+            position: absolute;
+        `
+    }}
+`

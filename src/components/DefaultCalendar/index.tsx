@@ -1,4 +1,5 @@
 import { memo, useContext, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 import {
     datePlaceholder,
@@ -20,7 +21,12 @@ import { DateInput } from '@components/DateInput'
 import { DaysTable } from '@components/DaysTable'
 import { TodoModal } from '@components/TodoModal'
 import WeekBar from '@components/WeekBar'
-import { daysInWeek, initialActiveCellId, initialWeekDays } from '@constants'
+import {
+    daysInWeek,
+    initialActiveCellId,
+    initialWeekDays,
+    todosKey,
+} from '@constants'
 import { InputContext } from '@context'
 import { useClickOutside, useInputDate } from '@hooks'
 import { LocalStorage } from '@utils'
@@ -35,6 +41,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         handleRemoveTodo,
         handleAddTodo,
         handleRemoveAllTodos,
+        handleUpdateTodo,
         startDay = 1,
         ...restProps
     } = props
@@ -107,9 +114,8 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     }
 
     const todo = localStorage
-        .getItem('todos', [])
+        .getItem(todosKey, [])
         .find((todo) => todo.id == activeCellId) ?? { id: '', data: [] }
-    const isTodoEmpty = !!todo.data.length
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
         <CalendarSection
@@ -166,7 +172,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                             handleChangeActiveCellId={handleChangeActiveCellId}
                             weekDays={weekDays}
                             startDay={startDay}
-                            isTodoEmpty={isTodoEmpty}
+                            isWithTodos={isWithTodos}
                         />
                     </CalendarArticle>
                     {isWithTodos && (
@@ -177,16 +183,19 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                             >
                                 {todoButtonText}
                             </TodoButton>
-                            {isOpenModal && (
-                                <TodoModal
-                                    onClose={handleChangeModalState}
-                                    todo={todo}
-                                    addTodo={handleAddTodo}
-                                    removeTodo={handleRemoveTodo}
-                                    removeAllTodos={handleRemoveAllTodos}
-                                    todoId={activeCellId}
-                                />
-                            )}
+                            {isOpenModal &&
+                                createPortal(
+                                    <TodoModal
+                                        onClose={handleChangeModalState}
+                                        todo={todo}
+                                        addTodo={handleAddTodo}
+                                        removeTodo={handleRemoveTodo}
+                                        removeAllTodos={handleRemoveAllTodos}
+                                        updateTodo={handleUpdateTodo}
+                                        todoId={activeCellId}
+                                    />,
+                                    document.body
+                                )}
                         </>
                     )}
                 </>

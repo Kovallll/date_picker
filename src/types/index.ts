@@ -66,4 +66,5 @@ export interface Todo {
 export interface TodoData {
     id: string
     data: string
+    checked: boolean
 }

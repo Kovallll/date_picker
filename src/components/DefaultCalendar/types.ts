@@ -1,5 +1,5 @@
 import { WeekDays } from '@constants'
-import { onClickWithRange, StartDay, Todo } from '@types'
+import { onClickWithRange, StartDay, Todo, TodoData } from '@types'
 
 export interface DefaultCalendarProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
@@ -12,6 +12,7 @@ export interface DefaultCalendarProps
     handleAddTodo: (cellId: string, data: string) => Todo[]
     handleRemoveTodo: (cellId: string, todoDataId: string) => Todo[]
     handleRemoveAllTodos: (cellId: string) => Todo[]
+    handleUpdateTodo: (todoId: string, todo: TodoData) => void
 }
 
 export interface CalendarContainerProps {

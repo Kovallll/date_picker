@@ -4,7 +4,7 @@ import { Container } from './styled'
 import { WeekRowProps } from './types'
 
 import Cell from '@components/Cell'
-import { daysInWeek, WeekDays } from '@constants'
+import { daysInWeek, todosKey, WeekDays } from '@constants'
 import { DateContext } from '@context'
 import {
     getAllCellsPrevMonths,
@@ -13,6 +13,7 @@ import {
     getCellsPrevMonth,
     getCountCellsPrevYears,
     getMonthAndDaysByWeek,
+    LocalStorage,
 } from '@utils'
 
 export const WeekRow = (props: WeekRowProps) => {
@@ -24,9 +25,14 @@ export const WeekRow = (props: WeekRowProps) => {
         handleClickDay,
         firstDayIndex,
         startDay,
-        isTodoEmpty,
+        isWithTodos,
         ...restProps
     } = props
+    const localStorage = new LocalStorage()
+    const allTodos = localStorage.getItem(todosKey, [])
+    const getIsWithTodo = (id: string) => {
+        return !!allTodos.find((todo) => todo.id === id)
+    }
 
     const SundayIndex = useMemo(() => {
         return weekDays.findIndex((el) => el === WeekDays.Sunday)
@@ -83,6 +89,7 @@ export const WeekRow = (props: WeekRowProps) => {
                 const isNext = isNextMonths && id >= cellsInMonth - daysInWeek
                 const isSelectWeek = isPrev || isCurrent || isNext
 
+                const isWithTodo = isWithTodos ? getIsWithTodo(dayId) : false
                 return (
                     <Cell
                         key={dayId}
@@ -95,7 +102,7 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isHoliday={isHoliday}
                         $isNewMonth={isNewMonth}
                         $isSelectWeek={isSelectWeek}
-                        $isTodoEmpty={isTodoEmpty}
+                        $isWithTodo={isWithTodo}
                     >
                         {day}
                     </Cell>

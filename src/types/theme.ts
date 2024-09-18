@@ -2,19 +2,16 @@ export interface ElementStyle {
     large: {
         width: string
         borderRadius: string
-        border: string
         [K: string]: string
     }
     medium: {
         width: string
         borderRadius: string
-        border: string
         [K: string]: string
     }
     small: {
         width: string
         borderRadius: string
-        border: string
         [K: string]: string
     }
 }
@@ -46,6 +43,7 @@ export interface Theme {
         medium: string
     }
     noneBorder: string
+    baseBorder: string
     fullSize: string
     media: {
         sm: string
@@ -64,15 +62,50 @@ export interface Theme {
         md: string
         lg: string
     }
-    modalStyles: {
+    todoCircleStyles: {
+        borderRadius: string
+        top: string
+        right: string
         large: {
             width: string
+            height: string
         }
         medium: {
             width: string
+            height: string
         }
         small: {
             width: string
+            height: string
+        }
+    }
+    modalStyles: {
+        buttonsMarginLeft: string
+        borderRadius: string
+        closePadding: string
+        closeRight: string
+        closeTop: string
+        titleMargin: string
+        large: {
+            buttonPadding: string
+            width: string
+            inputPadding: string
+            buttonsWidth: string
+            todoMaxHeight: string
+        }
+        medium: {
+            buttonPadding: string
+            width: string
+            inputPadding: string
+            buttonsWidth: string
+            todoMaxHeight: string
+        }
+        small: {
+            buttonPadding: string
+            width: string
+            inputPadding: string
+            buttonsWidth: string
+            todoMaxHeight: string
         }
     }
     cellBorderRadius: string

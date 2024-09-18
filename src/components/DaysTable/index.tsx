@@ -42,7 +42,7 @@ export const DaysTable = (props: DaysTableProps) => {
         startDay,
         activeCellId,
         handleChangeActiveCellId,
-        isTodoEmpty,
+        isWithTodos,
         ...restProps
     } = props
 
@@ -315,7 +315,7 @@ export const DaysTable = (props: DaysTableProps) => {
                     weekDays={weekDays}
                     firstDayIndex={firstDayIndex}
                     startDay={startDay}
-                    isTodoEmpty={isTodoEmpty}
+                    isWithTodos={isWithTodos}
                 />
             ))}
         </Article>
