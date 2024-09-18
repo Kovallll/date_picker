@@ -1,4 +1,4 @@
-export { type Theme, type ElementStyle } from './theme'
+export { type Theme, type ElementStyle, type SizeStyles } from './theme'
 export interface CellsInitialData {
     id: string
     data: CellData[]
@@ -24,6 +24,17 @@ export interface InputRange {
     end: string
 }
 
+export type Holidays =
+    | {
+          id: string
+          holiday: string
+      }
+    | undefined
+
+export interface CustomHolidays {
+    date: string
+    holiday: string
+}
 export type ChangeType = 'year' | 'month' | 'week'
 
 export interface CurrentDate {
@@ -57,3 +68,8 @@ export type InitialCells = (
           data: never[]
       }
 )[]
+
+export interface GetHoliday {
+    isHoliday: boolean
+    holidayTitle: string
+}

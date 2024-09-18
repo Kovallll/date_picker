@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { memo, useContext, useState } from 'react'
 
 import { clickNextMonthCell } from './clickNextMonthCell'
 import { clickPrevMonthCell } from './clickPrevMonthCell'
@@ -27,7 +27,7 @@ import {
     getValidInputCell,
 } from '@utils'
 
-export const DaysTable = (props: DaysTableProps) => {
+const DaysTable = (props: DaysTableProps) => {
     const {
         handleChangeError,
         isWithRange,
@@ -40,6 +40,8 @@ export const DaysTable = (props: DaysTableProps) => {
         handleChangeFirstDateInput,
         handleChangeSecondDateInput,
         startDay,
+        handleGetHoliday,
+        handleGetAllHolidays,
         ...restProps
     } = props
 
@@ -60,7 +62,6 @@ export const DaysTable = (props: DaysTableProps) => {
         start: null,
         end: null,
     })
-
     const handleSetActiveCellId = (id: string) => {
         setActiveCellId(id)
     }
@@ -74,32 +75,22 @@ export const DaysTable = (props: DaysTableProps) => {
     const isRange = !!isWithRange && !!onClickWithRange
 
     const {
-        isValidDate: isValidFirstInput,
         inputCellId: firstInputCellId,
         inputYear: firstInputYear,
         inputMonth: firstInputMonth,
     } = getValidInputCell(firstInputDate, prevFirstDate)
     const {
-        isValidDate: isValidSecondInput,
         inputCellId: secondInputCellId,
         inputYear: secondInputYear,
         inputMonth: secondInputMonth,
     } = getValidInputCell(secondInputDate, prevSecondDate)
     const isValidFirstInputDate =
-        firstInputDate.length >= daysInWeek &&
-        prevFirstDate !== firstInputDate &&
-        isKeyboardChange &&
-        isValidFirstInput
-
+        prevFirstDate !== firstInputDate && isKeyboardChange
     const isValidSecondInputDate =
-        firstInputDate.length >= daysInWeek &&
-        secondInputDate.length >= daysInWeek &&
-        prevSecondDate !== secondInputDate &&
-        isKeyboardChange &&
-        isValidSecondInput
+        prevSecondDate !== secondInputDate && isKeyboardChange
+
     const isFirstDateLonger =
-        Number(secondInputCellId) <= Number(firstInputCellId) &&
-        secondInputDate.length >= daysInWeek
+        Number(secondInputCellId) <= Number(firstInputCellId)
 
     const cellsWithOutNextMonth =
         getCellsInMonth(year, currentMonth - 1) -
@@ -127,10 +118,13 @@ export const DaysTable = (props: DaysTableProps) => {
         handleChangeCurrentMonth(firstInputMonth)
 
         handleChangeYear(firstInputYear)
-        setRange((prev) => ({
-            start: prev.start,
-            end: Number(firstInputCellId),
-        }))
+
+        if (isRange) {
+            setRange((prev) => ({
+                start: prev.start,
+                end: Number(firstInputCellId),
+            }))
+        }
     }, waitTime)
 
     if (isValidFirstInputDate) {
@@ -178,12 +172,12 @@ export const DaysTable = (props: DaysTableProps) => {
             cellId -
             getCountCellsPrevYears(year) -
             getAllCellsPrevMonths(year, currentMonth - 1)
-
         const isNextMonthCell = dayId >= cellsWithOutNextMonth
         const isPrevMonthCell = dayId <= prevMonthCells
 
         const isFirstClickCell =
             isFisrtClick && !isPrevMonthCell && !isNextMonthCell
+
         const isSecondClick =
             isRange &&
             cellId !== range.end &&
@@ -312,9 +306,13 @@ export const DaysTable = (props: DaysTableProps) => {
                     range={range}
                     weekDays={weekDays}
                     firstDayIndex={firstDayIndex}
+                    handleGetHoliday={handleGetHoliday}
+                    handleGetAllHolidays={handleGetAllHolidays}
                     startDay={startDay}
                 />
             ))}
         </Article>
     )
 }
+
+export default memo(DaysTable)

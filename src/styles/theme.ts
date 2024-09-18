@@ -12,7 +12,8 @@ const theme: Theme = {
         lightBlue: '#82b3f4',
         inRangeBackgroundColor: '#eaf2fd',
         disabledColor: '#aaa',
-        holidayColor: '#BB0000',
+        weekendColor: '#BB0000',
+        holidayColor: '#FFCF00',
         newMonth: '#ccc',
         errorColor: '#FF2222',
         lightHoverColor: '#eee',
@@ -35,6 +36,21 @@ const theme: Theme = {
         lg: '1000',
     },
     noneBorder: '0',
+    holidayTextWidth: {
+        bottom: '30',
+        small: {
+            height: '20',
+            width: '100',
+        },
+        medium: {
+            height: '20',
+            width: '120',
+        },
+        large: {
+            height: '20',
+            width: '140',
+        },
+    },
     popupStyles: {
         border: '1px solid',
         top: '26',

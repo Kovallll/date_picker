@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-import { ElementStyle, Theme } from '@types'
+import { ElementStyle, SizeStyles, Theme } from '@types'
 
 export default {
     flexRowSE: () => css`
@@ -130,7 +130,7 @@ export default {
     `,
     elementWidth: (
         theme: Theme,
-        elementStyle: ElementStyle,
+        elementStyle: SizeStyles,
         typeWidth: string
     ) => css`
         ${elementStyle.large[typeWidth] + 'px'};
@@ -146,18 +146,18 @@ export default {
         isActive?: boolean,
         inRange?: boolean,
         isStartRange?: boolean,
-        isDisabled?: boolean,
         isEndRange?: boolean,
         isHoliday?: boolean,
+        isWeekend?: boolean,
         isNewMonth?: boolean
     ) => {
-        if (isDisabled) return theme.palette.disabledColor
         if (inRange) return theme.palette.blue
         if (isActive) return theme.palette.common.white
         if (isEndRange) return theme.palette.common.white
         if (isStartRange) return theme.palette.common.white
         if (isNewMonth) return theme.palette.newMonth
         if (isHoliday) return theme.palette.holidayColor
+        if (isWeekend) return theme.palette.weekendColor
         else return theme.palette.common.black
     },
     dayBorderRadius: (

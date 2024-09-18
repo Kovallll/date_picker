@@ -9,10 +9,6 @@ const meta: Meta<typeof Day> = {
         layout: 'centered',
     },
     argTypes: {
-        $isDisabled: {
-            options: [true, false],
-            control: { type: 'radio' },
-        },
         $isActive: {
             options: [true, false],
             control: { type: 'radio' },
@@ -68,12 +64,5 @@ export const endRange: Story = {
     args: {
         children: 10,
         $isEndRange: true,
-    },
-}
-
-export const disabled: Story = {
-    args: {
-        children: 10,
-        $isDisabled: true,
     },
 }

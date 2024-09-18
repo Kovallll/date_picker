@@ -14,4 +14,5 @@ export {
     getMonthAndDaysByWeek,
     getWeekNumber,
     getMonthByWeek,
+    getHolidaysData,
 } from './getDate'

@@ -7,7 +7,6 @@ import { useCurrentDate } from '@hooks'
 export const DateProvider = ({
     initialYear = initialProps.year,
     initialMonth = initialProps.month,
-    isWithStartSunday,
     children,
 }: DateProviderProps) => {
     const {
@@ -19,7 +18,7 @@ export const DateProvider = ({
         handleChangeWeek,
         handleDecrementMonth,
         handleIncrementMonth,
-    } = useCurrentDate(initialYear, initialMonth, isWithStartSunday)
+    } = useCurrentDate(initialYear, initialMonth)
 
     const dateValue = {
         year: year,

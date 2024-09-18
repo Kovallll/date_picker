@@ -13,9 +13,9 @@ export const CellData = styled.button<CellDataProps>`
         $isEndRange,
         $isPopup,
         $isPopupActive,
-        $isDisabled,
         $isHoliday,
         $isNewMonth,
+        $isWeekend,
         $isSelectWeek,
     }) => {
         const cellHeight = mixins.cellHeight(theme)
@@ -40,9 +40,9 @@ export const CellData = styled.button<CellDataProps>`
             $isActive,
             $inRange,
             $isStartRange,
-            $isDisabled,
             $isEndRange,
             $isHoliday,
+            $isWeekend,
             $isNewMonth
         )
         const hoverBackground = mixins.hoverBackgroundColor(
@@ -65,6 +65,7 @@ export const CellData = styled.button<CellDataProps>`
             color: ${color};
             font-size: ${mixins.fontSize(theme)};
             cursor: pointer;
+            position: relative;
 
             @media (hover: hover) and (pointer: fine) {
                 &:hover {
@@ -74,4 +75,16 @@ export const CellData = styled.button<CellDataProps>`
             }
         `
     }}
+`
+
+export const Holiday = styled.div`
+    ${mixins.flexRowCenter}
+
+    justify-content: start;
+    bottom: ${({ theme }) => theme.holidayTextWidth.bottom + 'px'};
+    z-index: 10;
+    position: absolute;
+    width: ${({ theme }) =>
+        mixins.elementWidth(theme, theme.holidayTextWidth, 'width')};
+    white-space: nowrap;
 `

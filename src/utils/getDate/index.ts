@@ -1,4 +1,5 @@
 import { countMsInDay, daysInWeek, thursdayIndex } from '@constants'
+import { CustomHolidays, Holidays } from '@types'
 import {
     getAllCellsPrevMonths,
     getCellsPrevMonth,
@@ -17,6 +18,20 @@ export const getDateFormat = (
     const date = newDate.toLocaleDateString().replace(/\./g, '/')
 
     return date
+}
+
+export const getHolidaysData = (data: CustomHolidays[]) => {
+    const holidaysData: Holidays[] = data.map((item) => {
+        const [day, month, year] = item.date.split('/')
+        if (year === '*') {
+            return { id: `*${day}/${month}`, holiday: item.holiday }
+        } else {
+            const { isValidDate, inputCellId } = getValidInputCell(item.date)
+            if (isValidDate) return { id: inputCellId, holiday: item.holiday }
+        }
+    })
+
+    return holidaysData
 }
 
 export const getValidInputCell = (
@@ -58,8 +73,12 @@ export const getValidInputCell = (
     return { isValidDate, inputCellId, inputYear, inputMonth, inputDay }
 }
 
-export const getMonthAndDaysByWeek = (year: number, weekNumber: number) => {
-    const firstDayOfYear = new Date(year, 0, 1)
+export const getMonthAndDaysByWeek = (
+    year: number,
+    weekNumber: number,
+    startDay: number
+) => {
+    const firstDayOfYear = new Date(year, 0, 1 - startDay)
 
     const firstMonday = new Date(firstDayOfYear)
     firstMonday.setDate(
