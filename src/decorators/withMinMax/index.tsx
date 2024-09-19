@@ -9,16 +9,28 @@ export const withMinMax = <T extends WithMinMax>(
     WrappedComponent: ComponentType<T>,
     minMaxDate: minMaxDate | undefined
 ) => {
-    const { isValidDate: isValidMinDate, inputCellId: minDateCellId } =
-        getValidInputCell(minMaxDate?.minDate ?? '')
-    const { isValidDate: isValidMaxDate, inputCellId: maxDateCellId } =
-        getValidInputCell(minMaxDate?.maxDate ?? '')
+    const {
+        isValidDate: isValidMinDate,
+        inputCellId: minDateCellId,
+        inputMonth: minMonth,
+        inputYear: minYear,
+    } = getValidInputCell(minMaxDate?.minDate ?? '')
+    const {
+        isValidDate: isValidMaxDate,
+        inputCellId: maxDateCellId,
+        inputMonth: maxMonth,
+        inputYear: maxYear,
+    } = getValidInputCell(minMaxDate?.maxDate ?? '')
 
     const newMinMaxDate = {
         minDate: minMaxDate?.minDate,
         maxDate: minMaxDate?.maxDate,
         minDateCellId,
         maxDateCellId,
+        minMonth,
+        maxMonth,
+        minYear,
+        maxYear,
     }
 
     if (!isValidMinDate) {

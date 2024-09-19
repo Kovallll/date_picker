@@ -130,6 +130,10 @@ export const defaultMinMaxDate = {
     maxDate: '',
     minDateCellId: 0,
     maxDateCellId: 0,
+    minMonth: 0,
+    maxMonth: 0,
+    minYear: 0,
+    maxYear: 0,
 }
 
 export const initialProps = {

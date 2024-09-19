@@ -121,7 +121,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
             </InputBlock>
             {isOpen && (
                 <Article {...restProps}>
-                    <DateBar />
+                    <DateBar minMaxDate={minMaxDate} />
                     <WeekBar weekDays={weekDays} />
                     <DaysTable
                         handleChangeError={handleChangeError}

@@ -34,6 +34,10 @@ export interface minMaxCellDate {
     maxDate: string
     minDateCellId: number
     maxDateCellId: number
+    minMonth: number
+    maxMonth: number
+    minYear: number
+    maxYear: number
 }
 
 export type Holidays =
