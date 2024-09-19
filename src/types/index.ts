@@ -24,6 +24,33 @@ export interface InputRange {
     end: string
 }
 
+export interface minMaxDate {
+    minDate: string
+    maxDate: string
+}
+
+export interface minMaxCellDate {
+    minDate: string
+    maxDate: string
+    minDateCellId: number
+    maxDateCellId: number
+    minMonth: number
+    maxMonth: number
+    minYear: number
+    maxYear: number
+}
+
+export type Holidays =
+    | {
+          id: string
+          holiday: string
+      }
+    | undefined
+
+export interface CustomHolidays {
+    date: string
+    holiday: string
+}
 export type ChangeType = 'year' | 'month' | 'week'
 
 export interface CurrentDate {
@@ -67,4 +94,9 @@ export interface TodoData {
     id: string
     data: string
     checked: boolean
+}
+
+export interface GetHoliday {
+    isHoliday: boolean
+    holidayTitle: string
 }

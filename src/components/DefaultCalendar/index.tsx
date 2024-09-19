@@ -1,4 +1,4 @@
-import { memo, useContext, useRef, useState } from 'react'
+import { memo, useCallback, useContext, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import {
@@ -18,18 +18,13 @@ import { DefaultCalendarProps } from './types'
 
 import DateBar from '@components/DateBar'
 import { DateInput } from '@components/DateInput'
-import { DaysTable } from '@components/DaysTable'
+import DaysTable from '@components/DaysTable'
 import { TodoModal } from '@components/TodoModal'
 import WeekBar from '@components/WeekBar'
-import {
-    daysInWeek,
-    initialActiveCellId,
-    initialWeekDays,
-    todosKey,
-} from '@constants'
+import { initialActiveCellId, initialWeekDays, todosKey } from '@constants'
 import { InputContext } from '@context'
 import { useClickOutside, useInputDate } from '@hooks'
-import { LocalStorage } from '@utils'
+import { getValidInputCell, LocalStorage } from '@utils'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
     const {
@@ -42,6 +37,9 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         handleAddTodo,
         handleRemoveAllTodos,
         handleUpdateTodo,
+        handleGetHoliday,
+        handleGetAllHolidays,
+        minMaxDate,
         startDay = 1,
         ...restProps
     } = props
@@ -69,35 +67,49 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     const handleChangeModalState = () => {
         setIsOpenModal((prev) => !prev)
     }
+    const { isValidDate: isValidFirstInput } = getValidInputCell(firstInputDate)
+    const validFirstInput = isValidFirstInput ? firstInputDate : ''
+    const { isValidDate: isValidSecondInput } =
+        getValidInputCell(secondInputDate)
+    const validSecondInput = isValidSecondInput ? secondInputDate : ''
 
     const isSunday =
         !!isChangeStartDay &&
         weekDays === initialWeekDays &&
         !!handleChangeWeekDays
 
+    const isTodos =
+        isWithTodos &&
+        handleAddTodo &&
+        handleRemoveTodo &&
+        handleUpdateTodo &&
+        handleRemoveAllTodos
+
     if (isSunday) {
         const newWeekDays = handleChangeWeekDays()
         setWeekDays(newWeekDays)
     }
 
-    const isDisabled = firstInputDate.length <= daysInWeek
-    const isDisabledTodos = activeCellId === initialActiveCellId
-    const handleChangeError = (error: string) => {
+    const isDisabledTodos =
+        activeCellId === initialActiveCellId || secondInputDate !== ''
+
+    const isDisabled = !validFirstInput
+    const handleChangeError = useCallback((error: string) => {
         setError(error)
-    }
+    }, [])
 
     useClickOutside(calendarRef, () => {
         if (isWithInput) {
             setError('')
             handleChangeFirstDateInput('')
             handleChangeSecondDateInput('')
-            setIsOpenTable(false)
+            if (!isOpenModal) setIsOpenTable(false)
         }
     })
 
-    const handleKeyboardChange = (isKeyboard: boolean) => {
+    const handleKeyboardChange = useCallback((isKeyboard: boolean) => {
         setIsKeyboardChange(isKeyboard)
-    }
+    }, [])
 
     const handleFocus = () => {
         setIsOpenTable(true)
@@ -106,6 +118,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     const handleOpenCalendar = () => {
         setIsOpenTable((prev) => !prev)
         handleChangeFirstDateInput('')
+        handleChangeSecondDateInput('')
         handleChangeError('')
     }
 
@@ -152,12 +165,12 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
             {isOpenTable && (
                 <>
                     <CalendarArticle {...restProps} $isWithTodos={isWithTodos}>
-                        <DateBar />
+                        <DateBar minMaxDate={minMaxDate} />
                         <WeekBar weekDays={weekDays} />
                         <DaysTable
+                            firstInputDate={validFirstInput}
+                            secondInputDate={validSecondInput}
                             handleChangeError={handleChangeError}
-                            firstInputDate={firstInputDate}
-                            secondInputDate={secondInputDate}
                             isWithRange={isWithRange}
                             handleKeyboardChange={handleKeyboardChange}
                             isKeyboardChange={isKeyboardChange}
@@ -173,9 +186,12 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                             weekDays={weekDays}
                             startDay={startDay}
                             isWithTodos={isWithTodos}
+                            handleGetHoliday={handleGetHoliday}
+                            handleGetAllHolidays={handleGetAllHolidays}
+                            minMaxDate={minMaxDate}
                         />
                     </CalendarArticle>
-                    {isWithTodos && (
+                    {isTodos && (
                         <>
                             <TodoButton
                                 $isDisabled={isDisabledTodos}
@@ -183,23 +199,24 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                             >
                                 {todoButtonText}
                             </TodoButton>
-                            {isOpenModal &&
-                                createPortal(
-                                    <TodoModal
-                                        onClose={handleChangeModalState}
-                                        todo={todo}
-                                        addTodo={handleAddTodo}
-                                        removeTodo={handleRemoveTodo}
-                                        removeAllTodos={handleRemoveAllTodos}
-                                        updateTodo={handleUpdateTodo}
-                                        todoId={activeCellId}
-                                    />,
-                                    document.body
-                                )}
                         </>
                     )}
                 </>
             )}
+            {isOpenModal &&
+                isTodos &&
+                createPortal(
+                    <TodoModal
+                        onClose={handleChangeModalState}
+                        todo={todo}
+                        addTodo={handleAddTodo}
+                        removeTodo={handleRemoveTodo}
+                        removeAllTodos={handleRemoveAllTodos}
+                        updateTodo={handleUpdateTodo}
+                        todoId={activeCellId}
+                    />,
+                    document.body
+                )}
         </CalendarSection>
     )
 }

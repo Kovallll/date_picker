@@ -4,8 +4,9 @@ import { Container } from './styled'
 import { WeekRowProps } from './types'
 
 import Cell from '@components/Cell'
-import { daysInWeek, todosKey, WeekDays } from '@constants'
+import { daysInWeek, defaultGetHoliday, todosKey, WeekDays } from '@constants'
 import { DateContext } from '@context'
+import { GetHoliday, Holidays } from '@types'
 import {
     getAllCellsPrevMonths,
     getCellsInMonth,
@@ -23,15 +24,25 @@ export const WeekRow = (props: WeekRowProps) => {
         range,
         weekDays,
         handleClickDay,
+        handleGetHoliday,
+        handleGetAllHolidays,
         firstDayIndex,
         startDay,
         isWithTodos,
+        minMaxDate,
         ...restProps
     } = props
+    const { minDateCellId, maxDateCellId } = minMaxDate
+
     const localStorage = new LocalStorage()
     const allTodos = localStorage.getItem(todosKey, [])
     const getIsWithTodo = (id: string) => {
         return !!allTodos.find((todo) => todo.id === id)
+    }
+
+    let holidaysDates: Holidays[] = []
+    if (handleGetAllHolidays) {
+        holidaysDates = handleGetAllHolidays()
     }
 
     const SundayIndex = useMemo(() => {
@@ -46,7 +57,11 @@ export const WeekRow = (props: WeekRowProps) => {
     const yearId = getCountCellsPrevYears(year)
     const monthId = getAllCellsPrevMonths(year, currentMonth - 1)
 
-    const { days, monthStart, monthEnd } = getMonthAndDaysByWeek(year, weekId)
+    const { days, monthStart, monthEnd } = getMonthAndDaysByWeek(
+        year,
+        weekId,
+        startDay
+    )
     const corectDay = startDay ? 1 : 2
 
     const newDays = useMemo(() => {
@@ -64,6 +79,12 @@ export const WeekRow = (props: WeekRowProps) => {
     const isNextMonths =
         monthEnd === currentMonth + 1 && monthStart === currentMonth
 
+    const getHolidayData = (day: number, dayId: string): GetHoliday => {
+        if (handleGetHoliday) {
+            return handleGetHoliday(holidaysDates, day, currentMonth, dayId)
+        } else return defaultGetHoliday
+    }
+
     return (
         <Container {...restProps}>
             {data.map(({ id: dayId, day }, index) => {
@@ -76,9 +97,17 @@ export const WeekRow = (props: WeekRowProps) => {
                 const isStartRange = range.start === Number(dayId)
                 const isEndRange = range.end === Number(dayId)
 
-                const isHoliday =
+                const { isHoliday, holidayTitle } = getHolidayData(day, dayId)
+
+                const isWeekend =
                     index % daysInWeek === SundayIndex ||
                     index % daysInWeek === SaturdayIndex
+
+                const isLowerThanMinDate =
+                    minDateCellId === 0 ? false : minDateCellId > Number(dayId)
+                const isHigherThanMaxDate =
+                    maxDateCellId === 0 ? false : maxDateCellId < Number(dayId)
+
                 const isNewMonth =
                     Number(dayId) - yearId - monthId < cellsPrevMonth ||
                     Number(dayId) - yearId - monthId >
@@ -100,7 +129,11 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isStartRange={isStartRange}
                         $isEndRange={isEndRange}
                         $isHoliday={isHoliday}
+                        $isWeekend={isWeekend}
                         $isNewMonth={isNewMonth}
+                        $isLowerThanMinDate={isLowerThanMinDate}
+                        $isHigherThanMaxDate={isHigherThanMaxDate}
+                        holidayTitle={holidayTitle}
                         $isSelectWeek={isSelectWeek}
                         $isWithTodo={isWithTodo}
                     >

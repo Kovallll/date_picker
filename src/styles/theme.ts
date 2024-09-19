@@ -11,9 +11,10 @@ const theme: Theme = {
         blue: '#2f80ed',
         lightBlue: '#82b3f4',
         inRangeBackgroundColor: '#eaf2fd',
-        disabledColor: '#aaa',
-        holidayColor: '#BB0000',
-        newMonth: '#ccc',
+        disabledColor: '#ddd',
+        weekendColor: '#BB0000',
+        holidayColor: '#FFCF00',
+        newMonth: '#aaa',
         errorColor: '#FF2222',
         lightHoverColor: '#eee',
         darkHoverColor: '#faefaf',
@@ -36,6 +37,21 @@ const theme: Theme = {
     },
     noneBorder: '0',
     baseBorder: '1px solid',
+    holidayTextWidth: {
+        bottom: '30',
+        small: {
+            height: '20',
+            width: '100',
+        },
+        medium: {
+            height: '20',
+            width: '120',
+        },
+        large: {
+            height: '20',
+            width: '140',
+        },
+    },
     popupStyles: {
         border: '1px solid',
         top: '26',
@@ -136,18 +152,21 @@ const theme: Theme = {
     calendarStyles: {
         small: {
             width: '180',
+            popupWidth: '170',
             rangeWidth: '320',
             borderRadius: '6',
             border: '1px solid',
         },
         medium: {
             width: '220',
+            popupWidth: '210',
             rangeWidth: '360',
             borderRadius: '8',
             border: '1px solid',
         },
         large: {
             width: '270',
+            popupWidth: '260',
             rangeWidth: '400',
             borderRadius: '10',
             border: '1px solid',

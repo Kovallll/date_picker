@@ -13,10 +13,12 @@ export const CellData = styled.button<CellDataProps>`
         $isEndRange,
         $isPopup,
         $isPopupActive,
-        $isDisabled,
         $isHoliday,
         $isNewMonth,
+        $isWeekend,
         $isSelectWeek,
+        $isHigherThanMaxDate,
+        $isLowerThanMinDate,
     }) => {
         const cellHeight = mixins.cellHeight(theme)
         const borderRadius = mixins.dayBorderRadius(
@@ -40,10 +42,12 @@ export const CellData = styled.button<CellDataProps>`
             $isActive,
             $inRange,
             $isStartRange,
-            $isDisabled,
             $isEndRange,
             $isHoliday,
-            $isNewMonth
+            $isNewMonth,
+            $isHigherThanMaxDate,
+            $isWeekend,
+            $isLowerThanMinDate
         )
         const hoverBackground = mixins.hoverBackgroundColor(
             theme,
@@ -64,13 +68,17 @@ export const CellData = styled.button<CellDataProps>`
             background: ${backgroundColor};
             color: ${color};
             font-size: ${mixins.fontSize(theme)};
-            cursor: pointer;
+            cursor: ${$isHigherThanMaxDate || $isLowerThanMinDate
+                ? 'default'
+                : 'pointer'};
             position: relative;
 
             @media (hover: hover) and (pointer: fine) {
                 &:hover {
                     border-radius: ${theme.cellBorderRadius + 'px'};
-                    background: ${hoverBackground};
+                    background: ${$isHigherThanMaxDate || $isLowerThanMinDate
+                        ? 'none'
+                        : hoverBackground};
                 }
             }
         `
@@ -97,4 +105,16 @@ export const TodoCircle = styled.div`
             position: absolute;
         `
     }}
+`
+
+export const Holiday = styled.div`
+    ${mixins.flexRowCenter}
+
+    justify-content: start;
+    bottom: ${({ theme }) => theme.holidayTextWidth.bottom + 'px'};
+    z-index: 10;
+    position: absolute;
+    width: ${({ theme }) =>
+        mixins.elementWidth(theme, theme.holidayTextWidth, 'width')};
+    white-space: nowrap;
 `

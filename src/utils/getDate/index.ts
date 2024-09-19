@@ -1,4 +1,5 @@
 import { countMsInDay, daysInWeek, thursdayIndex } from '@constants'
+import { CustomHolidays, Holidays } from '@types'
 import {
     getAllCellsPrevMonths,
     getCellsPrevMonth,
@@ -19,13 +20,27 @@ export const getDateFormat = (
     return date
 }
 
+export const getHolidaysData = (data: CustomHolidays[]) => {
+    const holidaysData: Holidays[] = data.map((item) => {
+        const [day, month, year] = item.date.split('/')
+        if (year === '*') {
+            return { id: `*${day}/${month}`, holiday: item.holiday }
+        } else {
+            const { isValidDate, inputCellId } = getValidInputCell(item.date)
+            if (isValidDate)
+                return { id: String(inputCellId), holiday: item.holiday }
+        }
+    })
+
+    return holidaysData
+}
+
 export const getValidInputCell = (
     inputData: string,
     prevInputData: string = ''
 ) => {
     let [inputDay, inputMonth] = inputData.split('/').map(Number)
     const inputYear = Number(inputData.split('/')[2])
-
     const limitYear = 1000
     const [prevInputDay, prevInputMonth] = prevInputData.split('/').map(Number)
 
@@ -43,10 +58,10 @@ export const getValidInputCell = (
         dateObj.getMonth() === inputMonth - 1 &&
         dateObj.getDate() === inputDay
 
-    if (inputDay === 0 && prevInputDay) {
+    if (!inputDay || (inputDay === 0 && prevInputDay)) {
         inputDay = prevInputDay
     }
-    if (inputMonth === 0 && prevInputMonth) {
+    if (!inputMonth || (inputMonth === 0 && prevInputMonth)) {
         inputMonth = prevInputMonth
     }
 
@@ -54,12 +69,16 @@ export const getValidInputCell = (
     const prevMonthCellsCount =
         getAllCellsPrevMonths(inputYear, inputMonth - 1) +
         getCellsPrevMonth(inputYear, inputMonth - 1)
-    const inputCellId = String(yearId + prevMonthCellsCount + inputDay - 1)
+    const inputCellId = yearId + prevMonthCellsCount + inputDay - 1
     return { isValidDate, inputCellId, inputYear, inputMonth, inputDay }
 }
 
-export const getMonthAndDaysByWeek = (year: number, weekNumber: number) => {
-    const firstDayOfYear = new Date(year, 0, 1)
+export const getMonthAndDaysByWeek = (
+    year: number,
+    weekNumber: number,
+    startDay: number
+) => {
+    const firstDayOfYear = new Date(year, 0, 1 - startDay)
 
     const firstMonday = new Date(firstDayOfYear)
     firstMonday.setDate(

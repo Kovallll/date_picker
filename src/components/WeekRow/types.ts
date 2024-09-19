@@ -1,5 +1,13 @@
 import { WeekDays } from '@constants'
-import { CellData, onClickCell, Range, StartDay } from '@types'
+import {
+    CellData,
+    GetHoliday,
+    Holidays,
+    minMaxCellDate,
+    onClickCell,
+    Range,
+    StartDay,
+} from '@types'
 
 export interface WeekRowProps {
     data: CellData[]
@@ -10,4 +18,12 @@ export interface WeekRowProps {
     firstDayIndex: number
     startDay: StartDay
     isWithTodos?: boolean
+    handleGetHoliday?: (
+        holidaysDates: Holidays[],
+        day: number,
+        currentMonth: number,
+        dayId: string
+    ) => GetHoliday
+    handleGetAllHolidays?: () => Holidays[]
+    minMaxDate: minMaxCellDate
 }

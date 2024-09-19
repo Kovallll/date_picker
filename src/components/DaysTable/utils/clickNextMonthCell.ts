@@ -1,4 +1,4 @@
-import { ClickNextMonthCell } from './types'
+import { ClickNextMonthCell } from '../types'
 
 import { daysInWeek } from '@constants'
 

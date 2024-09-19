@@ -27,6 +27,7 @@ export interface Theme {
         inRangeBackgroundColor: string
         disabledColor: string
         holidayColor: string
+        weekendColor: string
         newMonth: string
         errorColor: string
         lightHoverColor: string
@@ -49,6 +50,21 @@ export interface Theme {
         sm: string
         md: string
         lg: string
+    }
+    holidayTextWidth: {
+        bottom: string
+        small: {
+            height: string
+            width: string
+        }
+        medium: {
+            height: string
+            width: string
+        }
+        large: {
+            height: string
+            width: string
+        }
     }
     spaces: {
         xs: string
