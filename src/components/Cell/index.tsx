@@ -18,6 +18,8 @@ const Cell = (props: CellProps) => {
         $isNewMonth,
         holidayTitle,
         $isPopupActive,
+        $isLowerThanMinDate,
+        $isHigherThanMaxDate,
         onClickCell,
         id,
         ...restProps
@@ -30,8 +32,8 @@ const Cell = (props: CellProps) => {
         onClickCell(e, id)
     }
     let holiday = holidayTitle
-    if ((holidayTitle.length) >= maxLenHolidayText) {
-        holiday = holidayTitle.slice(0, maxLenHolidayText) + '...'
+    if (holidayTitle?.length >= maxLenHolidayText) {
+        holiday = holidayTitle?.slice(0, maxLenHolidayText) + '...'
     }
     const unhover = $isActive || $isStartRange || $inRange || $isEndRange
     const showHoliday = () => {
@@ -61,6 +63,8 @@ const Cell = (props: CellProps) => {
             $isWeekend={$isWeekend}
             $isHoliday={$isHoliday}
             $isNewMonth={$isNewMonth}
+            $isLowerThanMinDate={$isLowerThanMinDate}
+            $isHigherThanMaxDate={$isHigherThanMaxDate}
             onClick={handleClickDay}
         >
             {isHover && <Holiday>{holiday}</Holiday>}

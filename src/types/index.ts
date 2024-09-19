@@ -24,6 +24,22 @@ export interface InputRange {
     end: string
 }
 
+export interface minMaxDate {
+    minDate: string
+    maxDate: string
+}
+
+export interface minMaxCellDate {
+    minDate: string
+    maxDate: string
+    minDateCellId: number
+    maxDateCellId: number
+    minMonth: number
+    maxMonth: number
+    minYear: number
+    maxYear: number
+}
+
 export type Holidays =
     | {
           id: string

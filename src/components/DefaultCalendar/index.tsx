@@ -25,6 +25,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         handleChangeWeekDays,
         handleGetHoliday,
         handleGetAllHolidays,
+        minMaxDate,
         startDay = 1,
         ...restProps
     } = props
@@ -120,7 +121,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
             </InputBlock>
             {isOpen && (
                 <Article {...restProps}>
-                    <DateBar />
+                    <DateBar minMaxDate={minMaxDate} />
                     <WeekBar weekDays={weekDays} />
                     <DaysTable
                         handleChangeError={handleChangeError}
@@ -138,6 +139,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         startDay={startDay}
                         handleGetHoliday={handleGetHoliday}
                         handleGetAllHolidays={handleGetAllHolidays}
+                        minMaxDate={minMaxDate}
                     />
                 </Article>
             )}

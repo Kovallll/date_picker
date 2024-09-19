@@ -17,6 +17,8 @@ export const CellData = styled.button<CellDataProps>`
         $isNewMonth,
         $isWeekend,
         $isSelectWeek,
+        $isHigherThanMaxDate,
+        $isLowerThanMinDate,
     }) => {
         const cellHeight = mixins.cellHeight(theme)
         const borderRadius = mixins.dayBorderRadius(
@@ -42,8 +44,10 @@ export const CellData = styled.button<CellDataProps>`
             $isStartRange,
             $isEndRange,
             $isHoliday,
+            $isNewMonth,
+            $isHigherThanMaxDate,
             $isWeekend,
-            $isNewMonth
+            $isLowerThanMinDate
         )
         const hoverBackground = mixins.hoverBackgroundColor(
             theme,
@@ -64,13 +68,17 @@ export const CellData = styled.button<CellDataProps>`
             background: ${backgroundColor};
             color: ${color};
             font-size: ${mixins.fontSize(theme)};
-            cursor: pointer;
+            cursor: ${$isHigherThanMaxDate || $isLowerThanMinDate
+                ? 'default'
+                : 'pointer'};
             position: relative;
 
             @media (hover: hover) and (pointer: fine) {
                 &:hover {
                     border-radius: ${theme.cellBorderRadius + 'px'};
-                    background: ${hoverBackground};
+                    background: ${$isHigherThanMaxDate || $isLowerThanMinDate
+                        ? 'none'
+                        : hoverBackground};
                 }
             }
         `

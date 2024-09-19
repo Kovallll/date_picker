@@ -27,8 +27,10 @@ export const WeekRow = (props: WeekRowProps) => {
         handleGetAllHolidays,
         firstDayIndex,
         startDay,
+        minMaxDate,
         ...restProps
     } = props
+    const { minDateCellId, maxDateCellId } = minMaxDate
     let holidaysDates: Holidays[] = []
     if (handleGetAllHolidays) {
         holidaysDates = handleGetAllHolidays()
@@ -91,6 +93,12 @@ export const WeekRow = (props: WeekRowProps) => {
                 const isWeekend =
                     index % daysInWeek === SundayIndex ||
                     index % daysInWeek === SaturdayIndex
+
+                const isLowerThanMinDate =
+                    minDateCellId === 0 ? false : minDateCellId > Number(dayId)
+                const isHigherThanMaxDate =
+                    maxDateCellId === 0 ? false : maxDateCellId < Number(dayId)
+
                 const isNewMonth =
                     Number(dayId) - yearId - monthId < cellsPrevMonth ||
                     Number(dayId) - yearId - monthId >
@@ -113,6 +121,8 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isHoliday={isHoliday}
                         $isWeekend={isWeekend}
                         $isNewMonth={isNewMonth}
+                        $isLowerThanMinDate={isLowerThanMinDate}
+                        $isHigherThanMaxDate={isHigherThanMaxDate}
                         holidayTitle={holidayTitle}
                         $isSelectWeek={isSelectWeek}
                     >

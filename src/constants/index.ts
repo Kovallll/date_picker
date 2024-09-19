@@ -125,6 +125,17 @@ export const icons = {
     clearIcon,
 }
 
+export const defaultMinMaxDate = {
+    minDate: '',
+    maxDate: '',
+    minDateCellId: 0,
+    maxDateCellId: 0,
+    minMonth: 0,
+    maxMonth: 0,
+    minYear: 0,
+    maxYear: 0,
+}
+
 export const initialProps = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,

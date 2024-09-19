@@ -148,9 +148,13 @@ export default {
         isStartRange?: boolean,
         isEndRange?: boolean,
         isHoliday?: boolean,
+        isNewMonth?: boolean,
+        isHigherThanMaxDate?: boolean,
         isWeekend?: boolean,
-        isNewMonth?: boolean
+        isLowerThanMaxDate?: boolean
     ) => {
+        if (isHigherThanMaxDate || isLowerThanMaxDate)
+            return theme.palette.disabledColor
         if (inRange) return theme.palette.blue
         if (isActive) return theme.palette.common.white
         if (isEndRange) return theme.palette.common.white

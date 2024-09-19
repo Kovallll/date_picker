@@ -6,7 +6,10 @@ export interface CalendarProps
     initialYear?: number
     initialMonth?: number
     isWithRange?: boolean
+    minDate?: string
+    maxDate?: string
     isWithHoliday?: boolean
+    isWithMinMax?: boolean
     isWithStartSunday?: boolean
     holidaysData?: CustomHolidays[]
 }

@@ -1,5 +1,11 @@
 import { WeekDays } from '@constants'
-import { GetHoliday, Holidays, onClickWithRange, StartDay } from '@types'
+import {
+    GetHoliday,
+    Holidays,
+    minMaxCellDate,
+    onClickWithRange,
+    StartDay,
+} from '@types'
 
 export interface DefaultCalendarProps
     extends React.ButtonHTMLAttributes<HTMLDivElement> {
@@ -7,6 +13,7 @@ export interface DefaultCalendarProps
     isWithRange?: boolean
     startDay?: StartDay
     isWithHoliday?: boolean
+    isWithMinMax?: boolean
     onClickWithRange?: onClickWithRange
     handleChangeWeekDays?: () => WeekDays[]
     handleGetHoliday?: (
@@ -16,6 +23,7 @@ export interface DefaultCalendarProps
         dayId: string
     ) => GetHoliday
     handleGetAllHolidays?: () => Holidays[]
+    minMaxDate?: minMaxCellDate
 }
 
 export interface CalendarContainerProps {

@@ -3,6 +3,7 @@ import {
     CellData,
     GetHoliday,
     Holidays,
+    minMaxCellDate,
     onClickCell,
     Range,
     StartDay,
@@ -23,4 +24,5 @@ export interface WeekRowProps {
         dayId: string
     ) => GetHoliday
     handleGetAllHolidays?: () => Holidays[]
+    minMaxDate: minMaxCellDate
 }

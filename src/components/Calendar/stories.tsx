@@ -46,6 +46,16 @@ export const CalendarWithRangeInput: Story = {
     },
 }
 
+export const CalendarWithMinMaxDate: Story = {
+    args: {
+        isWithInput: true,
+        isWithRange: true,
+        isWithMinMax: true,
+        minDate: '6/09/2024',
+        maxDate: '15/10/2024',
+    },
+}
+
 export const CalendarWithStartSunday: Story = {
     args: {
         isWithRange: false,

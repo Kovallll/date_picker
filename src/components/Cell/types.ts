@@ -15,6 +15,8 @@ export interface CellProps
     $isWeekend: boolean
     $isNewMonth: boolean
     $isSelectWeek: boolean
+    $isLowerThanMinDate?: boolean
+    $isHigherThanMaxDate?: boolean
     onClickCell: onClickCell
 }
 
@@ -30,4 +32,6 @@ export interface CellDataProps {
     $isEndRange?: boolean
     $isNewMonth?: boolean
     $isSelectWeek?: boolean
+    $isLowerThanMinDate?: boolean
+    $isHigherThanMaxDate?: boolean
 }
