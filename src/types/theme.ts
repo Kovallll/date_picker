@@ -1,4 +1,23 @@
-import { ElementStyle } from '.'
+export interface ElementStyle {
+    large: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
+    medium: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
+    small: {
+        width: string
+        borderRadius: string
+        border: string
+        [K: string]: string
+    }
+}
 
 export interface Theme {
     palette: {
@@ -11,8 +30,12 @@ export interface Theme {
         inRangeBackgroundColor: string
         disabledColor: string
         holidayColor: string
+        weekendColor: string
         newMonth: string
         errorColor: string
+        lightHoverColor: string
+        darkHoverColor: string
+        selectedWeekColor: string
     }
     fontSizes: {
         sm: string
@@ -30,7 +53,23 @@ export interface Theme {
         md: string
         lg: string
     }
+    holidayTextWidth: {
+        bottom: string
+        small: {
+            height: string
+            width: string
+        }
+        medium: {
+            height: string
+            width: string
+        }
+        large: {
+            height: string
+            width: string
+        }
+    }
     spaces: {
+        xs: string
         sm: string
         md: string
         lg: string
@@ -46,6 +85,10 @@ export interface Theme {
         width: string
         height: string
     }
+    popupStyles: {
+        border: string
+        top: string
+    }
     arrowScale: {
         sm: number
         md: number
@@ -58,4 +101,16 @@ export interface Theme {
     }
     inputStyles: ElementStyle
     calendarStyles: ElementStyle
+}
+
+export interface SizeStyles {
+    small: {
+        [K: string]: string
+    }
+    medium: {
+        [K: string]: string
+    }
+    large: {
+        [K: string]: string
+    }
 }

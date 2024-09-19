@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-import { ElementStyle, Theme } from '@types'
+import { ElementStyle, SizeStyles, Theme } from '@types'
 
 export default {
     flexRowSE: () => css`
@@ -94,11 +94,11 @@ export default {
         ${theme.spaces.lg + 'px'} ${theme.spaces.xl + 'px'};
         @media (max-width: ${theme.media.md + 'px'}) {
             padding: ${theme.spaces.md + 'px'}
-                ${String(+theme.spaces.xl - 4) + 'px'};
+                ${String(Number(theme.spaces.xl) - 4) + 'px'};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
             padding: ${theme.spaces.sm + 'px'}
-                ${String(+theme.spaces.xl - 8) + 'px'};
+                ${String(Number(theme.spaces.xl) - 8) + 'px'};
         }
     `,
     elementBorderRadius: (theme: Theme, elementStyle: ElementStyle) => css`
@@ -111,12 +111,12 @@ export default {
         }
     `,
     elementBorder: (theme: Theme, elementStyle: ElementStyle) => css`
-        ${elementStyle.large.border};
+        ${elementStyle.large.border + theme.palette.newMonth};
         @media (max-width: ${theme.media.md + 'px'}) {
-            border: ${elementStyle.medium.border};
+            border: ${elementStyle.medium.border + theme.palette.newMonth};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            border: ${elementStyle.small.border};
+            border: ${elementStyle.small.border + theme.palette.newMonth};
         }
     `,
     elementMaxWidth: (theme: Theme, elementStyle: ElementStyle) => css`
@@ -130,7 +130,7 @@ export default {
     `,
     elementWidth: (
         theme: Theme,
-        elementStyle: ElementStyle,
+        elementStyle: SizeStyles,
         typeWidth: string
     ) => css`
         ${elementStyle.large[typeWidth] + 'px'};
@@ -150,6 +150,7 @@ export default {
         isHoliday?: boolean,
         isNewMonth?: boolean,
         isHigherThanMaxDate?: boolean,
+        isWeekend?: boolean,
         isLowerThanMaxDate?: boolean
     ) => {
         if (isHigherThanMaxDate || isLowerThanMaxDate)
@@ -160,15 +161,17 @@ export default {
         if (isStartRange) return theme.palette.common.white
         if (isNewMonth) return theme.palette.newMonth
         if (isHoliday) return theme.palette.holidayColor
+        if (isWeekend) return theme.palette.weekendColor
         else return theme.palette.common.black
     },
     dayBorderRadius: (
         theme: Theme,
         isActive?: boolean,
         isStartRange?: boolean,
-        isEndRange?: boolean
+        isEndRange?: boolean,
+        $isPopup?: boolean
     ) => {
-        if (isActive) return theme.cellBorderRadius + 'px'
+        if (isActive || $isPopup) return theme.cellBorderRadius + 'px'
         else if (isStartRange)
             return `${theme.cellBorderRadius + 'px'} 0px 0px ${theme.cellBorderRadius + 'px'}`
         else if (isEndRange)
@@ -180,12 +183,28 @@ export default {
         isActive?: boolean,
         inRange?: boolean,
         isStartRange?: boolean,
-        isEndRange?: boolean
+        isEndRange?: boolean,
+        isSelectWeek?: boolean,
+        isPopupActive?: boolean
     ) => {
+        if (isPopupActive) return theme.palette.selectedWeekColor
         if (inRange) return theme.palette.inRangeBackgroundColor
         if (isActive) return theme.palette.blue
         if (isEndRange) return theme.palette.blue
         if (isStartRange) return theme.palette.lightBlue
+        if (isSelectWeek) return theme.palette.selectedWeekColor
         else return theme.palette.common.white
+    },
+    hoverBackgroundColor: (
+        theme: Theme,
+        isActive?: boolean,
+        inRange?: boolean,
+        isStartRange?: boolean,
+        isEndRange?: boolean
+    ) => {
+        const isDarkHover = inRange || isActive || isEndRange || isStartRange
+
+        if (isDarkHover) return theme.palette.darkHoverColor
+        else return theme.palette.lightHoverColor
     },
 }

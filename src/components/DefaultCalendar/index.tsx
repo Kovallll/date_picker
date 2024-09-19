@@ -1,29 +1,31 @@
-import { memo, useContext, useRef, useState } from 'react'
+import { memo, useCallback, useContext, useRef, useState } from 'react'
 
 import {
     datePlaceholder,
     endRangePlaceholder,
     startRangePlaceholder,
 } from './config'
-import { CalendarBlock, Container, ErrorMesssage, InputBlock } from './styled'
+import { Article, CalendarSection, ErrorMesssage, InputBlock } from './styled'
 import { DefaultCalendarProps } from './types'
 
-import { InputContext } from '@components/Calendar'
+import DateBar from '@components/DateBar'
 import { DateInput } from '@components/DateInput'
-import { DaysTable } from '@components/DaysTable'
-import MonthBar from '@components/MonthBar'
+import DaysTable from '@components/DaysTable'
 import WeekBar from '@components/WeekBar'
-import { daysInWeek, initialWeekDays } from '@constants'
-import { useClickOutside, useCurrentDate, useInputDate } from '@hooks'
+import { initialWeekDays } from '@constants'
+import { InputContext } from '@context'
+import { useClickOutside, useInputDate } from '@hooks'
+import { getValidInputCell } from '@utils'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
     const {
-        initialYear,
-        initialMonth,
         isWithRange = false,
         onClickWithRange,
         isChangeStartDay,
         handleChangeWeekDays,
+        handleGetHoliday,
+        handleGetAllHolidays,
+        minMaxDate,
         startDay = 1,
         ...restProps
     } = props
@@ -40,14 +42,11 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         secondInputDate,
         handleChangeSecondDateInput,
     } = useInputDate()
-    const {
-        currentMonth,
-        year,
-        handleChangeCurrentMonth,
-        handleChangeYear,
-        handleDecrementMonth,
-        handleIncrementMonth,
-    } = useCurrentDate(initialMonth, initialYear)
+    const { isValidDate: isValidFirstInput } = getValidInputCell(firstInputDate)
+    const validFirstInput = isValidFirstInput ? firstInputDate : ''
+    const { isValidDate: isValidSecondInput } =
+        getValidInputCell(secondInputDate)
+    const validSecondInput = isValidSecondInput ? secondInputDate : ''
 
     const isSunday =
         !!isChangeStartDay &&
@@ -59,7 +58,10 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         setWeekDays(newWeekDays)
     }
 
-    const isDisabled = firstInputDate.length <= daysInWeek
+    const isDisabled = !validFirstInput
+    const handleChangeError = useCallback((error: string) => {
+        setError(error)
+    }, [])
 
     useClickOutside(calendarRef, () => {
         if (isWithInput) {
@@ -70,13 +72,9 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         }
     })
 
-    const handleChangeError = (error: string) => {
-        setError(error)
-    }
-
-    const handleKeyboardChange = (isKeyboard: boolean) => {
+    const handleKeyboardChange = useCallback((isKeyboard: boolean) => {
         setIsKeyboardChange(isKeyboard)
-    }
+    }, [])
 
     const handleFocus = () => {
         setIsOpen(true)
@@ -90,7 +88,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
 
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
-        <Container
+        <CalendarSection
             $isWithRange={isWithRange}
             $isWithInput={isWithInput}
             ref={calendarRef}
@@ -122,38 +120,30 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                 )}
             </InputBlock>
             {isOpen && (
-                <CalendarBlock {...restProps}>
-                    <MonthBar
-                        year={year}
-                        currentMonth={currentMonth}
-                        increment={handleIncrementMonth}
-                        decrement={handleDecrementMonth}
-                    />
+                <Article {...restProps}>
+                    <DateBar />
                     <WeekBar weekDays={weekDays} />
                     <DaysTable
                         handleChangeError={handleChangeError}
-                        firstInputDate={firstInputDate}
-                        secondInputDate={secondInputDate}
+                        firstInputDate={validFirstInput}
+                        secondInputDate={validSecondInput}
                         isWithRange={isWithRange}
                         handleKeyboardChange={handleKeyboardChange}
                         isKeyboardChange={isKeyboardChange}
-                        handleDecrementMonth={handleDecrementMonth}
-                        handleIncrementMonth={handleIncrementMonth}
-                        handleChangeCurrentMonth={handleChangeCurrentMonth}
-                        handleChangeYear={handleChangeYear}
                         onClickWithRange={onClickWithRange}
                         handleChangeFirstDateInput={handleChangeFirstDateInput}
                         handleChangeSecondDateInput={
                             handleChangeSecondDateInput
                         }
-                        year={year}
-                        currentMonth={currentMonth}
-                        initialWeekDays={initialWeekDays}
+                        weekDays={weekDays}
                         startDay={startDay}
+                        handleGetHoliday={handleGetHoliday}
+                        handleGetAllHolidays={handleGetAllHolidays}
+                        minMaxDate={minMaxDate}
                     />
-                </CalendarBlock>
+                </Article>
             )}
-        </Container>
+        </CalendarSection>
     )
 }
 

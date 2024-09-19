@@ -1,15 +1,28 @@
 import { WeekDays } from '@constants'
-import { CellData, Range } from '@types'
+import {
+    CellData,
+    GetHoliday,
+    Holidays,
+    minMaxCellDate,
+    onClickCell,
+    Range,
+    StartDay,
+} from '@types'
 
 export interface WeekRowProps {
     data: CellData[]
     activeCellId: string
-    initialWeekDays: WeekDays[]
+    weekDays: WeekDays[]
     range: Range
-    year: number
-    currentMonth: number
-    handleClickDay: (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        id: string
-    ) => void
+    handleClickDay: onClickCell
+    firstDayIndex: number
+    startDay: StartDay
+    handleGetHoliday?: (
+        holidaysDates: Holidays[],
+        day: number,
+        currentMonth: number,
+        dayId: string
+    ) => GetHoliday
+    handleGetAllHolidays?: () => Holidays[]
+    minMaxDate: minMaxCellDate
 }

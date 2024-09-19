@@ -1,4 +1,9 @@
-import { countMonth, daysInWeek } from '@constants'
+import {
+    countMonth,
+    dateNumberForCurrentDays,
+    daysInWeek,
+    reversePrevId,
+} from '@constants'
 import { CellsInitialData, StartDay } from '@types'
 
 export const getCountCellsPrevYears = (year: number) => {
@@ -39,10 +44,10 @@ export const getCellsNextMonth = (year: number, monthIndex: number) => {
 
 export const getCellsInMonth = (year: number, monthIndex: number) => {
     let daysInMonth = 0
-    const dateNumber = 33
 
     const currentDays =
-        dateNumber - new Date(year, monthIndex, dateNumber).getDate()
+        dateNumberForCurrentDays -
+        new Date(year, monthIndex, dateNumberForCurrentDays).getDate()
     const prevDays = getCellsPrevMonth(year, monthIndex)
 
     const nextDays = getCellsNextMonth(year, monthIndex)
@@ -59,17 +64,17 @@ const getDaysInMonth = (year: number, monthIndex: number) => {
     return days
 }
 
-const getInitialCells = <T>(
+export const getInitialCells = <T>(
     len: number,
-    array: Array<T> = [],
-    initialId: number = 0
+    data: T[] = [],
+    initialIndex: number = 0
 ) => {
     return [
         ...Array(len)
             .fill({})
             .map((_, index) => ({
-                id: String(initialId * countMonth + index + 1),
-                data: array,
+                id: String(index + 1 + initialIndex),
+                data: data[initialIndex + index] ?? [],
             })),
     ]
 }
@@ -86,14 +91,14 @@ export const getCalendarCells = (
     const countDaysActiveMonth = getDaysInMonth(year, monthIndex + 1)
     const cellsInActiveMonth = getCellsInMonth(year, monthIndex)
     const countDaysArrays = cellsInActiveMonth / daysInWeek
-    const days: CellsInitialData[] = getInitialCells(countDaysArrays, [])
+    const prevMonthCellsCount = getAllCellsPrevMonths(year, monthIndex)
+
+    const days: CellsInitialData[] = getInitialCells(countDaysArrays)
 
     let arr = []
     let j = 0
-
     const yearId = getCountCellsPrevYears(year)
-    const prevMonthCellsCount = getAllCellsPrevMonths(year, monthIndex)
-    const reversePrevId = 2
+
     let numberForReversePrevMonthIds = actualPrevMonthDays - 1
     let cellId = yearId + prevMonthCellsCount
     for (
@@ -131,4 +136,12 @@ export const getCalendarCells = (
         }
     }
     return days
+}
+
+export const getPopupTableCells = (len: number, id: number) => {
+    return [
+        ...Array(len)
+            .fill({})
+            .map((_, index) => String(id + index)),
+    ]
 }

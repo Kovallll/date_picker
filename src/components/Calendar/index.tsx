@@ -1,29 +1,29 @@
-import { createContext } from 'react'
-
 import { CalendarProps } from './types'
 
-import { defaultProps } from '@constants'
-import { withChangeStartDay, withRange } from '@decorators'
+import {
+    withChangeStartDay,
+    withHolidays,
+    withMinMax,
+    withRange,
+} from '@decorators'
+import { DateProvider } from '@providers/DateProvider'
+import { InputProvider } from '@providers/InputProvider'
 import ThemeProvider from '@providers/ThemeProvider'
 import calendarCreater from '@service'
-import { minMaxDate } from '@types'
-
-export const InputContext = createContext(false)
-
-export const MinMaxContext = createContext<minMaxDate>({
-    minDate: '',
-    maxDate: '',
-})
+import { CustomHolidays, minMaxDate } from '@types'
 
 export const Calendar = (props: CalendarProps) => {
     const {
-        initialYear = defaultProps.defaultYear,
-        initialMonth = defaultProps.defaultMonth,
+        initialYear,
+        initialMonth,
         isWithInput = false,
         isWithRange,
         minDate,
         maxDate,
-        isWithStartSunday,
+        isWithHoliday,
+        isWithMinMax,
+        holidaysData = [],
+        isWithStartSunday = false,
     } = props
 
     const calendar = new calendarCreater()
@@ -39,17 +39,20 @@ export const Calendar = (props: CalendarProps) => {
     if (isWithStartSunday) {
         calendar.addFeature(withChangeStartDay)
     }
+    if (isWithHoliday) {
+        calendar.addFeature<CustomHolidays[]>(withHolidays, holidaysData)
+    }
+    if (isWithMinMax) {
+        calendar.addFeature<minMaxDate>(withMinMax, minMaxDate)
+    }
     const Calendar = calendar.getCalendar()
     return (
         <ThemeProvider>
-            <InputContext.Provider value={isWithInput}>
-                <MinMaxContext.Provider value={minMaxDate}>
-                    <Calendar
-                        initialYear={initialYear}
-                        initialMonth={initialMonth}
-                    />
-                </MinMaxContext.Provider>
-            </InputContext.Provider>
+            <DateProvider initialMonth={initialMonth} initialYear={initialYear}>
+                <InputProvider isWithInput={isWithInput}>
+                    <Calendar />
+                </InputProvider>
+            </DateProvider>
         </ThemeProvider>
     )
 }
