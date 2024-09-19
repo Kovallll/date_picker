@@ -9,16 +9,21 @@ import {
 import mixins from '@styles/mixins'
 
 export const CalendarSection = styled.section<CalendarContainerProps>`
-    ${mixins.flexColumnCenter()}
-
-    justify-content: start;
-    box-sizing: border-box;
-    width: ${({ theme, $isWithRange, $isWithInput }) =>
-        mixins.elementWidth(
+    ${({ theme, $isWithRange, $isWithInput }) => {
+        const width = mixins.elementWidth(
             theme,
             theme.calendarStyles,
             $isWithRange && $isWithInput ? 'rangeWidth' : 'width'
-        )};
+        )
+
+        return css`
+            ${mixins.flexColumnCenter()}
+
+            justify-content: start;
+            box-sizing: border-box;
+            width: ${width};
+        `
+    }}
 `
 
 export const ErrorMesssage = styled.div`
@@ -43,43 +48,49 @@ export const InputBlock = styled.div`
 
 export const CalendarArticle = styled.article<CalendarArticleProps>`
     ${({ theme, $isWithTodos }) => {
+        const border = mixins.elementBorder(
+            theme,
+            theme.baseBorder,
+            theme.palette.newMonth
+        )
+        const borderRadius = mixins.elementBorderRadius(
+            theme,
+            theme.calendarStyles,
+            $isWithTodos
+        )
+
         return css`
             ${mixins.flexColumnCenter()}
 
             width: ${theme.fullSize};
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};
-            border: ${mixins.elementBorder(
-                theme,
-                theme.baseBorder,
-                theme.palette.newMonth
-            )};
-            border-radius: ${mixins.elementBorderRadius(
-                theme,
-                theme.calendarStyles,
-                $isWithTodos
-            )};
+            border: ${border};
+            border-radius: ${borderRadius};
         `
     }}
 `
 
 export const TodoButton = styled.button<TodoButtonProps>`
     ${({ theme, $isDisabled }) => {
+        const border = mixins.elementBorder(
+            theme,
+            theme.baseBorder,
+            theme.palette.newMonth,
+            true
+        )
+        const color = $isDisabled
+            ? theme.palette.newMonth
+            : theme.palette.common.black
+
         return css`
             width: ${theme.fullSize};
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};
             border-radius: ${`0px 0px ${theme.cellBorderRadius}px ${theme.cellBorderRadius}px`};
-            border: ${mixins.elementBorder(
-                theme,
-                theme.baseBorder,
-                theme.palette.newMonth,
-                true
-            )};
+            border: ${border};
             border-top: ${theme.noneBorder};
-            color: ${$isDisabled
-                ? theme.palette.newMonth
-                : theme.palette.common.black};
+            color: ${color};
             background: ${theme.palette.common.white};
             cursor: ${$isDisabled ? 'default' : 'pointer'};
         `

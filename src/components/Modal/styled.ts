@@ -18,6 +18,12 @@ export const Container = styled.div`
 
 export const Window = styled.div`
     ${({ theme }) => {
+        const border = mixins.elementBorder(
+            theme,
+            theme.baseBorder,
+            theme.palette.newMonth
+        )
+
         return css`
             ${mixins.flexColumnCenter}
 
@@ -26,11 +32,7 @@ export const Window = styled.div`
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};
             border-radius: ${theme.cellBorderRadius + 'px'};
-            border: ${mixins.elementBorder(
-                theme,
-                theme.baseBorder,
-                theme.palette.newMonth
-            )};
+            border: ${border};
             color: ${theme.palette.common.black};
             background: ${theme.palette.common.white};
         `

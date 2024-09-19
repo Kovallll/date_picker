@@ -10,20 +10,23 @@ export const Title = styled.h1`
 
 export const Input = styled.input`
     ${({ theme }) => {
+        const border = mixins.elementBorder(
+            theme,
+            theme.baseBorder,
+            theme.palette.blue
+        )
+        const padding = mixins.modalPadding(
+            theme,
+            '4px',
+            theme.modalStyles,
+            'inputPadding'
+        )
+
         return css`
-            padding: ${mixins.modalPadding(
-                theme,
-                '4px',
-                theme.modalStyles,
-                'inputPadding'
-            )};
+            padding: ${padding};
             font-size: ${mixins.fontSize(theme)};
             border-radius: ${theme.modalStyles.borderRadius + 'px'};
-            border: ${mixins.elementBorder(
-                theme,
-                theme.baseBorder,
-                theme.palette.blue
-            )};
+            border: ${border};
         `
     }}
 `
@@ -40,14 +43,15 @@ export const TodoCreater = styled.div`
 
 export const Buttons = styled.div`
     ${({ theme }) => {
+        const width = mixins.elementWidth(
+            theme,
+            theme.modalStyles,
+            'buttonsWidth'
+        )
         return css`
             ${mixins.flexRowSB}
 
-            width: ${mixins.elementWidth(
-                theme,
-                theme.modalStyles,
-                'buttonsWidth'
-            )};
+            width: ${width};
             margin-left: ${theme.modalStyles.buttonsMarginLeft + 'px'};
         `
     }}
@@ -55,26 +59,26 @@ export const Buttons = styled.div`
 
 export const Button = styled.button<ButtonProps>`
     ${({ theme, $isDisabled }) => {
+        const padding = mixins.modalPadding(
+            theme,
+            '4px',
+            theme.modalStyles,
+            'buttonPadding'
+        )
+        const color = $isDisabled
+            ? theme.palette.newMonth
+            : theme.palette.common.white
+        const bgColor = $isDisabled
+            ? theme.palette.common.white
+            : theme.palette.lightBlue
+
         return css`
-            padding: ${mixins.modalPadding(
-                theme,
-                '4px',
-                theme.modalStyles,
-                'buttonPadding'
-            )};
-            background-color: ${
-                $isDisabled
-                    ? theme.palette.common.white
-                    : theme.palette.lightBlue
-            };
-             border: ${mixins.elementBorder(theme, theme.baseBorder, theme.palette.blue)}
+            padding: ${padding};
+            background-color: ${bgColor};
+            border: ${mixins.elementBorder(theme, theme.baseBorder, theme.palette.blue)}
             border-radius: ${theme.modalStyles.borderRadius + 'px'};
             cursor: ${$isDisabled ? 'default' : 'pointer'};
-            color: ${
-                $isDisabled
-                    ? theme.palette.newMonth
-                    : theme.palette.common.white
-            };
+            color: ${color};
             font-size: ${mixins.fontSize(theme)};
         `
     }}
@@ -82,13 +86,15 @@ export const Button = styled.button<ButtonProps>`
 
 export const TodoList = styled.div`
     ${({ theme }) => {
+        const maxHeight = mixins.elementMaxHeight(
+            theme,
+            theme.modalStyles,
+            'todoMaxHeight'
+        )
+
         return css`
             margin-top: ${mixins.margin(theme)};
-            max-height: ${mixins.elementMaxHeight(
-                theme,
-                theme.modalStyles,
-                'todoMaxHeight'
-            )};
+            max-height: ${maxHeight};
             overflow-y: auto;
         `
     }}

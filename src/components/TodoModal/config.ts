@@ -1,0 +1,7 @@
+export const title = 'Your Todo'
+export const removeAllText = 'Remove All'
+export const addText = 'Add'
+export const removeText = 'Remove'
+export const checkTitleText = 'Are you sure?'
+export const deleteText = 'Delete'
+export const cancelText = 'Cancel'

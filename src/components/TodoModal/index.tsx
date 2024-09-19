@@ -2,6 +2,15 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import {
+    addText,
+    cancelText,
+    checkTitleText,
+    deleteText,
+    removeAllText,
+    removeText,
+    title,
+} from './config'
+import {
     Button,
     Buttons,
     Input,
@@ -14,6 +23,8 @@ import {
 import { TodoModalProps } from './types'
 
 import { Modal } from '@components/Modal'
+import { initialActiveCellId } from '@constants'
+import { useTodo } from '@hooks'
 
 export const TodoModal = ({
     onClose,
@@ -24,47 +35,34 @@ export const TodoModal = ({
     updateTodo,
     todoId,
 }: TodoModalProps) => {
-    const [todoData, setTodoData] = useState(todo.data)
     const [inputData, setInputData] = useState('')
-    const [isDelete, setIsDelete] = useState(false)
-    const [removeId, setRemoveId] = useState('-1')
+
+    const isAddDisabled = inputData.length === 0
+
+    const {
+        todoData,
+        handleSetTodoData,
+        handleAddTodo: appendTodo,
+        handleRemoveTodo,
+        handleRemoveAllTodos,
+        isRemoveAllDisabled,
+        checkRemove,
+        checkAllRemove,
+        handleChangeIsDelete,
+        removeId,
+        isDelete,
+    } = useTodo({
+        initialTodoData: todo.data,
+        addTodo,
+        removeTodo,
+        removeAllTodos,
+        inputData,
+        isAddDisabled,
+    })
 
     const handleChangeInputData = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target
         setInputData(value)
-    }
-
-    const handleAddTodo = () => {
-        if (!isAddDisabled) {
-            const allTodos = addTodo(todoId, inputData)
-            const currentTodo = allTodos.find((todo) => todo.id === todoId)!
-            setTodoData(currentTodo.data)
-        }
-    }
-
-    const checkAllRemove = () => {
-        if (!isRemoveAllDisabled) {
-            setIsDelete((prev) => !prev)
-            setRemoveId('-1')
-        }
-    }
-
-    const checkRemove = (id: string) => () => {
-        setIsDelete((prev) => !prev)
-        setRemoveId(id)
-    }
-
-    const handleRemoveAllTodos = () => {
-        removeAllTodos(todoId)
-        setTodoData([])
-        onCloseCheckModal()
-    }
-
-    const handleRemoveTodo = () => {
-        const allTodos = removeTodo(todoId, removeId)
-        const currentTodo = allTodos.find((todo) => todo.id === todoId)!
-        setTodoData(currentTodo.data)
-        onCloseCheckModal()
     }
 
     const handleChangeCheckBox =
@@ -80,42 +78,40 @@ export const TodoModal = ({
                     }
                 } else return todoData
             })
-            setTodoData(newTodoData)
+            handleSetTodoData(newTodoData)
             updateTodo(todoId, { id, data: currentTodo.data, checked })
         }
-    console.log(todoData, 'todoData')
-    const onCloseCheckModal = () => {
-        setIsDelete((prev) => !prev)
-    }
 
     const onCloseTodoModal = () => {
         if (!isDelete) onClose()
     }
 
     const handleDeleteModal = () => {
-        if (removeId === '-1') {
-            handleRemoveAllTodos()
+        if (removeId === initialActiveCellId) {
+            handleRemoveAllTodos(todoId)
         } else {
-            handleRemoveTodo()
+            handleRemoveTodo(todoId, removeId)
         }
     }
 
-    const isAddDisabled = inputData.length === 0
-    const isRemoveAllDisabled = todoData.length === 0
+    const handleAddTodo = () => {
+        appendTodo(todoId)
+    }
+
     return (
         <Modal onCloseModal={onCloseTodoModal}>
-            <Title>Add Todo</Title>
+            <Title>{title}</Title>
             <TodoCreater>
                 <Input value={inputData} onChange={handleChangeInputData} />
                 <Buttons>
                     <Button $isDisabled={isAddDisabled} onClick={handleAddTodo}>
-                        Add
+                        {addText}
                     </Button>
                     <Button
                         $isDisabled={isRemoveAllDisabled}
                         onClick={checkAllRemove}
                     >
-                        Remove All
+                        {removeAllText}
                     </Button>
                 </Buttons>
             </TodoCreater>
@@ -130,17 +126,21 @@ export const TodoModal = ({
                         <TodoText key={id} $isChecked={checked}>
                             {data}
                         </TodoText>
-                        <Button onClick={checkRemove(id)}>Remove</Button>
+                        <Button onClick={checkRemove(id)}>{removeText}</Button>
                     </Todo>
                 ))}
             </TodoList>
             {isDelete &&
                 createPortal(
-                    <Modal onCloseModal={onCloseCheckModal}>
-                        <Title>Are you sure?</Title>
+                    <Modal onCloseModal={handleChangeIsDelete}>
+                        <Title>{checkTitleText}</Title>
                         <Buttons>
-                            <Button onClick={handleDeleteModal}>Delete</Button>
-                            <Button onClick={onCloseCheckModal}>Cancel</Button>
+                            <Button onClick={handleDeleteModal}>
+                                {deleteText}
+                            </Button>
+                            <Button onClick={handleChangeIsDelete}>
+                                {cancelText}
+                            </Button>
                         </Buttons>
                     </Modal>,
                     document.body

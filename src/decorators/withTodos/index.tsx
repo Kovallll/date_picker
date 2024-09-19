@@ -13,17 +13,16 @@ export const withTodos = <T extends WithTodos>(
     const localStorage = new LocalStorage()
 
     const handleAddTodo = (cellId: string, data: string) => {
+        const id = uuidv4()
         const allTodos = localStorage.getItem(todosKey, [])
         let newData = data
         if (data.length > maxLenTodo) {
             newData = data.slice(0, maxLenTodo) + '...'
         }
         const todo = allTodos.find((item) => item.id === cellId)
-        const id = uuidv4()
 
-        const todoData = todo
-            ? [...todo?.data, { id: String(id), data: newData, checked: false }]
-            : [{ id: String(id), data: newData, checked: false }]
+        const newTodo = { id: String(id), data: newData, checked: false }
+        const todoData = todo ? [...todo?.data, newTodo] : [newTodo]
         const filtredTodos = allTodos.filter((todo) => todo.id !== cellId)
         const newTodos = [...filtredTodos, { id: cellId, data: todoData }]
         localStorage.setItem(todosKey, newTodos)
