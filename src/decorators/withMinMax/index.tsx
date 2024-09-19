@@ -2,6 +2,7 @@ import { ComponentType } from 'react'
 
 import { WithMinMax } from './types'
 
+import { defaultMinMaxDate } from '@constants'
 import { minMaxDate } from '@types'
 import { getValidInputCell } from '@utils'
 
@@ -22,9 +23,9 @@ export const withMinMax = <T extends WithMinMax>(
         inputYear: maxYear,
     } = getValidInputCell(minMaxDate?.maxDate ?? '')
 
-    const newMinMaxDate = {
-        minDate: minMaxDate?.minDate,
-        maxDate: minMaxDate?.maxDate,
+    let newMinMaxDate = {
+        minDate: minMaxDate?.minDate ?? '',
+        maxDate: minMaxDate?.maxDate ?? '',
         minDateCellId,
         maxDateCellId,
         minMonth,
@@ -40,6 +41,9 @@ export const withMinMax = <T extends WithMinMax>(
     if (!isValidMaxDate) {
         newMinMaxDate.maxDate = ''
         newMinMaxDate.maxDateCellId = 0
+    }
+    if (newMinMaxDate.maxDate < newMinMaxDate.minDate) {
+        newMinMaxDate = defaultMinMaxDate
     }
     const ComponentWithChangeStartDay = (props: T) => {
         return (
