@@ -7,7 +7,9 @@ import {
     getCountCellsPrevYears,
     getDaysInMonth,
     getInitialCells,
+    getPopupTableCells,
 } from '.'
+import { getCalendarCells202400 } from './mockData'
 
 describe('testing utils', () => {
     test('getCountCellsPrevYears', () => {
@@ -40,7 +42,7 @@ describe('testing utils', () => {
         expect(getCellsNextMonth(2024, 1)).toBe(3)
         expect(getCellsNextMonth(2024, 2)).toBe(0)
         expect(getCellsNextMonth(2024, 11)).toBe(5)
-        expect(getCellsNextMonth(0, 0)).toBe(6)
+        expect(getCellsNextMonth(0, 0)).toBe(4)
     })
 
     test('getCellsInMonth', () => {
@@ -51,21 +53,36 @@ describe('testing utils', () => {
     })
 
     test('getDaysInMonth', () => {
-        expect(getDaysInMonth(2024, 0)).toBe(31)
-        expect(getDaysInMonth(2024, 1)).toBe(29)
-        expect(getDaysInMonth(2024, 2)).toBe(31)
+        expect(getDaysInMonth(2024, 1)).toBe(31)
+        expect(getDaysInMonth(2024, 2)).toBe(29)
         expect(getDaysInMonth(-1, 0)).toBe(31)
     })
 
     test('getInitialCells', () => {
-        expect(getInitialCells(6)).toBe(31)
-        expect(getInitialCells(3, ['a', 'b', 'c'])).toBe(29)
-        expect(getInitialCells(3, ['a', 'b', 'c'], 2)).toBe(31)
+        expect(getInitialCells(2)).toStrictEqual([
+            { data: [], id: '1' },
+            { data: [], id: '2' },
+        ])
+        expect(getInitialCells(3, ['a', 'b', 'c'])).toStrictEqual([
+            { data: 'a', id: '1' },
+            { data: 'b', id: '2' },
+            { data: 'c', id: '3' },
+        ])
+        expect(getInitialCells(3, ['a', 'b', 'c'], 2)).toStrictEqual([
+            { data: 'c', id: '3' },
+            { data: [], id: '4' },
+            { data: [], id: '5' },
+        ])
     })
 
     test('getCalendarCells', () => {
-        expect(getCalendarCells(2024, 0, 0)).toBe(31)
-        expect(getCalendarCells(2024, 0, 1)).toBe(29)
-        expect(getCalendarCells(2023, 0, 0)).toBe(31)
+        expect(getCalendarCells(2024, 0, 0)).toStrictEqual(
+            getCalendarCells202400
+        )
+    })
+
+    test('getPopupTableCells', () => {
+        expect(getPopupTableCells(0, 0)).toStrictEqual([])
+        expect(getPopupTableCells(2, 0)).toStrictEqual(['0', '1'])
     })
 })

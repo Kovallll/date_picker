@@ -1,4 +1,4 @@
-import { forwardRef, memo, useState } from 'react'
+import { memo, useState } from 'react'
 
 import { changeType, nextImageAlt, prevImageAlt } from './config'
 import { ButtonsWrap, YearSection } from './styled'
@@ -9,10 +9,7 @@ import { SwapButton } from '@components/SwapButton'
 import { countElementInPopupTable, icons } from '@constants'
 import { getPopupTableCells } from '@utils'
 
-const YearCalendar = forwardRef(function YearCalendar(
-    { year, handleSelectYear }: YearCalendarProps,
-    ref: React.ForwardedRef<HTMLElement | null>
-) {
+const YearCalendar = ({ year, handleSelectYear }: YearCalendarProps) => {
     const [currentYear, setCurrentYear] = useState(year)
     const [yearData, setYearData] = useState(
         getPopupTableCells(countElementInPopupTable, currentYear)
@@ -51,7 +48,7 @@ const YearCalendar = forwardRef(function YearCalendar(
         : icons.prevArrowIcon
 
     return (
-        <YearSection ref={ref}>
+        <YearSection>
             <ButtonsWrap>
                 <SwapButton
                     onClick={handleClickPrevButton}
@@ -72,6 +69,6 @@ const YearCalendar = forwardRef(function YearCalendar(
             />
         </YearSection>
     )
-})
+}
 
 export default memo(YearCalendar)

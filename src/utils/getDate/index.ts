@@ -1,5 +1,5 @@
 import { countMsInDay, daysInWeek, thursdayIndex } from '@constants'
-import { CustomHolidays, Holidays } from '@types'
+import { CustomHolidays, Holidays, StartDay } from '@types'
 import {
     getAllCellsPrevMonths,
     getCellsPrevMonth,
@@ -76,7 +76,7 @@ export const getValidInputCell = (
 export const getMonthAndDaysByWeek = (
     year: number,
     weekNumber: number,
-    startDay: number
+    startDay: StartDay
 ) => {
     const firstDayOfYear = new Date(year, 0, 1 - startDay)
 
