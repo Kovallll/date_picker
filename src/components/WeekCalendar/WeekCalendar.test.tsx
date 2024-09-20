@@ -6,12 +6,13 @@ import '@testing-library/jest-dom'
 import theme from '@styles/theme'
 import { fireEvent, render, screen } from '@testing-library/react'
 
-test('loads and displays greeting', async () => {
+test('test WeekCalendar', async () => {
+    const mockFn = jest.fn()
     render(
         <ThemeProvider theme={theme}>
-            <WeekCalendar handleOpenCalendar={() => {}} />
+            <WeekCalendar handleOpenCalendar={mockFn} />
         </ThemeProvider>
     )
-    const firstElement = screen.getByText('1')
+    const firstElement = screen.getByText('40')
     fireEvent.click(firstElement)
 })

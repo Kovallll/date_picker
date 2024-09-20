@@ -7,7 +7,7 @@ import { initialWeekDays } from '@constants'
 import theme from '@styles/theme'
 import { fireEvent, render, screen } from '@testing-library/react'
 
-test('loads and displays greeting', async () => {
+test('test WeekBar', async () => {
     render(
         <ThemeProvider theme={theme}>
             <WeekBar weekDays={initialWeekDays} />
@@ -16,5 +16,5 @@ test('loads and displays greeting', async () => {
 
     const sunday = screen.getByText('Su')
     fireEvent.click(sunday)
-    screen.getAllByTestId('week-calendar')
+    screen.getByText('40')
 })

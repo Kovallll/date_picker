@@ -62,6 +62,7 @@ export const CalendarWithCustomHolidays: Story = {
         holidaysData: [
             { date: '07/01/2024', holiday: 'title' },
             { date: '12/01/2024', holiday: '' },
+            { date: '17/09/2024', holiday: 'test' },
             { date: '14/01/2024', holiday: 'Any holiday' },
             { date: '09/010/2024', holiday: 'value' },
         ],

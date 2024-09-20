@@ -1,15 +1,16 @@
 import { ThemeProvider } from 'styled-components'
 
-import { SwapButton } from '.'
+import DefaultCalendar from '.'
 
 import '@testing-library/jest-dom'
 import theme from '@styles/theme'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
-test('test SwapButton', async () => {
+test('test DefaultCalendar', async () => {
     render(
         <ThemeProvider theme={theme}>
-            <SwapButton alt="" src="" onClick={() => {}} />
+            <DefaultCalendar />
         </ThemeProvider>
     )
+    screen.getAllByText('1')
 })

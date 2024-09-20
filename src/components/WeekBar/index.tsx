@@ -29,7 +29,6 @@ const WeekBar = (props: WeekBarProps) => {
             </Week>
             {isWeekOpen && (
                 <WeekCalendar
-                    data-testid="week-calendar"
                     handleOpenCalendar={handleOpenCalendar}
                     ref={calendarRef}
                 />

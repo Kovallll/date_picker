@@ -20,6 +20,9 @@ describe('testing utils', () => {
             getHolidaysData([{ date: '02/01/2024', holiday: '' }])
         ).toStrictEqual([{ holiday: '', id: '885032' }])
         expect(
+            getHolidaysData([{ date: '03/01/2024', holiday: 'test' }])
+        ).toStrictEqual([{ holiday: 'test', id: '885033' }])
+        expect(
             getHolidaysData([{ date: '02/123/2024', holiday: '' }])
         ).toStrictEqual([undefined])
     })

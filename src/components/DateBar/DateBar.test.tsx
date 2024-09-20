@@ -6,7 +6,7 @@ import '@testing-library/jest-dom'
 import theme from '@styles/theme'
 import { fireEvent, render, screen } from '@testing-library/react'
 
-test('loads and displays greeting', async () => {
+test('test DateBar', async () => {
     render(
         <ThemeProvider theme={theme}>
             <DateBar />
@@ -17,7 +17,8 @@ test('loads and displays greeting', async () => {
     fireEvent.click(year)
     screen.getByText('2025')
     fireEvent.click(year)
-    const january = screen.getByText('September')
-    fireEvent.click(january)
+    
+    const month = screen.getByText('September')
+    fireEvent.click(month)
     screen.getByText('February')
 })
