@@ -102,26 +102,33 @@ export interface Theme {
         closeRight: string
         closeTop: string
         titleMargin: string
+        checkBoxWidth: string
         large: {
+            top: string
             buttonPadding: string
-            width: string
+            inputWidth: string
             inputPadding: string
             buttonsWidth: string
             todoMaxHeight: string
+            buttonImageSize: string
         }
         medium: {
+            top: string
             buttonPadding: string
-            width: string
+            inputWidth: string
             inputPadding: string
             buttonsWidth: string
             todoMaxHeight: string
+            buttonImageSize: string
         }
         small: {
+            top: string
             buttonPadding: string
-            width: string
+            inputWidth: string
             inputPadding: string
             buttonsWidth: string
             todoMaxHeight: string
+            buttonImageSize: string
         }
     }
     cellBorderRadius: string

@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 import { CloseButton, Container, Image, Window } from './styled'
 import { ModalProps } from './types'
@@ -10,7 +11,7 @@ export const Modal = ({ onCloseModal, children }: ModalProps) => {
     const modalRef = useRef(null)
     useClickOutside(modalRef, () => onCloseModal())
 
-    return (
+    return createPortal(
         <Container>
             <Window ref={modalRef}>
                 <CloseButton onClick={onCloseModal}>
@@ -18,6 +19,7 @@ export const Modal = ({ onCloseModal, children }: ModalProps) => {
                 </CloseButton>
                 {children}
             </Window>
-        </Container>
+        </Container>,
+        document.body
     )
 }

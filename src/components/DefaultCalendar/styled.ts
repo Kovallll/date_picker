@@ -62,6 +62,7 @@ export const CalendarArticle = styled.article<CalendarArticleProps>`
         return css`
             ${mixins.flexColumnCenter()}
 
+            position: relative;
             width: ${theme.fullSize};
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};

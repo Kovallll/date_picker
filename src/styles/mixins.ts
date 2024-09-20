@@ -47,6 +47,15 @@ export default {
             height: ${theme.cellHeight.sm + 'px'};
         }
     `,
+    modalTop: (theme: Theme) => css`
+        ${theme.modalStyles.large.top + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            top: ${theme.modalStyles.medium.top + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            top: ${theme.modalStyles.small.top + 'px'};
+        }
+    `,
     margin: (theme: Theme, fisrtPos?: string, lastPos?: string) => css`
         ${fisrtPos} ${theme.spaces.lg + 'px'} ${lastPos};
         @media (max-width: ${theme.media.md + 'px'}) {

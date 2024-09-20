@@ -5,7 +5,7 @@ import {
     withHolidays,
     withMinMax,
     withRange,
-    withTodos
+    withTodos,
 } from '@decorators'
 import { DateProvider } from '@providers/DateProvider'
 import { InputProvider } from '@providers/InputProvider'

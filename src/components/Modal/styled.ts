@@ -5,14 +5,8 @@ import mixins from '@styles/mixins'
 export const Container = styled.div`
     ${mixins.flexColumnCenter}
 
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    overflow: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    top: ${({ theme }) => mixins.modalTop(theme)};
     z-index: 10;
 `
 
@@ -28,7 +22,7 @@ export const Window = styled.div`
             ${mixins.flexColumnCenter}
 
             position: relative;
-            width: ${mixins.elementWidth(theme, theme.modalStyles, 'width')};
+            width: ${mixins.elementWidth(theme, theme.calendarStyles, 'width')};
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};
             border-radius: ${theme.cellBorderRadius + 'px'};

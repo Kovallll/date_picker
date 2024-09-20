@@ -1,18 +1,17 @@
-import { useState } from 'react'
-import { createPortal } from 'react-dom'
+import { memo, useState } from 'react'
 
 import {
-    addText,
+    allText,
     cancelText,
     checkTitleText,
     deleteText,
-    removeAllText,
-    removeText,
+    placeholderText,
     title,
 } from './config'
 import {
     Button,
     Buttons,
+    Image,
     Input,
     Title,
     Todo,
@@ -23,10 +22,10 @@ import {
 import { TodoModalProps } from './types'
 
 import { Modal } from '@components/Modal'
-import { initialActiveCellId } from '@constants'
+import { icons, initialActiveCellId } from '@constants'
 import { useTodo } from '@hooks'
 
-export const TodoModal = ({
+const TodoModal = ({
     onClose,
     todo,
     addTodo,
@@ -96,55 +95,67 @@ export const TodoModal = ({
 
     const handleAddTodo = () => {
         appendTodo(todoId)
+        setInputData('')
     }
+
+    const addIcon = isAddDisabled ? icons.disabledAddIcon : icons.addIcon
+    const deleteIcon = isRemoveAllDisabled
+        ? icons.disabledDeleteIcon
+        : icons.deleteIcon
 
     return (
         <Modal onCloseModal={onCloseTodoModal}>
             <Title>{title}</Title>
             <TodoCreater>
-                <Input value={inputData} onChange={handleChangeInputData} />
-                <Buttons>
-                    <Button $isDisabled={isAddDisabled} onClick={handleAddTodo}>
-                        {addText}
+                <Input
+                    value={inputData}
+                    onChange={handleChangeInputData}
+                    $isCheckbox={false}
+                    placeholder={placeholderText}
+                />
+                <Buttons $isCheckModal={false}>
+                    <Button disabled={isAddDisabled} onClick={handleAddTodo}>
+                        <Image src={addIcon} />
                     </Button>
                     <Button
-                        $isDisabled={isRemoveAllDisabled}
+                        disabled={isRemoveAllDisabled}
                         onClick={checkAllRemove}
                     >
-                        {removeAllText}
+                        <Image src={deleteIcon} /> {allText}
                     </Button>
                 </Buttons>
             </TodoCreater>
             <TodoList>
                 {todoData.map(({ id, data, checked }) => (
-                    <Todo>
+                    <Todo key={id}>
                         <Input
                             type="checkbox"
                             defaultChecked={checked}
                             onChange={handleChangeCheckBox(id)}
+                            $isCheckbox={true}
                         />
-                        <TodoText key={id} $isChecked={checked}>
-                            {data}
-                        </TodoText>
-                        <Button onClick={checkRemove(id)}>{removeText}</Button>
+                        <TodoText $isChecked={checked}>{data}</TodoText>
+                        <Button onClick={checkRemove(id)}>
+                            <Image src={icons.deleteIcon} />
+                        </Button>
                     </Todo>
                 ))}
             </TodoList>
-            {isDelete &&
-                createPortal(
-                    <Modal onCloseModal={handleChangeIsDelete}>
-                        <Title>{checkTitleText}</Title>
-                        <Buttons>
-                            <Button onClick={handleDeleteModal}>
-                                {deleteText}
-                            </Button>
-                            <Button onClick={handleChangeIsDelete}>
-                                {cancelText}
-                            </Button>
-                        </Buttons>
-                    </Modal>,
-                    document.body
-                )}
+            {isDelete && (
+                <Modal onCloseModal={handleChangeIsDelete}>
+                    <Title>{checkTitleText}</Title>
+                    <Buttons $isCheckModal={true}>
+                        <Button onClick={handleDeleteModal}>
+                            {deleteText}
+                        </Button>
+                        <Button onClick={handleChangeIsDelete}>
+                            {cancelText}
+                        </Button>
+                    </Buttons>
+                </Modal>
+            )}
         </Modal>
     )
 }
+
+export default memo(TodoModal)

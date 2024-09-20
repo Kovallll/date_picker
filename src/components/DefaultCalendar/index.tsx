@@ -1,5 +1,4 @@
-import { memo, useCallback, useContext, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { memo, useCallback, useContext, useMemo, useRef, useState } from 'react'
 
 import {
     datePlaceholder,
@@ -19,7 +18,7 @@ import { DefaultCalendarProps } from './types'
 import DateBar from '@components/DateBar'
 import { DateInput } from '@components/DateInput'
 import DaysTable from '@components/DaysTable'
-import { TodoModal } from '@components/TodoModal'
+import TodoModal from '@components/TodoModal'
 import WeekBar from '@components/WeekBar'
 import { initialActiveCellId, initialWeekDays, todosKey } from '@constants'
 import { InputContext } from '@context'
@@ -58,15 +57,14 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         secondInputDate,
         handleChangeSecondDateInput,
     } = useInputDate()
-    const localStorage = new LocalStorage()
 
     const handleChangeActiveCellId = (id: string) => {
         setActiveCellId(id)
     }
 
-    const handleChangeModalState = () => {
+    const handleChangeModalState = useCallback(() => {
         setIsOpenModal((prev) => !prev)
-    }
+    }, [])
     const { isValidDate: isValidFirstInput } = getValidInputCell(firstInputDate)
     const validFirstInput = isValidFirstInput ? firstInputDate : ''
     const { isValidDate: isValidSecondInput } =
@@ -126,9 +124,15 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         if (!isDisabledTodos) handleChangeModalState()
     }
 
-    const todo = localStorage
-        .getItem(todosKey, [])
-        .find((todo) => todo.id == activeCellId) ?? { id: '', data: [] }
+    const todo = useMemo(() => {
+        const localStorage = new LocalStorage()
+
+        return (
+            localStorage
+                .getItem(todosKey, [])
+                .find((todo) => todo.id == activeCellId) ?? { id: '', data: [] }
+        )
+    }, [activeCellId])
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
         <CalendarSection
@@ -190,6 +194,17 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                             handleGetAllHolidays={handleGetAllHolidays}
                             minMaxDate={minMaxDate}
                         />
+                        {isOpenModal && isTodos && (
+                            <TodoModal
+                                onClose={handleChangeModalState}
+                                todo={todo}
+                                addTodo={handleAddTodo}
+                                removeTodo={handleRemoveTodo}
+                                removeAllTodos={handleRemoveAllTodos}
+                                updateTodo={handleUpdateTodo}
+                                todoId={activeCellId}
+                            />
+                        )}
                     </CalendarArticle>
                     {isTodos && (
                         <>
@@ -203,20 +218,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                     )}
                 </>
             )}
-            {isOpenModal &&
-                isTodos &&
-                createPortal(
-                    <TodoModal
-                        onClose={handleChangeModalState}
-                        todo={todo}
-                        addTodo={handleAddTodo}
-                        removeTodo={handleRemoveTodo}
-                        removeAllTodos={handleRemoveAllTodos}
-                        updateTodo={handleUpdateTodo}
-                        todoId={activeCellId}
-                    />,
-                    document.body
-                )}
         </CalendarSection>
     )
 }

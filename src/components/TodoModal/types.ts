@@ -10,9 +10,14 @@ export interface TodoModalProps {
     todoId: string
 }
 
-export interface ButtonProps {
-    $isDisabled?: boolean
-}
 export interface TodoTextProps {
     $isChecked: boolean
+}
+
+export interface InputProps {
+    $isCheckbox: boolean
+}
+
+export interface ButtonsProps {
+    $isCheckModal: boolean
 }

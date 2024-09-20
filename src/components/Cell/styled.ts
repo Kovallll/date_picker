@@ -85,7 +85,7 @@ export const CellData = styled.button<CellDataProps>`
     }}
 `
 
-export const TodoCircle = styled.div`
+export const TodoMark = styled.div`
     ${({ theme }) => {
         return css`
             top: ${theme.todoCircleStyles.top + 'px'};

@@ -1,6 +1,6 @@
 import { memo, useState } from 'react'
 
-import { CellData, Holiday, TodoCircle } from './styled'
+import { CellData, Holiday, TodoMark } from './styled'
 import { CellProps } from './types'
 
 import { maxLenHolidayText } from '@constants'
@@ -68,7 +68,7 @@ const Cell = (props: CellProps) => {
             $isHigherThanMaxDate={$isHigherThanMaxDate}
             onClick={handleClickDay}
         >
-            {$isWithTodo && <TodoCircle />}
+            {$isWithTodo && <TodoMark />}
             {isHover && <Holiday>{holiday}</Holiday>}
             <>{children}</>
         </CellData>

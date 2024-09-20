@@ -1,15 +1,16 @@
 import styled, { css } from 'styled-components'
 
-import { ButtonProps, TodoTextProps } from './types'
+import { ButtonsProps, InputProps, TodoTextProps } from './types'
 
+import { DefaultButton } from '@styles/global'
 import mixins from '@styles/mixins'
 
-export const Title = styled.h1`
+export const Title = styled.h2`
     margin-bottom: ${({ theme }) => theme.modalStyles.titleMargin + 'px'};
 `
 
-export const Input = styled.input`
-    ${({ theme }) => {
+export const Input = styled.input<InputProps>`
+    ${({ theme, $isCheckbox }) => {
         const border = mixins.elementBorder(
             theme,
             theme.baseBorder,
@@ -21,12 +22,16 @@ export const Input = styled.input`
             theme.modalStyles,
             'inputPadding'
         )
+        const width = $isCheckbox
+            ? theme.modalStyles.checkBoxWidth
+            : mixins.elementWidth(theme, theme.modalStyles, 'inputWidth')
 
         return css`
             padding: ${padding};
             font-size: ${mixins.fontSize(theme)};
             border-radius: ${theme.modalStyles.borderRadius + 'px'};
             border: ${border};
+            width: ${width};
         `
     }}
 `
@@ -41,15 +46,13 @@ export const TodoCreater = styled.div`
     }}
 `
 
-export const Buttons = styled.div`
-    ${({ theme }) => {
-        const width = mixins.elementWidth(
-            theme,
-            theme.modalStyles,
-            'buttonsWidth'
-        )
+export const Buttons = styled.div<ButtonsProps>`
+    ${({ theme, $isCheckModal }) => {
+        const width = $isCheckModal
+            ? theme.fullSize
+            : mixins.elementWidth(theme, theme.modalStyles, 'buttonsWidth')
         return css`
-            ${mixins.flexRowSB}
+            ${$isCheckModal ? mixins.flexRowSE : mixins.flexRowSB}
 
             width: ${width};
             margin-left: ${theme.modalStyles.buttonsMarginLeft + 'px'};
@@ -57,29 +60,48 @@ export const Buttons = styled.div`
     }}
 `
 
-export const Button = styled.button<ButtonProps>`
-    ${({ theme, $isDisabled }) => {
+export const Button = styled(DefaultButton)`
+    ${({ theme, disabled }) => {
         const padding = mixins.modalPadding(
             theme,
-            '4px',
+            '2px',
             theme.modalStyles,
             'buttonPadding'
         )
-        const color = $isDisabled
+        const color = disabled
             ? theme.palette.newMonth
-            : theme.palette.common.white
-        const bgColor = $isDisabled
-            ? theme.palette.common.white
-            : theme.palette.lightBlue
+            : theme.palette.common.black
+        const borderColor = disabled
+            ? theme.palette.newMonth
+            : theme.palette.blue
 
         return css`
             padding: ${padding};
-            background-color: ${bgColor};
-            border: ${mixins.elementBorder(theme, theme.baseBorder, theme.palette.blue)}
+            border: ${mixins.elementBorder(theme, theme.baseBorder, borderColor)}
             border-radius: ${theme.modalStyles.borderRadius + 'px'};
-            cursor: ${$isDisabled ? 'default' : 'pointer'};
             color: ${color};
             font-size: ${mixins.fontSize(theme)};
+        `
+    }}
+`
+
+export const Image = styled.img`
+    ${({ theme }) => {
+        const width = mixins.elementWidth(
+            theme,
+            theme.modalStyles,
+            'buttonImageSize'
+        )
+        const height = mixins.elementHeight(
+            theme,
+            theme.modalStyles,
+            'buttonImageSize'
+        )
+        return css`
+            ${mixins.flexRowSB}
+
+            width: ${width};
+            height: ${height};
         `
     }}
 `
