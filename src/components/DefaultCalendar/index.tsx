@@ -15,9 +15,12 @@ import WeekBar from '@components/WeekBar'
 import { initialWeekDays } from '@constants'
 import { InputContext } from '@context'
 import { useClickOutside, useInputDate } from '@hooks'
+import { calendarInfo } from '@service'
 import { getValidInputCell } from '@utils'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
+    const calendarData = new calendarInfo()
+
     const {
         isWithRange = false,
         onClickWithRange,
@@ -42,6 +45,12 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         secondInputDate,
         handleChangeSecondDateInput,
     } = useInputDate()
+
+    calendarData.updateData({
+        firstInputDate,
+        secondInputDate,
+    })
+
     const { isValidDate: isValidFirstInput } = getValidInputCell(firstInputDate)
     const validFirstInput = isValidFirstInput ? firstInputDate : ''
     const { isValidDate: isValidSecondInput } =
@@ -140,6 +149,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         handleGetHoliday={handleGetHoliday}
                         handleGetAllHolidays={handleGetAllHolidays}
                         minMaxDate={minMaxDate}
+                        calendarData={calendarData}
                     />
                 </Article>
             )}

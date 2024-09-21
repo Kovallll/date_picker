@@ -19,23 +19,18 @@ export default meta
 type Story = StoryObj<typeof Calendar>
 
 export const DefaultCalendar: Story = {
-    args: {
-        isWithRange: false,
-        isWithInput: false,
-    },
+    args: {},
 }
 
 export const CalendarWithRange: Story = {
     args: {
         isWithRange: true,
-        isWithInput: false,
     },
 }
 
 export const CalendarWithInput: Story = {
     args: {
         isWithInput: true,
-        isWithRange: false,
     },
 }
 
@@ -48,26 +43,20 @@ export const CalendarWithRangeInput: Story = {
 
 export const CalendarWithMinMaxDate: Story = {
     args: {
-        isWithInput: true,
-        isWithRange: true,
         isWithMinMax: true,
-        minDate: '6/09/2024',
-        maxDate: '15/10/2024',
+        minDate: '06/09/2024',
+        maxDate: '24/09/2024',
     },
 }
 
 export const CalendarWithStartSunday: Story = {
     args: {
-        isWithRange: false,
-        isWithInput: false,
         isWithStartSunday: true,
     },
 }
 
 export const CalendarWithCustomHolidays: Story = {
     args: {
-        isWithRange: false,
-        isWithInput: false,
         isWithHoliday: true,
         holidaysData: [
             { date: '07/01/2024', holiday: 'title' },

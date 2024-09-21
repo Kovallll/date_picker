@@ -1,6 +1,12 @@
 {
-    "name": "date_picker",
+    "name": "date-picker-calendar-react",
     "packageManager": "yarn@1.22.22",
+    "version": "0.9.0",
+    "author": "Danila Kovaliou",
+    "keywords": [
+        "date-picker",
+        "calendar"
+    ],
     "type": "module",
     "license": "MIT",
     "scripts": {
@@ -71,7 +77,7 @@
         "rollup": "^4.21.1",
         "rollup-plugin-jsx": "^1.0.3",
         "rollup-plugin-styles": "^4.0.0",
-        "storybook": "^8.2.9",
+        "storybook": "^8.3.2",
         "storybook-react-context": "^0.6.0",
         "ts-node": "^10.9.2",
         "tslib": "^2.7.0",

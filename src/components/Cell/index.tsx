@@ -32,7 +32,7 @@ const Cell = (props: CellProps) => {
         onClickCell(e, id)
     }
     let holiday = holidayTitle
-    if (holidayTitle?.length >= maxLenHolidayText) {
+    if (holidayTitle?.length ?? 0 >= maxLenHolidayText) {
         holiday = holidayTitle?.slice(0, maxLenHolidayText) + '...'
     }
     const unhover = $isActive || $isStartRange || $inRange || $isEndRange
