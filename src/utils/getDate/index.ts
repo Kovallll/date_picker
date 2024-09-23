@@ -15,7 +15,12 @@ export const getDateFormat = (
 
     const day = id + 1 - getCellsPrevMonth(year, currentMonth - 1)
     newDate.setFullYear(year, currentMonth - 1, day)
-    const date = newDate.toLocaleDateString().replace(/\./g, '/')
+
+    const formattedYear = newDate.getFullYear()
+    const formattedMonth = String(newDate.getMonth() + 1).padStart(2, '0')
+    const formattedDay = String(newDate.getDate()).padStart(2, '0')
+
+    const date = `${formattedDay}/${formattedMonth}/${formattedYear}`
 
     return date
 }
@@ -97,7 +102,7 @@ export const getMonthAndDaysByWeek = (
 
     const days = []
     for (let d = startOfWeek; d <= endOfWeek; d.setDate(d.getDate() + 1)) {
-        days.push(Number(new Date(d).toLocaleDateString().split('.')[0]))
+        days.push(Number(new Date(d).toString().split(' ')[2]))
     }
 
     return {
