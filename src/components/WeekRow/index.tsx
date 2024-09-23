@@ -7,14 +7,7 @@ import Cell from '@components/Cell'
 import { daysInWeek, defaultGetHoliday, WeekDays } from '@constants'
 import { DateContext } from '@context'
 import { GetHoliday, Holidays } from '@types'
-import {
-    getAllCellsPrevMonths,
-    getCellsInMonth,
-    getCellsNextMonth,
-    getCellsPrevMonth,
-    getCountCellsPrevYears,
-    getMonthAndDaysByWeek,
-} from '@utils'
+import {   getAllCellsPrevMonths,    getCellsInMonth,    getCellsNextMonth,    getCellsPrevMonth,    getCountCellsPrevYears,    getMonthAndDaysByWeek} from '@utils'
 
 export const WeekRow = (props: WeekRowProps) => {
     const {

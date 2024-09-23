@@ -1,25 +1,8 @@
 import { noDateError } from './config'
-import {
-    CalendarImageButton,
-    ClearImageButton,
-    DateSection,
-    Image,
-    Input,
-    InputBlock,
-} from './styled'
+import {CalendarImageButton,ClearImageButton,DateSection,Image,Input,InputBlock} from './styled'
 import { DateInputProps } from './types'
 
-import {
-    countMonth,
-    dayWithSlashId,
-    icons,
-    inputDaySlashIndex,
-    inputMonthSlashIndex,
-    maxDays,
-    monthWithSlashId,
-    NaNRegExp,
-    pickSlashRegExp,
-} from '@constants'
+import {countMonth,dayWithSlashId,icons,inputDaySlashIndex,inputMonthSlashIndex, maxDays,monthWithSlashId,NaNRegExp, pickSlashRegExp} from '@constants'
 import { getValidInputCell } from '@utils'
 
 export const DateInput = (props: DateInputProps) => {

@@ -1,9 +1,6 @@
 import { useContext } from 'react'
 
-import {
-    fisrtDateLongerThanSecondError,
-    minMaxError,
-} from '@components/DaysTable/config'
+import {   fisrtDateLongerThanSecondError,    minMaxError} from '@components/DaysTable/config'
 import { isInputDateInMinMaxRange } from '@components/DaysTable/utils/isInputDateInMinMaxRange'
 import { defaultMinMaxDate, initialActiveCellId, waitTime } from '@constants'
 import { DateContext } from '@context'

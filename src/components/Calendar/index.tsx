@@ -1,12 +1,7 @@
 import { CalendarProps } from './types'
 
 import ErrorBoundary from '@components/ErrorBoundary'
-import {
-    withChangeStartDay,
-    withHolidays,
-    withMinMax,
-    withRange,
-} from '@decorators'
+import {withChangeStartDay,withHolidays,withMinMax,withRange} from '@decorators'
 import { DateProvider } from '@providers/DateProvider'
 import { InputProvider } from '@providers/InputProvider'
 import ThemeProvider from '@providers/ThemeProvider'

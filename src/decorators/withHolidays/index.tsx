@@ -2,12 +2,7 @@ import { ComponentType } from 'react'
 
 import { WithHoliday } from './types'
 
-import {
-    defaultHoliday,
-    holidays,
-    inputDaySlashIndex,
-    inputMonthSlashIndex,
-} from '@constants'
+import {defaultHoliday,holidays,inputDaySlashIndex,inputMonthSlashIndex} from '@constants'
 import { CustomHolidays, GetHoliday, Holidays } from '@types'
 import { getHolidaysData } from '@utils'
 

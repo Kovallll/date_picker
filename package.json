@@ -1,7 +1,7 @@
 {
     "name": "date-picker-calendar-react",
     "packageManager": "yarn@1.22.22",
-    "version": "0.9.0",
+    "version": "0.9.8",
     "author": "Danila Kovaliou",
     "keywords": [
         "date-picker",
@@ -9,6 +9,9 @@
     ],
     "type": "module",
     "license": "MIT",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "sb": "storybook dev -p 6006",
         "build-sb": "storybook build",
@@ -18,7 +21,8 @@
         "format": "prettier . --write",
         "build": "rollup --config --bundleConfigAsCjs",
         "prepare": "husky",
-        "test:unit": "jest --passWithNoTests"
+        "test:unit": "jest --passWithNoTests",
+        "publish-npm": "yarn build && npm publish"
     },
     "dependencies": {
         "react": "^18.3.1",
@@ -26,9 +30,23 @@
         "styled-components": "^6.1.12"
     },
     "peerDependencies": {
+        "@emotion/react": "^11.5.0",
+        "@emotion/styled": "^11.3.0",
+        "@types/react": "^17.0.0 || ^18.0.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "styled-components": "^6.1.12"
+    },
+    "peerDependenciesMeta": {
+        "@types/react": {
+            "optional": true
+        },
+        "@emotion/react": {
+            "optional": true
+        },
+        "@emotion/styled": {
+            "optional": true
+        }
     },
     "devDependencies": {
         "@babel/core": "^7.25.2",
@@ -42,10 +60,8 @@
         "@rollup/plugin-alias": "^5.1.0",
         "@rollup/plugin-babel": "^6.0.4",
         "@rollup/plugin-commonjs": "^26.0.1",
-        "@rollup/plugin-image": "^3.0.3",
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-node-resolve": "^15.2.3",
-        "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^11.1.6",
         "@storybook/addon-essentials": "^8.2.9",
         "@storybook/addon-interactions": "^8.2.9",
@@ -75,8 +91,12 @@
         "prettier": "^3.3.3",
         "prettier-eslint": "^16.3.0",
         "rollup": "^4.21.1",
+        "rollup-plugin-dts": "^6.1.1",
+        "rollup-plugin-img": "^1.1.0",
         "rollup-plugin-jsx": "^1.0.3",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-styles": "^4.0.0",
+        "rollup-plugin-terser": "^7.0.2",
         "storybook": "^8.3.2",
         "storybook-react-context": "^0.6.0",
         "ts-node": "^10.9.2",
@@ -88,5 +108,17 @@
         "vite": "^5.4.2",
         "vite-tsconfig-paths": "^5.0.1",
         "yup": "^1.4.0"
-    }
+    },
+    "description": "Date Picker — это легковесная и интуитивно понятная библиотека, предназначенная для интеграции функционала календаря в ваши веб-приложения. Она поддерживает различные форматы отображения, позволяет настраивать минимальные и максимальные даты, добавлять задачи в конкретные дни, добавлять свои праздники и многое другое.",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Kovallll/date_picker.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Kovallll/date_picker/issues"
+    },
+    "homepage": "https://github.com/Kovallll/date_picker#readme"
 }

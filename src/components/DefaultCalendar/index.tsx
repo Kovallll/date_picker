@@ -1,10 +1,6 @@
 import { memo, useCallback, useContext, useRef, useState } from 'react'
 
-import {
-    datePlaceholder,
-    endRangePlaceholder,
-    startRangePlaceholder,
-} from './config'
+import {datePlaceholder,endRangePlaceholder,startRangePlaceholder} from './config'
 import { Article, CalendarSection, ErrorMesssage, InputBlock } from './styled'
 import { DefaultCalendarProps } from './types'
 

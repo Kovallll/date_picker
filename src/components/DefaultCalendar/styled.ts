@@ -46,6 +46,7 @@ export const Article = styled.article`
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};
             border: ${mixins.elementBorder(theme, theme.calendarStyles)};
+            background-color: ${theme.palette.common.white};
             border-radius: ${mixins.elementBorderRadius(
                 theme,
                 theme.calendarStyles
