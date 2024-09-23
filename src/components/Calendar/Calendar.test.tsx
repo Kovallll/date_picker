@@ -107,14 +107,16 @@ test('testing isWithMinMax', async () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar
+                minDate="07/09/2024"
+                maxDate="10/09/2024"
                 isWithMinMax={true}
-                minDate="01/01/2024"
-                maxDate="05/01/2024"
             />
         </ThemeProvider>
     )
-    const style = window.getComputedStyle(screen.getByText('17'))
-    expect(style.color).toBe('rgb(221, 221, 221)')
+    const styleDisabled = window.getComputedStyle(screen.getByText('17'))
+    expect(styleDisabled.color).toBe('rgb(221, 221, 221)')
+    const styleActive = window.getComputedStyle(screen.getByText('9'))
+    expect(styleActive.color).toBe('rgb(57, 57, 57)')
 })
 
 test('testing isWithTodos', async () => {
