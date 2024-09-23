@@ -25,4 +25,4 @@ jobs:
             - name: build storybook
               run: yarn build-sb
             - name: check tests
-              run: yarn test
+              run: yarn test --runInBand
