@@ -27,7 +27,8 @@ export const getHolidaysData = (data: CustomHolidays[]) => {
             return { id: `*${day}/${month}`, holiday: item.holiday }
         } else {
             const { isValidDate, inputCellId } = getValidInputCell(item.date)
-            if (isValidDate) return { id: inputCellId, holiday: item.holiday }
+            if (isValidDate)
+                return { id: String(inputCellId), holiday: item.holiday }
         }
     })
 
@@ -40,7 +41,6 @@ export const getValidInputCell = (
 ) => {
     let [inputDay, inputMonth] = inputData.split('/').map(Number)
     const inputYear = Number(inputData.split('/')[2])
-
     const limitYear = 1000
     const [prevInputDay, prevInputMonth] = prevInputData.split('/').map(Number)
 
@@ -58,10 +58,10 @@ export const getValidInputCell = (
         dateObj.getMonth() === inputMonth - 1 &&
         dateObj.getDate() === inputDay
 
-    if (inputDay === 0 && prevInputDay) {
+    if (!inputDay || (inputDay === 0 && prevInputDay)) {
         inputDay = prevInputDay
     }
-    if (inputMonth === 0 && prevInputMonth) {
+    if (!inputMonth || (inputMonth === 0 && prevInputMonth)) {
         inputMonth = prevInputMonth
     }
 
@@ -69,7 +69,7 @@ export const getValidInputCell = (
     const prevMonthCellsCount =
         getAllCellsPrevMonths(inputYear, inputMonth - 1) +
         getCellsPrevMonth(inputYear, inputMonth - 1)
-    const inputCellId = String(yearId + prevMonthCellsCount + inputDay - 1)
+    const inputCellId = yearId + prevMonthCellsCount + inputDay - 1
     return { isValidDate, inputCellId, inputYear, inputMonth, inputDay }
 }
 

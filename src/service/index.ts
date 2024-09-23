@@ -11,9 +11,9 @@ class calendarCreater {
     addFeature = <T>(
         decorator: (
             calendar: React.FC<DefaultCalendarProps>,
-            data?: T[]
+            data?: T
         ) => React.FC<DefaultCalendarProps>,
-        data?: T[]
+        data?: T
     ) => {
         this.calendar = decorator(this.calendar, data)
     }

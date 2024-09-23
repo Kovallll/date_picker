@@ -1,11 +1,17 @@
 import { CalendarProps } from './types'
 
-import { withChangeStartDay, withHolidays, withRange } from '@decorators'
+import {
+    withChangeStartDay,
+    withHolidays,
+    withMinMax,
+    withRange,
+    withTodos,
+} from '@decorators'
 import { DateProvider } from '@providers/DateProvider'
 import { InputProvider } from '@providers/InputProvider'
 import ThemeProvider from '@providers/ThemeProvider'
 import calendarCreater from '@service'
-import { CustomHolidays } from '@types'
+import { CustomHolidays, minMaxDate } from '@types'
 
 export const Calendar = (props: CalendarProps) => {
     const {
@@ -13,20 +19,37 @@ export const Calendar = (props: CalendarProps) => {
         initialMonth,
         isWithInput = false,
         isWithRange,
+        minDate,
+        maxDate,
         isWithHoliday,
+        isWithMinMax,
         holidaysData = [],
         isWithStartSunday = false,
+        isWithTodos,
     } = props
 
     const calendar = new calendarCreater()
     if (isWithRange) {
         calendar.addFeature(withRange)
     }
+
+    const minMaxDate = {
+        minDate: minDate ?? '',
+        maxDate: maxDate ?? '',
+    }
+
     if (isWithStartSunday) {
         calendar.addFeature(withChangeStartDay)
     }
+    if (isWithTodos) {
+        calendar.addFeature(withTodos)
+    }
+
     if (isWithHoliday) {
-        calendar.addFeature<CustomHolidays>(withHolidays, holidaysData)
+        calendar.addFeature<CustomHolidays[]>(withHolidays, holidaysData)
+    }
+    if (isWithMinMax) {
+        calendar.addFeature<minMaxDate>(withMinMax, minMaxDate)
     }
     const Calendar = calendar.getCalendar()
     return (

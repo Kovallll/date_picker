@@ -1,9 +1,7 @@
 import { memo, useState } from 'react'
 
-import { CellData, Holiday } from './styled'
+import { CellData, Holiday, TodoMark } from './styled'
 import { CellProps } from './types'
-
-import { maxLenHolidayText } from '@constants'
 
 const Cell = (props: CellProps) => {
     const {
@@ -18,6 +16,9 @@ const Cell = (props: CellProps) => {
         $isNewMonth,
         holidayTitle,
         $isPopupActive,
+        $isWithTodo,
+        $isLowerThanMinDate,
+        $isHigherThanMaxDate,
         onClickCell,
         id,
         ...restProps
@@ -29,13 +30,9 @@ const Cell = (props: CellProps) => {
     ) => {
         onClickCell(e, id)
     }
-    let holiday = holidayTitle
-    if ((holidayTitle?.length ?? 0) >= maxLenHolidayText) {
-        holiday = holidayTitle?.slice(0, maxLenHolidayText) + '...'
-    }
     const unhover = $isActive || $isStartRange || $inRange || $isEndRange
     const showHoliday = () => {
-        const isHover = !!holiday && !unhover
+        const isHover = !!holidayTitle && !unhover
         setIsHover(isHover)
     }
 
@@ -61,9 +58,12 @@ const Cell = (props: CellProps) => {
             $isWeekend={$isWeekend}
             $isHoliday={$isHoliday}
             $isNewMonth={$isNewMonth}
+            $isLowerThanMinDate={$isLowerThanMinDate}
+            $isHigherThanMaxDate={$isHigherThanMaxDate}
             onClick={handleClickDay}
         >
-            {isHover && <Holiday>{holiday}</Holiday>}
+            {$isWithTodo && <TodoMark />}
+            {isHover && <Holiday>{holidayTitle}</Holiday>}
             <>{children}</>
         </CellData>
     )

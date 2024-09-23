@@ -24,6 +24,22 @@ export interface InputRange {
     end: string
 }
 
+export interface minMaxDate {
+    minDate: string
+    maxDate: string
+}
+
+export interface minMaxCellDate {
+    minDate: string
+    maxDate: string
+    minDateCellId: number
+    maxDateCellId: number
+    minMonth: number
+    maxMonth: number
+    minYear: number
+    maxYear: number
+}
+
 export type Holidays =
     | {
           id: string
@@ -68,6 +84,17 @@ export type InitialCells = (
           data: never[]
       }
 )[]
+
+export interface Todo {
+    id: string
+    data: TodoData[]
+}
+
+export interface TodoData {
+    id: string
+    data: string
+    checked: boolean
+}
 
 export interface GetHoliday {
     isHoliday: boolean

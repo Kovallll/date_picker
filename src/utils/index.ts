@@ -16,3 +16,4 @@ export {
     getMonthByWeek,
     getHolidaysData,
 } from './getDate'
+export { LocalStorage } from './localStorage'

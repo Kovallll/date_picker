@@ -4,7 +4,7 @@ import { Container } from './styled'
 import { WeekRowProps } from './types'
 
 import Cell from '@components/Cell'
-import { daysInWeek, defaultGetHoliday, WeekDays } from '@constants'
+import { daysInWeek, defaultGetHoliday, todosKey, WeekDays } from '@constants'
 import { DateContext } from '@context'
 import { GetHoliday, Holidays } from '@types'
 import {
@@ -14,6 +14,7 @@ import {
     getCellsPrevMonth,
     getCountCellsPrevYears,
     getMonthAndDaysByWeek,
+    LocalStorage,
 } from '@utils'
 
 export const WeekRow = (props: WeekRowProps) => {
@@ -27,8 +28,18 @@ export const WeekRow = (props: WeekRowProps) => {
         handleGetAllHolidays,
         firstDayIndex,
         startDay,
+        isWithTodos,
+        minMaxDate,
         ...restProps
     } = props
+    const { minDateCellId, maxDateCellId } = minMaxDate
+
+    const localStorage = new LocalStorage()
+    const allTodos = localStorage.getItem(todosKey, [])
+    const getIsWithTodo = (id: string) => {
+        return !!allTodos.find((todo) => todo.id === id)
+    }
+
     let holidaysDates: Holidays[] = []
     if (handleGetAllHolidays) {
         holidaysDates = handleGetAllHolidays()
@@ -91,6 +102,12 @@ export const WeekRow = (props: WeekRowProps) => {
                 const isWeekend =
                     index % daysInWeek === SundayIndex ||
                     index % daysInWeek === SaturdayIndex
+
+                const isLowerThanMinDate =
+                    minDateCellId === 0 ? false : minDateCellId > Number(dayId)
+                const isHigherThanMaxDate =
+                    maxDateCellId === 0 ? false : maxDateCellId < Number(dayId)
+
                 const isNewMonth =
                     Number(dayId) - yearId - monthId < cellsPrevMonth ||
                     Number(dayId) - yearId - monthId >
@@ -101,6 +118,7 @@ export const WeekRow = (props: WeekRowProps) => {
                 const isNext = isNextMonths && id >= cellsInMonth - daysInWeek
                 const isSelectWeek = isPrev || isCurrent || isNext
 
+                const isWithTodo = isWithTodos ? getIsWithTodo(dayId) : false
                 return (
                     <Cell
                         key={dayId}
@@ -113,8 +131,11 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isHoliday={isHoliday}
                         $isWeekend={isWeekend}
                         $isNewMonth={isNewMonth}
+                        $isLowerThanMinDate={isLowerThanMinDate}
+                        $isHigherThanMaxDate={isHigherThanMaxDate}
                         holidayTitle={holidayTitle}
                         $isSelectWeek={isSelectWeek}
+                        $isWithTodo={isWithTodo}
                     >
                         {day}
                     </Cell>

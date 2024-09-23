@@ -8,6 +8,11 @@ export default {
         justify-content: space-evenly;
         align-items: center;
     `,
+    flexRowEnd: () => css`
+        display: flex;
+        justify-content: end;
+        align-items: center;
+    `,
     flexRowSB: () => css`
         display: flex;
         justify-content: space-between;
@@ -42,6 +47,15 @@ export default {
             height: ${theme.cellHeight.sm + 'px'};
         }
     `,
+    modalTop: (theme: Theme) => css`
+        ${theme.modalStyles.large.top + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            top: ${theme.modalStyles.medium.top + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            top: ${theme.modalStyles.small.top + 'px'};
+        }
+    `,
     margin: (theme: Theme, fisrtPos?: string, lastPos?: string) => css`
         ${fisrtPos} ${theme.spaces.lg + 'px'} ${lastPos};
         @media (max-width: ${theme.media.md + 'px'}) {
@@ -58,6 +72,20 @@ export default {
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
             padding: ${fisrtPos} ${theme.spaces.sm + 'px'} ${lastPos};
+        }
+    `,
+    modalPadding: (
+        theme: Theme,
+        fisrtPos: string,
+        elementStyle: SizeStyles,
+        type: string
+    ) => css`
+        ${fisrtPos} ${elementStyle.large[type] + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            padding: ${fisrtPos} ${elementStyle.medium[type] + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            padding: ${fisrtPos} ${elementStyle.small[type] + 'px'};
         }
     `,
     arrowScale: (theme: Theme) => css`
@@ -101,22 +129,39 @@ export default {
                 ${String(Number(theme.spaces.xl) - 8) + 'px'};
         }
     `,
-    elementBorderRadius: (theme: Theme, elementStyle: ElementStyle) => css`
-        ${elementStyle.large.borderRadius + 'px'};
+    elementBorderRadius: (
+        theme: Theme,
+        elementStyle: ElementStyle,
+        $isWithTodos?: boolean
+    ) => css`
+        ${$isWithTodos
+            ? `${elementStyle.large.borderRadius + 'px'} ${elementStyle.large.borderRadius + 'px'} 0px 0px `
+            : elementStyle.large.borderRadius + 'px'};
         @media (max-width: ${theme.media.md + 'px'}) {
-            border-radius: ${elementStyle.medium.borderRadius + 'px'};
+            ${$isWithTodos
+                ? `${elementStyle.medium.borderRadius + 'px'} ${elementStyle.medium.borderRadius + 'px'} 0px 0px `
+                : elementStyle.medium.borderRadius + 'px'};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            border-radius: ${elementStyle.small.borderRadius + 'px'};
+            ${$isWithTodos
+                ? `${elementStyle.small.borderRadius + 'px'} ${elementStyle.small.borderRadius + 'px'} 0px 0px `
+                : elementStyle.small.borderRadius + 'px'};
         }
     `,
-    elementBorder: (theme: Theme, elementStyle: ElementStyle) => css`
-        ${elementStyle.large.border + theme.palette.newMonth};
+    elementBorder: (
+        theme: Theme,
+        border: string,
+        color: string,
+        topNone?: boolean
+    ) => css`
+        ${border + color};
         @media (max-width: ${theme.media.md + 'px'}) {
-            border: ${elementStyle.medium.border + theme.palette.newMonth};
+            border: ${border + color};
+            border-top: ${topNone ? 0 : border + color};
         }
         @media (max-width: ${theme.media.sm + 'px'}) {
-            border: ${elementStyle.small.border + theme.palette.newMonth};
+            border: ${border + color};
+            border-top: ${topNone ? 0 : border + color};
         }
     `,
     elementMaxWidth: (theme: Theme, elementStyle: ElementStyle) => css`
@@ -141,6 +186,32 @@ export default {
             width: ${elementStyle.small[typeWidth] + 'px'};
         }
     `,
+    elementHeight: (
+        theme: Theme,
+        elementStyle: SizeStyles,
+        typeHeight: string
+    ) => css`
+        ${elementStyle.large[typeHeight] + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            height: ${elementStyle.medium[typeHeight] + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            height: ${elementStyle.small[typeHeight] + 'px'};
+        }
+    `,
+    elementMaxHeight: (
+        theme: Theme,
+        elementStyle: SizeStyles,
+        typeHeight: string
+    ) => css`
+        ${elementStyle.large[typeHeight] + 'px'};
+        @media (max-width: ${theme.media.md + 'px'}) {
+            height: ${elementStyle.medium[typeHeight] + 'px'};
+        }
+        @media (max-width: ${theme.media.sm + 'px'}) {
+            height: ${elementStyle.small[typeHeight] + 'px'};
+        }
+    `,
     dayColor: (
         theme: Theme,
         isActive?: boolean,
@@ -148,9 +219,13 @@ export default {
         isStartRange?: boolean,
         isEndRange?: boolean,
         isHoliday?: boolean,
+        isNewMonth?: boolean,
+        isHigherThanMaxDate?: boolean,
         isWeekend?: boolean,
-        isNewMonth?: boolean
+        isLowerThanMaxDate?: boolean
     ) => {
+        if (isHigherThanMaxDate || isLowerThanMaxDate)
+            return theme.palette.disabledColor
         if (inRange) return theme.palette.blue
         if (isActive) return theme.palette.common.white
         if (isEndRange) return theme.palette.common.white

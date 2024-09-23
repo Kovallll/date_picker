@@ -1,38 +1,54 @@
-import { memo, useCallback, useContext, useRef, useState } from 'react'
+import { memo, useCallback, useContext, useMemo, useRef, useState } from 'react'
 
 import {
     datePlaceholder,
     endRangePlaceholder,
     startRangePlaceholder,
+    todoButtonText,
 } from './config'
-import { Article, CalendarSection, ErrorMesssage, InputBlock } from './styled'
+import {
+    CalendarArticle,
+    CalendarSection,
+    ErrorMesssage,
+    InputBlock,
+    TodoButton,
+} from './styled'
 import { DefaultCalendarProps } from './types'
 
 import DateBar from '@components/DateBar'
 import { DateInput } from '@components/DateInput'
 import DaysTable from '@components/DaysTable'
+import TodoModal from '@components/TodoModal'
 import WeekBar from '@components/WeekBar'
-import { initialWeekDays } from '@constants'
+import { initialActiveCellId, initialWeekDays, todosKey } from '@constants'
 import { InputContext } from '@context'
 import { useClickOutside, useInputDate } from '@hooks'
-import { getValidInputCell } from '@utils'
+import { getValidInputCell, LocalStorage } from '@utils'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
     const {
         isWithRange = false,
+        isWithTodos,
         onClickWithRange,
         isChangeStartDay,
         handleChangeWeekDays,
+        handleRemoveTodo,
+        handleAddTodo,
+        handleRemoveAllTodos,
+        handleUpdateTodo,
         handleGetHoliday,
         handleGetAllHolidays,
+        minMaxDate,
         startDay = 1,
         ...restProps
     } = props
     const isWithInput = useContext(InputContext)
-    const [isOpen, setIsOpen] = useState(!isWithInput)
+    const [isOpenTable, setIsOpenTable] = useState(!isWithInput)
+    const [isOpenModal, setIsOpenModal] = useState(false)
     const [error, setError] = useState('')
     const [isKeyboardChange, setIsKeyboardChange] = useState(false)
     const [weekDays, setWeekDays] = useState(initialWeekDays)
+    const [activeCellId, setActiveCellId] = useState(initialActiveCellId)
 
     const calendarRef = useRef(null)
     const {
@@ -41,6 +57,14 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         secondInputDate,
         handleChangeSecondDateInput,
     } = useInputDate()
+
+    const handleChangeActiveCellId = (id: string) => {
+        setActiveCellId(id)
+    }
+
+    const handleChangeModalState = useCallback(() => {
+        setIsOpenModal((prev) => !prev)
+    }, [])
     const { isValidDate: isValidFirstInput } = getValidInputCell(firstInputDate)
     const validFirstInput = isValidFirstInput ? firstInputDate : ''
     const { isValidDate: isValidSecondInput } =
@@ -52,10 +76,20 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         weekDays === initialWeekDays &&
         !!handleChangeWeekDays
 
+    const isTodos =
+        isWithTodos &&
+        handleAddTodo &&
+        handleRemoveTodo &&
+        handleUpdateTodo &&
+        handleRemoveAllTodos
+
     if (isSunday) {
         const newWeekDays = handleChangeWeekDays()
         setWeekDays(newWeekDays)
     }
+
+    const isDisabledTodos =
+        activeCellId === initialActiveCellId || secondInputDate !== ''
 
     const isDisabled = !validFirstInput
     const handleChangeError = useCallback((error: string) => {
@@ -67,7 +101,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
             setError('')
             handleChangeFirstDateInput('')
             handleChangeSecondDateInput('')
-            setIsOpen(false)
+            if (!isOpenModal) setIsOpenTable(false)
         }
     })
 
@@ -76,15 +110,29 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
     }, [])
 
     const handleFocus = () => {
-        setIsOpen(true)
+        setIsOpenTable(true)
     }
 
     const handleOpenCalendar = () => {
-        setIsOpen((prev) => !prev)
+        setIsOpenTable((prev) => !prev)
         handleChangeFirstDateInput('')
+        handleChangeSecondDateInput('')
         handleChangeError('')
     }
 
+    const handleClickTodoButton = () => {
+        if (!isDisabledTodos) handleChangeModalState()
+    }
+
+    const todo = useMemo(() => {
+        const localStorage = new LocalStorage()
+
+        return (
+            localStorage
+                .getItem(todosKey, [])
+                .find((todo) => todo.id == activeCellId) ?? { id: '', data: [] }
+        )
+    }, [activeCellId])
     const placeholder = isWithRange ? startRangePlaceholder : datePlaceholder
     return (
         <CalendarSection
@@ -118,28 +166,57 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                     />
                 )}
             </InputBlock>
-            {isOpen && (
-                <Article {...restProps}>
-                    <DateBar />
-                    <WeekBar weekDays={weekDays} />
-                    <DaysTable
-                        handleChangeError={handleChangeError}
-                        firstInputDate={validFirstInput}
-                        secondInputDate={validSecondInput}
-                        isWithRange={isWithRange}
-                        handleKeyboardChange={handleKeyboardChange}
-                        isKeyboardChange={isKeyboardChange}
-                        onClickWithRange={onClickWithRange}
-                        handleChangeFirstDateInput={handleChangeFirstDateInput}
-                        handleChangeSecondDateInput={
-                            handleChangeSecondDateInput
-                        }
-                        weekDays={weekDays}
-                        startDay={startDay}
-                        handleGetHoliday={handleGetHoliday}
-                        handleGetAllHolidays={handleGetAllHolidays}
-                    />
-                </Article>
+            {isOpenTable && (
+                <>
+                    <CalendarArticle {...restProps} $isWithTodos={isWithTodos}>
+                        <DateBar minMaxDate={minMaxDate} />
+                        <WeekBar weekDays={weekDays} />
+                        <DaysTable
+                            firstInputDate={validFirstInput}
+                            secondInputDate={validSecondInput}
+                            handleChangeError={handleChangeError}
+                            isWithRange={isWithRange}
+                            handleKeyboardChange={handleKeyboardChange}
+                            isKeyboardChange={isKeyboardChange}
+                            onClickWithRange={onClickWithRange}
+                            handleChangeFirstDateInput={
+                                handleChangeFirstDateInput
+                            }
+                            handleChangeSecondDateInput={
+                                handleChangeSecondDateInput
+                            }
+                            activeCellId={activeCellId}
+                            handleChangeActiveCellId={handleChangeActiveCellId}
+                            weekDays={weekDays}
+                            startDay={startDay}
+                            isWithTodos={isWithTodos}
+                            handleGetHoliday={handleGetHoliday}
+                            handleGetAllHolidays={handleGetAllHolidays}
+                            minMaxDate={minMaxDate}
+                        />
+                        {isOpenModal && isTodos && (
+                            <TodoModal
+                                onClose={handleChangeModalState}
+                                todo={todo}
+                                addTodo={handleAddTodo}
+                                removeTodo={handleRemoveTodo}
+                                removeAllTodos={handleRemoveAllTodos}
+                                updateTodo={handleUpdateTodo}
+                                todoId={activeCellId}
+                            />
+                        )}
+                    </CalendarArticle>
+                    {isTodos && (
+                        <>
+                            <TodoButton
+                                $isDisabled={isDisabledTodos}
+                                onClick={handleClickTodoButton}
+                            >
+                                {todoButtonText}
+                            </TodoButton>
+                        </>
+                    )}
+                </>
             )}
         </CalendarSection>
     )

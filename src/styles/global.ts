@@ -1,4 +1,6 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
+
+import mixins from './mixins'
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -9,6 +11,21 @@ const GlobalStyle = createGlobalStyle`
     body {
         font-family: 'Arial', sans-serif;
     }
+`
+
+interface DefaultButtonProps {
+    disabled?: boolean
+}
+
+export const DefaultButton = styled.button<DefaultButtonProps>`
+    ${({ theme, disabled }) => {
+        return css`
+            ${mixins.flexRowCenter()}
+
+            cursor: ${disabled ? 'default' : 'pointer'};
+            background: ${theme.palette.common.white};
+        `
+    }}
 `
 
 export default GlobalStyle

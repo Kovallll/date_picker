@@ -7,11 +7,11 @@ import { DateBarProps } from './types'
 import MonthCalendar from '@components/MonthCalendar'
 import { SwapButton } from '@components/SwapButton'
 import YearCalendar from '@components/YearCalendar'
-import { icons, months } from '@constants'
+import { defaultMinMaxDate, icons, months } from '@constants'
 import { DateContext } from '@context'
 import { useClickOutside } from '@hooks'
 
-const DateBar = ({ ...restProps }: DateBarProps) => {
+const DateBar = ({ minMaxDate, ...restProps }: DateBarProps) => {
     const {
         year,
         currentMonth,
@@ -30,7 +30,8 @@ const DateBar = ({ ...restProps }: DateBarProps) => {
         currentYear: year,
         prevYear: year,
     })
-
+    const { maxMonth, minMonth, maxYear, minYear } =
+        minMaxDate ?? defaultMinMaxDate
     const calendarRef = useRef(null)
 
     useClickOutside(calendarRef, () => {
@@ -83,9 +84,12 @@ const DateBar = ({ ...restProps }: DateBarProps) => {
         [handleOpenYear]
     )
 
-    const isDisabled = year === 0 && currentMonth === 1
-    const disabledPrevButton = isDisabled || isMonthOpen || isYearOpen
-    const disabledNextButton = isMonthOpen || isYearOpen
+    const isDisabledPrevButton =
+        (year === 0 && currentMonth === 1) ||
+        (minMonth === currentMonth && year === minYear)
+    const isDisabledNextButton = maxMonth === currentMonth && year === maxYear
+    const disabledPrevButton = isDisabledPrevButton || isMonthOpen || isYearOpen
+    const disabledNextButton = isDisabledNextButton || isMonthOpen || isYearOpen
     const prevIcon = disabledPrevButton
         ? icons.disabledPrevArrowIcon
         : icons.prevArrowIcon
