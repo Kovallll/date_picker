@@ -3,8 +3,6 @@ import { memo, useState } from 'react'
 import { CellData, Holiday, TodoMark } from './styled'
 import { CellProps } from './types'
 
-import { maxLenHolidayText } from '@constants'
-
 const Cell = (props: CellProps) => {
     const {
         children,
@@ -32,13 +30,9 @@ const Cell = (props: CellProps) => {
     ) => {
         onClickCell(e, id)
     }
-    let holiday = holidayTitle
-    if (holidayTitle?.length >= maxLenHolidayText) {
-        holiday = holidayTitle?.slice(0, maxLenHolidayText) + '...'
-    }
     const unhover = $isActive || $isStartRange || $inRange || $isEndRange
     const showHoliday = () => {
-        const isHover = !!holiday && !unhover
+        const isHover = !!holidayTitle && !unhover
         setIsHover(isHover)
     }
 
@@ -69,7 +63,7 @@ const Cell = (props: CellProps) => {
             onClick={handleClickDay}
         >
             {$isWithTodo && <TodoMark />}
-            {isHover && <Holiday>{holiday}</Holiday>}
+            {isHover && <Holiday>{holidayTitle}</Holiday>}
             <>{children}</>
         </CellData>
     )

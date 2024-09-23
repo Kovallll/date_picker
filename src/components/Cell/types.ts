@@ -4,20 +4,20 @@ export interface CellProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     id: string
     children: React.ReactNode
-    holidayTitle: string
-    $isHoliday: boolean
+    holidayTitle?: string
+    $isHoliday?: boolean
     $isPopup?: boolean
     $isPopupActive?: boolean
-    $isActive: boolean
-    $inRange: boolean
-    $isStartRange: boolean
-    $isEndRange: boolean
-    $isWeekend: boolean
-    $isNewMonth: boolean
-    $isSelectWeek: boolean
-    $isLowerThanMinDate: boolean
-    $isHigherThanMaxDate: boolean
-    $isWithTodo: boolean
+    $isActive?: boolean
+    $inRange?: boolean
+    $isStartRange?: boolean
+    $isEndRange?: boolean
+    $isWeekend?: boolean
+    $isNewMonth?: boolean
+    $isSelectWeek?: boolean
+    $isLowerThanMinDate?: boolean
+    $isHigherThanMaxDate?: boolean
+    $isWithTodo?: boolean
     onClickCell: onClickCell
 }
 

@@ -22,7 +22,7 @@ import {
 import { TodoModalProps } from './types'
 
 import { Modal } from '@components/Modal'
-import { icons, initialActiveCellId } from '@constants'
+import { icons, initialActiveCellId, maxLenTodo } from '@constants'
 import { useTodo } from '@hooks'
 
 const TodoModal = ({
@@ -112,6 +112,7 @@ const TodoModal = ({
                     onChange={handleChangeInputData}
                     $isCheckbox={false}
                     placeholder={placeholderText}
+                    maxLength={maxLenTodo}
                 />
                 <Buttons $isCheckModal={false}>
                     <Button disabled={isAddDisabled} onClick={handleAddTodo}>
