@@ -1,6 +1,8 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
 
-const GlobalStyle = createGlobalStyle`
+import mixins from './mixins'
+
+export const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
         margin: 0;
@@ -11,4 +13,17 @@ const GlobalStyle = createGlobalStyle`
     }
 `
 
-export default GlobalStyle
+interface DefaultButtonProps {
+    disabled?: boolean
+}
+
+export const DefaultButton = styled.button<DefaultButtonProps>`
+    ${({ theme, disabled }) => {
+        return css`
+            ${mixins.flexRowCenter()}
+
+            cursor: ${disabled ? 'default' : 'pointer'};
+            background: ${theme.palette.common.white};
+        `
+    }}
+`

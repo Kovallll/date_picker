@@ -1,5 +1,9 @@
+import addIcon from '@assets/icons/add.svg'
 import calendarIcon from '@assets/icons/calendar.svg'
 import clearIcon from '@assets/icons/clear.svg'
+import deleteIcon from '@assets/icons/delete.svg'
+import disabledAddIcon from '@assets/icons/disabledAdd.svg'
+import disabledDeleteIcon from '@assets/icons/disabledDelete.svg'
 import disabledNextArrowIcon from '@assets/icons/disabledNextArrow.svg'
 import disabledPrevArrowIcon from '@assets/icons/disabledPrevArrow.svg'
 import nextArrowIcon from '@assets/icons/nextArrow.svg'
@@ -116,6 +120,8 @@ export const maxLenHolidayText = 25
 
 export const currentDate = new Date()
 
+export const maxLenTodo = 12
+
 export const icons = {
     prevArrowIcon,
     nextArrowIcon,
@@ -123,6 +129,10 @@ export const icons = {
     disabledPrevArrowIcon,
     calendarIcon,
     clearIcon,
+    deleteIcon,
+    disabledDeleteIcon,
+    disabledAddIcon,
+    addIcon,
 }
 
 export const defaultMinMaxDate = {
@@ -141,6 +151,8 @@ export const initialProps = {
     month: new Date().getMonth() + 1,
     weekId: getWeekNumber(currentDate),
 }
+
+export const todosKey = 'todos'
 
 export const holidays = [
     { date: '15/03/*', holiday: 'Constitution Day' },

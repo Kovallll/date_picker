@@ -1,4 +1,9 @@
-import {    countMonth,    dateNumberForCurrentDays,    daysInWeek,    reversePrevId} from '@constants'
+import {
+    countMonth,
+    dateNumberForCurrentDays,
+    daysInWeek,
+    reversePrevId,
+} from '@constants'
 import { CellsInitialData, StartDay } from '@types'
 
 export const getCountCellsPrevYears = (year: number) => {

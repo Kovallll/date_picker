@@ -1,6 +1,9 @@
 import { useContext } from 'react'
 
-import {   fisrtDateLongerThanSecondError,    minMaxError} from '@components/DaysTable/config'
+import {
+    fisrtDateLongerThanSecondError,
+    minMaxError,
+} from '@components/DaysTable/config'
 import { isInputDateInMinMaxRange } from '@components/DaysTable/utils/isInputDateInMinMaxRange'
 import { defaultMinMaxDate, initialActiveCellId, waitTime } from '@constants'
 import { DateContext } from '@context'
@@ -20,7 +23,7 @@ export const useDebouncedInputDate = (
     isRange: boolean,
     minMaxDate: minMaxCellDate,
     range: Range,
-    setActiveCellId: (activeId: string) => void,
+    handleChangeActiveCellId: (activeId: string) => void,
     setPrevFirstDate: (prevFirstDate: string) => void,
     setPrevSecondDate: (prevSecondDate: string) => void,
     setRange: (newRange: Range) => void
@@ -55,7 +58,7 @@ export const useDebouncedInputDate = (
         firstInputDate,
         secondInputDate
     )
-    const isFirstDateLonger = secondInputCellId <= firstInputCellId
+    const isFirstDateLonger = secondInputCellId < firstInputCellId
     const isNoErrors = !isFirstDateLonger && !!onClickWithRange && isFirstMinMax
     const isClearError = !isFirstDateLonger && isFirstMinMax && isSecondMinMax
 
@@ -90,7 +93,7 @@ export const useDebouncedInputDate = (
             setRange(newRange)
         }
         if (isFirstInputCellId) {
-            setActiveCellId(String(firstInputCellId))
+            handleChangeActiveCellId(String(firstInputCellId))
 
             if (isRange) {
                 setRange({

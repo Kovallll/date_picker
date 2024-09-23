@@ -1,6 +1,10 @@
 import { countMsInDay, daysInWeek, thursdayIndex } from '@constants'
 import { CustomHolidays, Holidays } from '@types'
-import {    getAllCellsPrevMonths,    getCellsPrevMonth,    getCountCellsPrevYears} from '@utils'
+import {
+    getAllCellsPrevMonths,
+    getCellsPrevMonth,
+    getCountCellsPrevYears,
+} from '@utils'
 
 export const getDateFormat = (
     year: number,

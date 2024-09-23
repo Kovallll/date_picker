@@ -7,11 +7,24 @@ import { clickPrevMonthCell } from './utils/clickPrevMonthCell'
 import { isCellInMinMaxRange } from './utils/isCellInMinMaxRange'
 
 import { WeekRow } from '@components/WeekRow'
-import {daysInWeek,defaultMinMaxDate,initialActiveCellId, prevCurrentMonth} from '@constants'
+import {
+    daysInWeek,
+    defaultMinMaxDate,
+    initialActiveCellId,
+    prevCurrentMonth,
+} from '@constants'
 import { DateContext, InputContext } from '@context'
 import { useDebouncedInputDate } from '@hooks'
 import { Range } from '@types'
-import {getAllCellsPrevMonths,getCalendarCells,getCellsInMonth,getCellsNextMonth,getCellsPrevMonth,getCountCellsPrevYears,getDateFormat} from '@utils'
+import {
+    getAllCellsPrevMonths,
+    getCalendarCells,
+    getCellsInMonth,
+    getCellsNextMonth,
+    getCellsPrevMonth,
+    getCountCellsPrevYears,
+    getDateFormat,
+} from '@utils'
 
 const DaysTable = (props: DaysTableProps) => {
     const {
@@ -26,6 +39,9 @@ const DaysTable = (props: DaysTableProps) => {
         handleChangeFirstDateInput,
         handleChangeSecondDateInput,
         startDay,
+        activeCellId,
+        handleChangeActiveCellId,
+        isWithTodos,
         handleGetHoliday,
         handleGetAllHolidays,
         minMaxDate,
@@ -44,7 +60,6 @@ const DaysTable = (props: DaysTableProps) => {
     const isWithInput = useContext(InputContext)
     const [prevFirstDate, setPrevFirstDate] = useState('')
     const [prevSecondDate, setPrevSecondDate] = useState('')
-    const [activeCellId, setActiveCellId] = useState(initialActiveCellId)
     const [range, setRange] = useState<Range>({
         start: null,
         end: null,
@@ -59,7 +74,7 @@ const DaysTable = (props: DaysTableProps) => {
     })
 
     const handleSetActiveCellId = (id: string) => {
-        setActiveCellId(id)
+        handleChangeActiveCellId(id)
     }
 
     const handleSetRange = (range: Range) => {
@@ -82,7 +97,7 @@ const DaysTable = (props: DaysTableProps) => {
         isRange,
         minMaxDate!,
         range,
-        setActiveCellId,
+        handleChangeActiveCellId,
         setPrevFirstDate,
         setPrevSecondDate,
         setRange
@@ -194,10 +209,10 @@ const DaysTable = (props: DaysTableProps) => {
             handleKeyboardChange(false)
         }
         if (isFirstClickCell && activeCellId === id) {
-            setActiveCellId(initialActiveCellId)
+            handleChangeActiveCellId(initialActiveCellId)
         }
         if (isFirstClickCell && activeCellId !== id) {
-            setActiveCellId(id)
+            handleChangeActiveCellId(id)
             if (isWithInput) {
                 const inputDate = getDateFormat(year, currentMonth, dayId)
                 handleKeyboardChange(false)
@@ -249,6 +264,7 @@ const DaysTable = (props: DaysTableProps) => {
                     handleGetHoliday={handleGetHoliday}
                     handleGetAllHolidays={handleGetAllHolidays}
                     startDay={startDay}
+                    isWithTodos={isWithTodos}
                     minMaxDate={minMaxDate ?? defaultMinMaxDate}
                 />
             ))}

@@ -4,5 +4,3 @@ export interface SwapButtonProps {
     src: string
     alt: string
 }
-
-export type SwapButtonContainer = Pick<SwapButtonProps, 'disabled'>

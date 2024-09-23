@@ -36,6 +36,7 @@ const theme: Theme = {
         lg: '1000',
     },
     noneBorder: '0',
+    baseBorder: '1px solid',
     holidayTextWidth: {
         bottom: '30',
         small: {
@@ -54,6 +55,59 @@ const theme: Theme = {
     popupStyles: {
         border: '1px solid',
         top: '26',
+    },
+    modalStyles: {
+        buttonsMarginLeft: '4',
+        borderRadius: '16',
+        closePadding: '2',
+        closeRight: '10',
+        closeTop: '8',
+        titleMargin: '4',
+        checkBoxWidth: '20',
+        large: {
+            top: '130',
+            inputWidth: '110',
+            buttonPadding: '16',
+            inputPadding: '8',
+            buttonsWidth: '138',
+            todoMaxHeight: '200',
+            buttonImageSize: '24',
+        },
+        medium: {
+            top: '116',
+            inputWidth: '96',
+            buttonPadding: '12',
+            inputPadding: '6',
+            buttonsWidth: '104',
+            todoMaxHeight: '150',
+            buttonImageSize: '16',
+        },
+        small: {
+            top: '104',
+            inputWidth: '80',
+            buttonPadding: '8',
+            inputPadding: '4',
+            buttonsWidth: '76',
+            todoMaxHeight: '120',
+            buttonImageSize: '12',
+        },
+    },
+    todoCircleStyles: {
+        borderRadius: '50%',
+        top: '2',
+        right: '2',
+        large: {
+            width: '8',
+            height: '8',
+        },
+        medium: {
+            width: '6',
+            height: '6',
+        },
+        small: {
+            width: '4',
+            height: '4',
+        },
     },
     spaces: {
         xs: '1',
@@ -84,21 +138,18 @@ const theme: Theme = {
     },
     inputStyles: {
         small: {
-            border: '1px solid',
             borderRadius: '6',
             width: '180',
             rangeWidth: '320',
             errorHeight: '20',
         },
         medium: {
-            border: '1px solid',
             borderRadius: '8',
             width: '220',
             rangeWidth: '360',
             errorHeight: '20',
         },
         large: {
-            border: '1px solid',
             borderRadius: '10',
             width: '270',
             rangeWidth: '400',

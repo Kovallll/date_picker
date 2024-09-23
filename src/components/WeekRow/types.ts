@@ -17,6 +17,7 @@ export interface WeekRowProps {
     handleClickDay: onClickCell
     firstDayIndex: number
     startDay: StartDay
+    isWithTodos?: boolean
     handleGetHoliday?: (
         holidaysDates: Holidays[],
         day: number,

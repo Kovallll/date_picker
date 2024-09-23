@@ -11,5 +11,6 @@ export interface CalendarProps
     isWithHoliday?: boolean
     isWithMinMax?: boolean
     isWithStartSunday?: boolean
+    isWithTodos?: boolean
     holidaysData?: CustomHolidays[]
 }

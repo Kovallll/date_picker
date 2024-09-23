@@ -85,6 +85,28 @@ export const CellData = styled.button<CellDataProps>`
     }}
 `
 
+export const TodoMark = styled.div`
+    ${({ theme }) => {
+        return css`
+            top: ${theme.todoCircleStyles.top + 'px'};
+            right: ${theme.todoCircleStyles.right + 'px'};
+            width: ${mixins.elementWidth(
+                theme,
+                theme.todoCircleStyles,
+                'width'
+            )};
+            height: ${mixins.elementHeight(
+                theme,
+                theme.todoCircleStyles,
+                'height'
+            )};
+            background-color: ${theme.palette.holidayColor};
+            border-radius: ${theme.todoCircleStyles.borderRadius};
+            position: absolute;
+        `
+    }}
+`
+
 export const Holiday = styled.div`
     ${mixins.flexRowCenter}
 

@@ -4,10 +4,18 @@ import { Container } from './styled'
 import { WeekRowProps } from './types'
 
 import Cell from '@components/Cell'
-import { daysInWeek, defaultGetHoliday, WeekDays } from '@constants'
+import { daysInWeek, defaultGetHoliday, todosKey, WeekDays } from '@constants'
 import { DateContext } from '@context'
 import { GetHoliday, Holidays } from '@types'
-import {   getAllCellsPrevMonths,    getCellsInMonth,    getCellsNextMonth,    getCellsPrevMonth,    getCountCellsPrevYears,    getMonthAndDaysByWeek} from '@utils'
+import {
+    getAllCellsPrevMonths,
+    getCellsInMonth,
+    getCellsNextMonth,
+    getCellsPrevMonth,
+    getCountCellsPrevYears,
+    getMonthAndDaysByWeek,
+    LocalStorage,
+} from '@utils'
 
 export const WeekRow = (props: WeekRowProps) => {
     const {
@@ -20,10 +28,18 @@ export const WeekRow = (props: WeekRowProps) => {
         handleGetAllHolidays,
         firstDayIndex,
         startDay,
+        isWithTodos,
         minMaxDate,
         ...restProps
     } = props
     const { minDateCellId, maxDateCellId } = minMaxDate
+
+    const localStorage = new LocalStorage()
+    const allTodos = localStorage.getItem(todosKey, [])
+    const getIsWithTodo = (id: string) => {
+        return !!allTodos.find((todo) => todo.id === id)
+    }
+
     let holidaysDates: Holidays[] = []
     if (handleGetAllHolidays) {
         holidaysDates = handleGetAllHolidays()
@@ -102,6 +118,7 @@ export const WeekRow = (props: WeekRowProps) => {
                 const isNext = isNextMonths && id >= cellsInMonth - daysInWeek
                 const isSelectWeek = isPrev || isCurrent || isNext
 
+                const isWithTodo = isWithTodos ? getIsWithTodo(dayId) : false
                 return (
                     <Cell
                         key={dayId}
@@ -118,6 +135,7 @@ export const WeekRow = (props: WeekRowProps) => {
                         $isHigherThanMaxDate={isHigherThanMaxDate}
                         holidayTitle={holidayTitle}
                         $isSelectWeek={isSelectWeek}
+                        $isWithTodo={isWithTodo}
                     >
                         {day}
                     </Cell>

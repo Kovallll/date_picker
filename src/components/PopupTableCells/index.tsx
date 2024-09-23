@@ -4,7 +4,10 @@ import TableRow from './CellsRow'
 import { Container } from './styled'
 import { DataPopupTableCells, PopupTableCellsProps } from './types'
 
-import {    countElementInPopupTableColumn,    countElementInPopupTableRow} from '@constants'
+import {
+    countElementInPopupTableColumn,
+    countElementInPopupTableRow,
+} from '@constants'
 import { getInitialCells } from '@utils'
 
 const PopupTableCells = (props: PopupTableCellsProps) => {

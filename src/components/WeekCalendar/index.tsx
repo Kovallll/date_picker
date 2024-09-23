@@ -6,7 +6,14 @@ import { WeekCalendarProps } from './types'
 
 import PopupTableCells from '@components/PopupTableCells'
 import { SwapButton } from '@components/SwapButton'
-import {    countElementInPopupTable,    icons,    maxCountWeeks,    maxWeekInPopupTable,    minBarrierWeek,    minWeekInPopupTable} from '@constants'
+import {
+    countElementInPopupTable,
+    icons,
+    maxCountWeeks,
+    maxWeekInPopupTable,
+    minBarrierWeek,
+    minWeekInPopupTable,
+} from '@constants'
 import { DateContext } from '@context'
 import { getMonthByWeek, getPopupTableCells } from '@utils'
 

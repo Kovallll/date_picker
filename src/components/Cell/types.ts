@@ -17,6 +17,7 @@ export interface CellProps
     $isSelectWeek?: boolean
     $isLowerThanMinDate?: boolean
     $isHigherThanMaxDate?: boolean
+    $isWithTodo?: boolean
     onClickCell: onClickCell
 }
 

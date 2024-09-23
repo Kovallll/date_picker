@@ -55,6 +55,14 @@ export const CalendarWithStartSunday: Story = {
     },
 }
 
+export const CalendarWithTodos: Story = {
+    args: {
+        isWithRange: false,
+        isWithInput: false,
+        isWithTodos: true,
+    },
+}
+
 export const CalendarWithCustomHolidays: Story = {
     args: {
         isWithHoliday: true,

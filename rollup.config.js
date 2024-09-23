@@ -1,7 +1,6 @@
 import path from 'path'
 import dts from 'rollup-plugin-dts'
 import image from 'rollup-plugin-img'
-import jsx from 'rollup-plugin-jsx'
 import PeerDepsExternalPlugin from 'rollup-plugin-peer-deps-external'
 import styles from 'rollup-plugin-styles'
 import { terser } from 'rollup-plugin-terser'
@@ -9,9 +8,7 @@ import { terser } from 'rollup-plugin-terser'
 import packageJson from './package.json'
 
 import alias from '@rollup/plugin-alias'
-import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
-import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 
@@ -58,10 +55,7 @@ export default [
                 limit: 8192,
                 exclude: 'node_modules/**',
             }),
-            json(),
             styles(),
-            jsx({ factory: 'React.createElement' }),
-            babel({ exclude: 'node_modules/**', babelHelpers: 'bundled' }),
             typescript({ tsconfig: './tsconfig.json' }),
             terser(),
         ],

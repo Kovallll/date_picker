@@ -2,7 +2,7 @@ import { ThemeProvider } from 'styled-components'
 
 import { ThemeProviderProps } from './types'
 
-import GlobalStyle from '@styles/global'
+import { GlobalStyle } from '@styles/global'
 import theme from '@styles/theme'
 
 export const ThemeWrapper = ({ children }: ThemeProviderProps) => (

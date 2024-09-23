@@ -1,7 +1,13 @@
 import { CalendarProps } from './types'
 
 import ErrorBoundary from '@components/ErrorBoundary'
-import {withChangeStartDay,withHolidays,withMinMax,withRange} from '@decorators'
+import {
+    withChangeStartDay,
+    withHolidays,
+    withMinMax,
+    withRange,
+    withTodos,
+} from '@decorators'
 import { DateProvider } from '@providers/DateProvider'
 import { InputProvider } from '@providers/InputProvider'
 import ThemeProvider from '@providers/ThemeProvider'
@@ -20,6 +26,7 @@ export const Calendar = (props: CalendarProps) => {
         isWithMinMax,
         holidaysData = [],
         isWithStartSunday = false,
+        isWithTodos,
     } = props
 
     const calendar = new calendarCreater()
@@ -35,6 +42,10 @@ export const Calendar = (props: CalendarProps) => {
     if (isWithStartSunday) {
         calendar.addFeature(withChangeStartDay)
     }
+    if (isWithTodos) {
+        calendar.addFeature(withTodos)
+    }
+
     if (isWithHoliday) {
         calendar.addFeature<CustomHolidays[]>(withHolidays, holidaysData)
     }
