@@ -4,7 +4,6 @@ import {
     getMonthAndDaysByWeek,
     getMonthByWeek,
     getValidInputCell,
-    getWeekNumber,
 } from '.'
 
 describe('testing utils', () => {
@@ -30,14 +29,14 @@ describe('testing utils', () => {
     test('getValidInputCell', () => {
         expect(getValidInputCell('01/01/2024', '12/02/2023')).toStrictEqual({
             isValidDate: true,
-            inputCellId: '885031',
+            inputCellId: 885031,
             inputYear: 2024,
             inputMonth: 1,
             inputDay: 1,
         })
         expect(getValidInputCell('12//2023', '12/02/2023')).toStrictEqual({
             isValidDate: false,
-            inputCellId: '884645',
+            inputCellId: 884645,
             inputYear: 2023,
             inputMonth: 2,
             inputDay: 12,
@@ -61,11 +60,5 @@ describe('testing utils', () => {
         expect(getMonthByWeek(2024, 1)).toBe(1)
         expect(getMonthByWeek(2024, 10)).toBe(3)
         expect(getMonthByWeek(2024, 52)).toBe(12)
-    })
-
-    test('getWeekNumber', () => {
-        expect(getWeekNumber(new Date(2024, 0, 1))).toBe(1)
-        expect(getWeekNumber(new Date(2024, 11, 1))).toBe(48)
-        expect(getWeekNumber(new Date(2024, 11, 25))).toBe(52)
     })
 })

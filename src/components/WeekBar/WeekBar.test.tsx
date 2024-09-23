@@ -16,5 +16,5 @@ test('test WeekBar', async () => {
 
     const sunday = screen.getByText('Su')
     fireEvent.click(sunday)
-    screen.getByText('40')
+    screen.getByText('1')
 })

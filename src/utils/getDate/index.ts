@@ -1,4 +1,4 @@
-import { countMsInDay, daysInWeek, thursdayIndex } from '@constants'
+import { daysInWeek } from '@constants'
 import { CustomHolidays, Holidays, StartDay } from '@types'
 import {
     getAllCellsPrevMonths,
@@ -121,19 +121,4 @@ export const getMonthByWeek = (year: number, weekNumber: number) => {
     const month = startOfWeek.getMonth() + 1
 
     return month
-}
-
-export const getWeekNumber = (date: Date) => {
-    const tempDate = new Date(date.getTime())
-
-    tempDate.setHours(0, 0, 0, 0)
-    tempDate.setDate(
-        tempDate.getDate() + thursdayIndex - (tempDate.getDay() || daysInWeek)
-    )
-    const yearStart = new Date(tempDate.getFullYear(), 0, 1)
-    const weekNumber = Math.ceil(
-        ((Number(tempDate) - Number(yearStart)) / countMsInDay + 1) / daysInWeek
-    )
-
-    return weekNumber
 }

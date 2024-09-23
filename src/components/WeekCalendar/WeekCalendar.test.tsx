@@ -13,6 +13,6 @@ test('test WeekCalendar', async () => {
             <WeekCalendar handleOpenCalendar={mockFn} />
         </ThemeProvider>
     )
-    const firstElement = screen.getByText('40')
+    const firstElement = screen.getByText('1')
     fireEvent.click(firstElement)
 })

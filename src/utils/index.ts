@@ -12,7 +12,6 @@ export {
     getDateFormat,
     getValidInputCell,
     getMonthAndDaysByWeek,
-    getWeekNumber,
     getMonthByWeek,
     getHolidaysData,
 } from './getDate'
