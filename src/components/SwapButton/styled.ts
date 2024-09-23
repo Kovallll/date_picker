@@ -1,20 +1,15 @@
 import styled, { css } from 'styled-components'
 
-import { SwapButtonContainer } from './types'
-
+import { DefaultButton } from '@styles/global'
 import mixins from '@styles/mixins'
 
-export const Button = styled.button<SwapButtonContainer>`
-    ${({ theme, disabled }) => {
+export const Button = styled(DefaultButton)`
+    ${({ theme }) => {
         return css`
-            ${mixins.flexRowCenter()}
-
             ${mixins.arrowScale(theme)};
             width: ${theme.arrowSize.width + 'px'};
             height: ${theme.arrowSize.height + 'px'};
-            cursor: ${disabled ? 'default' : 'pointer'};
             border: ${theme.noneBorder};
-            background: ${theme.palette.common.white};
         `
     }}
 `

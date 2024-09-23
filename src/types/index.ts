@@ -85,6 +85,17 @@ export type InitialCells = (
       }
 )[]
 
+export interface Todo {
+    id: string
+    data: TodoData[]
+}
+
+export interface TodoData {
+    id: string
+    data: string
+    checked: boolean
+}
+
 export interface GetHoliday {
     isHoliday: boolean
     holidayTitle: string

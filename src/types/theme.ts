@@ -2,19 +2,16 @@ export interface ElementStyle {
     large: {
         width: string
         borderRadius: string
-        border: string
         [K: string]: string
     }
     medium: {
         width: string
         borderRadius: string
-        border: string
         [K: string]: string
     }
     small: {
         width: string
         borderRadius: string
-        border: string
         [K: string]: string
     }
 }
@@ -47,6 +44,7 @@ export interface Theme {
         medium: string
     }
     noneBorder: string
+    baseBorder: string
     fullSize: string
     media: {
         sm: string
@@ -79,6 +77,59 @@ export interface Theme {
         sm: string
         md: string
         lg: string
+    }
+    todoCircleStyles: {
+        borderRadius: string
+        top: string
+        right: string
+        large: {
+            width: string
+            height: string
+        }
+        medium: {
+            width: string
+            height: string
+        }
+        small: {
+            width: string
+            height: string
+        }
+    }
+    modalStyles: {
+        buttonsMarginLeft: string
+        borderRadius: string
+        closePadding: string
+        closeRight: string
+        closeTop: string
+        titleMargin: string
+        checkBoxWidth: string
+        large: {
+            top: string
+            buttonPadding: string
+            inputWidth: string
+            inputPadding: string
+            buttonsWidth: string
+            todoMaxHeight: string
+            buttonImageSize: string
+        }
+        medium: {
+            top: string
+            buttonPadding: string
+            inputWidth: string
+            inputPadding: string
+            buttonsWidth: string
+            todoMaxHeight: string
+            buttonImageSize: string
+        }
+        small: {
+            top: string
+            buttonPadding: string
+            inputWidth: string
+            inputPadding: string
+            buttonsWidth: string
+            todoMaxHeight: string
+            buttonImageSize: string
+        }
     }
     cellBorderRadius: string
     arrowSize: {

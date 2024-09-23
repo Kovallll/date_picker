@@ -21,6 +21,9 @@ export interface DaysTableProps
     secondInputDate: string
     handleChangeFirstDateInput: (date: string) => void
     handleChangeSecondDateInput: (date: string) => void
+    activeCellId: string
+    handleChangeActiveCellId: (id: string) => void
+    isWithTodos?: boolean
     handleGetHoliday?: (
         holidaysDates: Holidays[],
         day: number,
