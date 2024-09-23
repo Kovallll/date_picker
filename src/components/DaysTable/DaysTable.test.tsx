@@ -20,6 +20,8 @@ test('test DayTable', async () => {
                 secondInputDate=""
                 startDay={0}
                 weekDays={[]}
+                activeCellId={''}
+                handleChangeActiveCellId={mockFn}
             />
         </ThemeProvider>
     )

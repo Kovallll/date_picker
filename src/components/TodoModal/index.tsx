@@ -1,11 +1,13 @@
 import { memo, useState } from 'react'
 
 import {
+    addAltText,
     allText,
     cancelText,
     checkTitleText,
     deleteText,
     placeholderText,
+    removeAltText,
     title,
 } from './config'
 import {
@@ -116,13 +118,13 @@ const TodoModal = ({
                 />
                 <Buttons $isCheckModal={false}>
                     <Button disabled={isAddDisabled} onClick={handleAddTodo}>
-                        <Image src={addIcon} />
+                        <Image src={addIcon} alt={addAltText} />
                     </Button>
                     <Button
                         disabled={isRemoveAllDisabled}
                         onClick={checkAllRemove}
                     >
-                        <Image src={deleteIcon} /> {allText}
+                        <Image src={deleteIcon} alt={removeAltText} /> {allText}
                     </Button>
                 </Buttons>
             </TodoCreater>
@@ -137,7 +139,7 @@ const TodoModal = ({
                         />
                         <TodoText $isChecked={checked}>{data}</TodoText>
                         <Button onClick={checkRemove(id)}>
-                            <Image src={icons.deleteIcon} />
+                            <Image src={icons.deleteIcon} alt={removeAltText} />
                         </Button>
                     </Todo>
                 ))}

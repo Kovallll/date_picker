@@ -19,6 +19,16 @@ test('test WeekRow', async () => {
                 range={{ start: 1, end: 1 }}
                 startDay={1}
                 weekDays={initialWeekDays}
+                minMaxDate={{
+                    minDate: '',
+                    maxDate: '',
+                    minDateCellId: 0,
+                    maxDateCellId: 0,
+                    minMonth: 0,
+                    maxMonth: 0,
+                    minYear: 0,
+                    maxYear: 0,
+                }}
             />
         </ThemeProvider>
     )

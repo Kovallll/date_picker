@@ -47,7 +47,7 @@ test('testing isWithInput & isWithRange', async () => {
         'Start range'
     ) as HTMLInputElement
     expect(firstInput.value).toBe('')
-    fireEvent.click(firstInput)
+    fireEvent.focus(firstInput)
     fireEvent.change(firstInput, { target: { value: '01/01/2024' } })
     expect(firstInput.value).toBe('01/01/2024')
 
@@ -55,7 +55,7 @@ test('testing isWithInput & isWithRange', async () => {
         'End range'
     ) as HTMLInputElement
     expect(secondInput.value).toBe('')
-    fireEvent.click(secondInput)
+    fireEvent.focus(secondInput)
     fireEvent.change(secondInput, { target: { value: '01/01/2024' } })
     expect(secondInput.value).toBe('01/01/2024')
 })
@@ -101,4 +101,27 @@ test('testing isWithStartSunday', async () => {
     )
     const week = screen.getByText('Su').parentElement
     expect(week?.firstChild?.textContent).toBe('Su')
+})
+
+test('testing isWithMinMax', async () => {
+    render(
+        <ThemeProvider theme={theme}>
+            <Calendar
+                isWithMinMax={true}
+                minDate="01/01/2024"
+                maxDate="05/01/2024"
+            />
+        </ThemeProvider>
+    )
+    const style = window.getComputedStyle(screen.getByText('17'))
+    expect(style.color).toBe('rgb(221, 221, 221)')
+})
+
+test('testing isWithTodos', async () => {
+    render(
+        <ThemeProvider theme={theme}>
+            <Calendar isWithTodos={true} />
+        </ThemeProvider>
+    )
+    screen.getByText('Add Todo')
 })

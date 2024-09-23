@@ -12,7 +12,8 @@
         "format": "prettier . --write",
         "build": "rollup --config --bundleConfigAsCjs",
         "prepare": "husky",
-        "test:unit": "jest --passWithNoTests"
+        "test": "jest --passWithNoTests",
+        "test:cov": "jest --passWithNoTests --coverage"
     },
     "dependencies": {
         "react": "^18.3.1",
