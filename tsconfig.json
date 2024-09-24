@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "target": "es5",
+        "types": ["vite/client", "node", "jest"],
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "declaration": true,
+        "declarationDir": "types",
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": false,
+        "allowUmdGlobalAccess": true,
+        "jsx": "react-jsx",
+        "baseUrl": ".",
+        "paths": {
+            "@types": ["src/types"],
+            "@components/*": ["src/components/*"],
+            "@assets/*": ["src/assets/*"],
+            "@constants": ["src/constants"],
+            "@providers/*": ["src/providers/*"],
+            "@styles/*": ["src/styles/*"],
+            "@utils": ["src/utils"],
+            "@hooks": ["src/hooks"],
+            "@decorators": ["src/decorators"],
+            "@service": ["src/service"],
+            "@context": ["src/context"]
+        },
+        "plugins": [
+            {
+                "name": "typescript-styled-plugin"
+            }
+        ]
+    },
+    "include": ["src", "declare.d.ts"]
+}

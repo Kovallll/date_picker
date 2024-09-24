@@ -1,37 +1,78 @@
 import path from 'path'
-import jsx from 'rollup-plugin-jsx'
+import dts from 'rollup-plugin-dts'
+import image from 'rollup-plugin-img'
+import PeerDepsExternalPlugin from 'rollup-plugin-peer-deps-external'
+import styles from 'rollup-plugin-styles'
+import { terser } from 'rollup-plugin-terser'
+
+import packageJson from './package.json'
 
 import alias from '@rollup/plugin-alias'
-import babel from '@rollup/plugin-babel'
 import commonjs from '@rollup/plugin-commonjs'
-import image from '@rollup/plugin-image'
-import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
-import terser from '@rollup/plugin-terser'
+import typescript from '@rollup/plugin-typescript'
 
-const devMode = process.env.NODE_ENV === 'development'
-
-export default {
-    input: 'src/index.tsx',
-    watch: {
-        include: './src/**',
-        clearScreen: false,
+export default [
+    {
+        input: 'src/index.tsx',
+        output: [
+            {
+                file: packageJson.main,
+                format: 'cjs',
+                sourcemap: true,
+            },
+            {
+                file: packageJson.module,
+                format: 'esm',
+                sourcemap: true,
+            },
+        ],
+        plugins: [
+            alias({
+                '@types': path.resolve(__dirname, 'src/types'),
+                '@components/*': path.resolve(__dirname, 'src/components/*'),
+                '@assets/*': path.resolve(__dirname, 'src/assets/*'),
+                '@constants': path.resolve(__dirname, 'src/constants'),
+                '@providers/*': path.resolve(__dirname, 'src/providers/*'),
+                '@styles/*': path.resolve(__dirname, 'src/styles/*'),
+                '@utils/*': path.resolve(__dirname, 'src/utils/*'),
+                '@hooks': path.resolve(__dirname, 'src/hooks'),
+                '@decorators': path.resolve(__dirname, 'src/decorators'),
+                '@service': path.resolve(__dirname, 'src/service'),
+                entries: [
+                    {
+                        find: /^@assets\/(.*)/,
+                        replacement: path.resolve(__dirname, 'src/assets/$1'),
+                    },
+                ],
+            }),
+            PeerDepsExternalPlugin(),
+            resolve(),
+            commonjs(),
+            image({
+                output: `dist/images`,
+                extensions: /\.(png|jpg|jpeg|gif|svg)$/,
+                limit: 8192,
+                exclude: 'node_modules/**',
+            }),
+            styles(),
+            typescript({ tsconfig: './tsconfig.json' }),
+            terser(),
+        ],
     },
-    output: {
-        file: 'dist/bundle.min.js',
-        format: 'iife',
-        plugins: [terser()],
+    {
+        input: 'dist/esm/types/index.d.ts',
+        output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+        plugins: [
+            dts.default(),
+            alias({
+                entries: [
+                    {
+                        find: /^@types$/,
+                        replacement: path.resolve(__dirname, 'src/types'),
+                    },
+                ],
+            }),
+        ],
     },
-    plugins: [
-        resolve(),
-        commonjs(),
-        image(),
-        json(),
-        jsx({ factory: 'React.createElement' }),
-        babel({ exclude: 'node_modules/**' }),
-        alias({
-            '@': path.resolve(__dirname, 'src/*'),
-        }),
-    ],
-    sourceMap: devMode ? 'inline' : false,
-}
+]
