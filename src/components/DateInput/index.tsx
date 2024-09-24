@@ -123,7 +123,7 @@ export const DateInput = (props: DateInputProps) => {
                     disabled={isDisabled}
                 />
                 <ClearImageButton onClick={handleClearDate}>
-                    <Image src={icons.clearIcon} alt={clearAlt}/>
+                    <Image src={icons.clearIcon} alt={clearAlt} />
                 </ClearImageButton>
             </InputBlock>
         </DateSection>

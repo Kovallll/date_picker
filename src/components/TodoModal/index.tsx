@@ -7,6 +7,7 @@ import {
     checkTitleText,
     deleteText,
     placeholderText,
+    removeAllAltText,
     removeAltText,
     title,
 } from './config'
@@ -34,7 +35,6 @@ const TodoModal = ({
     removeTodo,
     removeAllTodos,
     updateTodo,
-    todoId,
 }: TodoModalProps) => {
     const [inputData, setInputData] = useState('')
 
@@ -80,7 +80,7 @@ const TodoModal = ({
                 } else return todoData
             })
             handleSetTodoData(newTodoData)
-            updateTodo(todoId, { id, data: currentTodo.data, checked })
+            updateTodo(todo.id, { id, data: currentTodo.data, checked })
         }
 
     const onCloseTodoModal = () => {
@@ -89,14 +89,14 @@ const TodoModal = ({
 
     const handleDeleteModal = () => {
         if (removeId === initialActiveCellId) {
-            handleRemoveAllTodos(todoId)
+            handleRemoveAllTodos(todo.id)
         } else {
-            handleRemoveTodo(todoId, removeId)
+            handleRemoveTodo(todo.id, removeId)
         }
     }
 
     const handleAddTodo = () => {
-        appendTodo(todoId)
+        appendTodo(todo.id)
         setInputData('')
     }
 
@@ -124,7 +124,8 @@ const TodoModal = ({
                         disabled={isRemoveAllDisabled}
                         onClick={checkAllRemove}
                     >
-                        <Image src={deleteIcon} alt={removeAltText} /> {allText}
+                        <Image src={deleteIcon} alt={removeAllAltText} />{' '}
+                        {allText}
                     </Button>
                 </Buttons>
             </TodoCreater>

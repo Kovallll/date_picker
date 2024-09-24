@@ -6,7 +6,7 @@ import '@testing-library/jest-dom'
 import theme from '@styles/theme'
 import { fireEvent, render, screen } from '@testing-library/react'
 
-test('testing base Calendar', async () => {
+test('testing base Calendar', () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar />
@@ -19,7 +19,7 @@ test('testing base Calendar', async () => {
     expect(styleActiveCell.backgroundColor).toBe('rgb(47, 128, 237)')
 })
 
-test('testing isWithInput', async () => {
+test('testing isWithInput', () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar isWithInput={true} />
@@ -37,7 +37,7 @@ test('testing isWithInput', async () => {
     expect(firstInput.value).toBe('')
 })
 
-test('testing isWithInput & isWithRange', async () => {
+test('testing isWithInput & isWithRange', () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar isWithInput={true} isWithRange={true} />
@@ -60,7 +60,7 @@ test('testing isWithInput & isWithRange', async () => {
     expect(secondInput.value).toBe('01/01/2024')
 })
 
-test('testing isWithRange', async () => {
+test('testing isWithRange', () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar isWithRange={true} />
@@ -82,7 +82,7 @@ test('testing isWithRange', async () => {
     expect(styleInRange.backgroundColor).toBe('rgb(234, 242, 253)')
 })
 
-test('testing isWithHoliday', async () => {
+test('testing isWithHoliday', () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar isWithHoliday={true} />
@@ -93,7 +93,7 @@ test('testing isWithHoliday', async () => {
     expect(style.color).toBe('rgb(255, 207, 0)')
 })
 
-test('testing isWithStartSunday', async () => {
+test('testing isWithStartSunday', () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar isWithStartSunday={true} />
@@ -103,7 +103,7 @@ test('testing isWithStartSunday', async () => {
     expect(week?.firstChild?.textContent).toBe('Su')
 })
 
-test('testing isWithMinMax', async () => {
+test('testing isWithMinMax', () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar
@@ -119,7 +119,7 @@ test('testing isWithMinMax', async () => {
     expect(styleActive.color).toBe('rgb(57, 57, 57)')
 })
 
-test('testing isWithTodos', async () => {
+test('testing isWithTodos', () => {
     render(
         <ThemeProvider theme={theme}>
             <Calendar isWithTodos={true} />

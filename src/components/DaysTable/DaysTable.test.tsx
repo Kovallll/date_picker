@@ -6,7 +6,7 @@ import '@testing-library/jest-dom'
 import theme from '@styles/theme'
 import { render, screen } from '@testing-library/react'
 
-test('test DayTable', async () => {
+test('check DayTable childCount', () => {
     const mockFn = jest.fn()
     render(
         <ThemeProvider theme={theme}>

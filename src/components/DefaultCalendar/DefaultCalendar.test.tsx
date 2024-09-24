@@ -6,11 +6,19 @@ import '@testing-library/jest-dom'
 import theme from '@styles/theme'
 import { render, screen } from '@testing-library/react'
 
-test('test DefaultCalendar', async () => {
+test('test DefaultCalendar render todo button', () => {
+    const mockFn = jest.fn()
     render(
         <ThemeProvider theme={theme}>
-            <DefaultCalendar />
+            <DefaultCalendar
+                isWithTodos={true}
+                handleAddTodo={mockFn}
+                handleRemoveTodo={mockFn}
+                handleUpdateTodo={mockFn}
+                handleRemoveAllTodos={mockFn}
+            />
         </ThemeProvider>
     )
-    screen.getAllByText('1')
+    const addTodo = screen.getByText('Add Todo')
+    expect(addTodo).toBeInTheDocument()
 })

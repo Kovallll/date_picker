@@ -11,15 +11,15 @@ import {
 } from '.'
 import { getCalendarCells202400 } from './mockData'
 
-describe('testing utils', () => {
-    test('getCountCellsPrevYears', () => {
+describe('testing getCell utils', () => {
+    test('getCountCellsPrevYears cases', () => {
         expect(getCountCellsPrevYears(2024)).toBe(885031)
         expect(getCountCellsPrevYears(2023)).toBe(884590)
         expect(getCountCellsPrevYears(0)).toBe(0)
         expect(getCountCellsPrevYears(-1)).toBe(0)
     })
 
-    test('getAllCellsPrevMonths', () => {
+    test('getAllCellsPrevMonths cases', () => {
         expect(getAllCellsPrevMonths(2024, 0)).toBe(0)
         expect(getAllCellsPrevMonths(2024, 1)).toBe(35)
         expect(getAllCellsPrevMonths(2024, 2)).toBe(70)
@@ -29,7 +29,7 @@ describe('testing utils', () => {
         expect(getAllCellsPrevMonths(-1, -1)).toBe(0)
     })
 
-    test('getCellsPrevMonth', () => {
+    test('getCellsPrevMonth cases', () => {
         expect(getCellsPrevMonth(2024, 0)).toBe(0)
         expect(getCellsPrevMonth(2024, 1)).toBe(3)
         expect(getCellsPrevMonth(2024, 2)).toBe(4)
@@ -37,7 +37,7 @@ describe('testing utils', () => {
         expect(getCellsPrevMonth(0, 0)).toBe(0)
     })
 
-    test('getCellsNextMonth', () => {
+    test('getCellsNextMonth cases', () => {
         expect(getCellsNextMonth(2024, 0)).toBe(4)
         expect(getCellsNextMonth(2024, 1)).toBe(3)
         expect(getCellsNextMonth(2024, 2)).toBe(0)
@@ -45,20 +45,20 @@ describe('testing utils', () => {
         expect(getCellsNextMonth(0, 0)).toBe(4)
     })
 
-    test('getCellsInMonth', () => {
+    test('getCellsInMonth cases', () => {
         expect(getCellsInMonth(2024, 0)).toBe(35)
         expect(getCellsInMonth(2023, 0)).toBe(42)
         expect(getCellsInMonth(0, 1)).toBe(35)
         expect(getCellsInMonth(-1, -1)).toBe(35)
     })
 
-    test('getDaysInMonth', () => {
+    test('getDaysInMonth cases', () => {
         expect(getDaysInMonth(2024, 1)).toBe(31)
         expect(getDaysInMonth(2024, 2)).toBe(29)
         expect(getDaysInMonth(-1, 0)).toBe(31)
     })
 
-    test('getInitialCells', () => {
+    test('getInitialCells cases', () => {
         expect(getInitialCells(2)).toStrictEqual([
             { data: [], id: '1' },
             { data: [], id: '2' },
@@ -75,13 +75,13 @@ describe('testing utils', () => {
         ])
     })
 
-    test('getCalendarCells', () => {
+    test('getCalendarCells cases', () => {
         expect(getCalendarCells(2024, 0, 0)).toStrictEqual(
             getCalendarCells202400
         )
     })
 
-    test('getPopupTableCells', () => {
+    test('getPopupTableCells cases', () => {
         expect(getPopupTableCells(0, 0)).toStrictEqual([])
         expect(getPopupTableCells(2, 0)).toStrictEqual(['0', '1'])
     })

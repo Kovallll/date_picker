@@ -6,14 +6,14 @@ import {
     getValidInputCell,
 } from '.'
 
-describe('testing utils', () => {
-    test('getDateFormat', () => {
+describe('test getDate utils', () => {
+    test('getDateFormat cases', () => {
         expect(getDateFormat(2024, 10, 1)).toBe('01/10/2024')
         expect(getDateFormat(2024, 10, 31)).toBe('31/10/2024')
         expect(getDateFormat(2024, 10, 32)).toBe('01/11/2024')
     })
 
-    test('getHolidaysData', () => {
+    test('getHolidaysData cases', () => {
         expect(getHolidaysData([])).toStrictEqual([])
         expect(
             getHolidaysData([{ date: '02/01/2024', holiday: '' }])
@@ -26,7 +26,7 @@ describe('testing utils', () => {
         ).toStrictEqual([undefined])
     })
 
-    test('getValidInputCell', () => {
+    test('getValidInputCell cases', () => {
         expect(getValidInputCell('01/01/2024', '12/02/2023')).toStrictEqual({
             isValidDate: true,
             inputCellId: 885031,
@@ -43,7 +43,7 @@ describe('testing utils', () => {
         })
     })
 
-    test('getMonthAndDaysByWeek', () => {
+    test('getMonthAndDaysByWeek cases', () => {
         expect(getMonthAndDaysByWeek(2024, 1, 0)).toStrictEqual({
             monthStart: 1,
             monthEnd: 1,
@@ -56,7 +56,7 @@ describe('testing utils', () => {
         })
     })
 
-    test('getMonthByWeek', () => {
+    test('getMonthByWeek cases', () => {
         expect(getMonthByWeek(2024, 1)).toBe(1)
         expect(getMonthByWeek(2024, 10)).toBe(3)
         expect(getMonthByWeek(2024, 52)).toBe(12)
