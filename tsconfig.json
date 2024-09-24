@@ -2,7 +2,7 @@
     "compilerOptions": {
         "outDir": "./dist",
         "target": "es5",
-        "types": ["vite/client", "node"],
+        "types": ["vite/client", "node", "jest"],
         "lib": ["dom", "dom.iterable", "esnext"],
         "declaration": true,
         "declarationDir": "types",
@@ -22,7 +22,6 @@
         "jsx": "react-jsx",
         "baseUrl": ".",
         "paths": {
-            "/src/*": ["src/*"],
             "@types": ["src/types"],
             "@components/*": ["src/components/*"],
             "@assets/*": ["src/assets/*"],

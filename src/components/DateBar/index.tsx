@@ -55,12 +55,12 @@ const DateBar = ({ minMaxDate, ...restProps }: DateBarProps) => {
     }
 
     const handleOpenMonth = useCallback(() => {
-        if (!isYearOpen) setIsMonthOpen((prev) => !prev)
-    }, [isYearOpen])
+        setIsMonthOpen((prev) => !prev)
+    }, [])
 
     const handleOpenYear = useCallback(() => {
-        if (!isMonthOpen) setIsYearOpen((prev) => !prev)
-    }, [isMonthOpen])
+        setIsYearOpen((prev) => !prev)
+    }, [])
 
     const handleSelectMonth = useCallback(
         (monthId: number) => {
@@ -105,7 +105,7 @@ const DateBar = ({ minMaxDate, ...restProps }: DateBarProps) => {
                 src={prevIcon}
                 alt={prevImageAlt}
             />
-            <DateBarBlock>
+            <DateBarBlock ref={calendarRef}>
                 <>
                     <Month onClick={handleOpenMonth}>
                         {months[currentMonth - 1]}
@@ -115,14 +115,12 @@ const DateBar = ({ minMaxDate, ...restProps }: DateBarProps) => {
                         <MonthCalendar
                             month={currentMonth}
                             handleSelectMonth={handleSelectMonth}
-                            ref={calendarRef}
                         />
                     )}
                     {isYearOpen && (
                         <YearCalendar
                             year={year}
                             handleSelectYear={handleSelectYear}
-                            ref={calendarRef}
                         />
                     )}
                 </>

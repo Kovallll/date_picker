@@ -1,11 +1,14 @@
 import { memo, useState } from 'react'
 
 import {
+    addAltText,
     allText,
     cancelText,
     checkTitleText,
     deleteText,
     placeholderText,
+    removeAllAltText,
+    removeAltText,
     title,
 } from './config'
 import {
@@ -32,7 +35,6 @@ const TodoModal = ({
     removeTodo,
     removeAllTodos,
     updateTodo,
-    todoId,
 }: TodoModalProps) => {
     const [inputData, setInputData] = useState('')
 
@@ -78,7 +80,7 @@ const TodoModal = ({
                 } else return todoData
             })
             handleSetTodoData(newTodoData)
-            updateTodo(todoId, { id, data: currentTodo.data, checked })
+            updateTodo(todo.id, { id, data: currentTodo.data, checked })
         }
 
     const onCloseTodoModal = () => {
@@ -87,14 +89,14 @@ const TodoModal = ({
 
     const handleDeleteModal = () => {
         if (removeId === initialActiveCellId) {
-            handleRemoveAllTodos(todoId)
+            handleRemoveAllTodos(todo.id)
         } else {
-            handleRemoveTodo(todoId, removeId)
+            handleRemoveTodo(todo.id, removeId)
         }
     }
 
     const handleAddTodo = () => {
-        appendTodo(todoId)
+        appendTodo(todo.id)
         setInputData('')
     }
 
@@ -116,13 +118,14 @@ const TodoModal = ({
                 />
                 <Buttons $isCheckModal={false}>
                     <Button disabled={isAddDisabled} onClick={handleAddTodo}>
-                        <Image src={addIcon} />
+                        <Image src={addIcon} alt={addAltText} />
                     </Button>
                     <Button
                         disabled={isRemoveAllDisabled}
                         onClick={checkAllRemove}
                     >
-                        <Image src={deleteIcon} /> {allText}
+                        <Image src={deleteIcon} alt={removeAllAltText} />{' '}
+                        {allText}
                     </Button>
                 </Buttons>
             </TodoCreater>
@@ -137,7 +140,7 @@ const TodoModal = ({
                         />
                         <TodoText $isChecked={checked}>{data}</TodoText>
                         <Button onClick={checkRemove(id)}>
-                            <Image src={icons.deleteIcon} />
+                            <Image src={icons.deleteIcon} alt={removeAltText} />
                         </Button>
                     </Todo>
                 ))}

@@ -211,7 +211,6 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                                 removeTodo={handleRemoveTodo}
                                 removeAllTodos={handleRemoveAllTodos}
                                 updateTodo={handleUpdateTodo}
-                                todoId={activeCellId}
                             />
                         )}
                     </CalendarArticle>

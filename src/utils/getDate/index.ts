@@ -1,5 +1,5 @@
-import { countMsInDay, daysInWeek, thursdayIndex } from '@constants'
-import { CustomHolidays, Holidays } from '@types'
+import { daysInWeek } from '@constants'
+import { CustomHolidays, Holidays, StartDay } from '@types'
 import {
     getAllCellsPrevMonths,
     getCellsPrevMonth,
@@ -15,7 +15,12 @@ export const getDateFormat = (
 
     const day = id + 1 - getCellsPrevMonth(year, currentMonth - 1)
     newDate.setFullYear(year, currentMonth - 1, day)
-    const date = newDate.toLocaleDateString().replace(/\./g, '/')
+
+    const formattedYear = newDate.getFullYear()
+    const formattedMonth = String(newDate.getMonth() + 1).padStart(2, '0')
+    const formattedDay = String(newDate.getDate()).padStart(2, '0')
+
+    const date = `${formattedDay}/${formattedMonth}/${formattedYear}`
 
     return date
 }
@@ -76,7 +81,7 @@ export const getValidInputCell = (
 export const getMonthAndDaysByWeek = (
     year: number,
     weekNumber: number,
-    startDay: number
+    startDay: StartDay
 ) => {
     const firstDayOfYear = new Date(year, 0, 1 - startDay)
 
@@ -97,7 +102,7 @@ export const getMonthAndDaysByWeek = (
 
     const days = []
     for (let d = startOfWeek; d <= endOfWeek; d.setDate(d.getDate() + 1)) {
-        days.push(Number(new Date(d).toLocaleDateString().split('.')[0]))
+        days.push(Number(new Date(d).toString().split(' ')[2]))
     }
 
     return {
@@ -121,19 +126,4 @@ export const getMonthByWeek = (year: number, weekNumber: number) => {
     const month = startOfWeek.getMonth() + 1
 
     return month
-}
-
-export const getWeekNumber = (date: Date) => {
-    const tempDate = new Date(date.getTime())
-
-    tempDate.setHours(0, 0, 0, 0)
-    tempDate.setDate(
-        tempDate.getDate() + thursdayIndex - (tempDate.getDay() || daysInWeek)
-    )
-    const yearStart = new Date(tempDate.getFullYear(), 0, 1)
-    const weekNumber = Math.ceil(
-        ((Number(tempDate) - Number(yearStart)) / countMsInDay + 1) / daysInWeek
-    )
-
-    return weekNumber
 }
