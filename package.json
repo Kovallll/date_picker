@@ -1,7 +1,7 @@
 {
     "name": "date-picker-calendar-react",
     "packageManager": "yarn@1.22.22",
-    "version": "0.9.8",
+    "version": "1.0.1",
     "author": "Danila Kovaliou",
     "keywords": [
         "date-picker",
