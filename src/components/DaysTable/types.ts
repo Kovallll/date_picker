@@ -1,4 +1,5 @@
 import { WeekDays } from '@constants'
+import { calendarInfo } from '@service'
 import {
     GetHoliday,
     Holidays,
@@ -32,6 +33,7 @@ export interface DaysTableProps
     ) => GetHoliday
     handleGetAllHolidays?: () => Holidays[]
     minMaxDate?: minMaxCellDate
+    calendarData: calendarInfo
 }
 
 export type ClickNextMonthCell = Pick<

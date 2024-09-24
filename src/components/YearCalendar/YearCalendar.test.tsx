@@ -16,7 +16,7 @@ test('test YearCalendar cell styles', async () => {
     )
     const firstElement = screen.getByText('2024')
     const secondElement = screen.getByText('2025')
-    screen.debug()
+
     const stylesFirstElement = window.getComputedStyle(firstElement)
     const stylesSecondElement = window.getComputedStyle(secondElement)
 

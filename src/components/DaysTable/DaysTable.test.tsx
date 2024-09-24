@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import DaysTable from '.'
 
 import '@testing-library/jest-dom'
+import { calendarInfo } from '@service'
 import theme from '@styles/theme'
 import { render, screen } from '@testing-library/react'
 
@@ -22,6 +23,7 @@ test('check DayTable childCount', () => {
                 weekDays={[]}
                 activeCellId={''}
                 handleChangeActiveCellId={mockFn}
+                calendarData={new calendarInfo()}
             />
         </ThemeProvider>
     )

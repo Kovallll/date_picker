@@ -23,9 +23,12 @@ import WeekBar from '@components/WeekBar'
 import { initialActiveCellId, initialWeekDays, todosKey } from '@constants'
 import { InputContext } from '@context'
 import { useClickOutside, useInputDate } from '@hooks'
+import { calendarInfo } from '@service'
 import { getValidInputCell, LocalStorage } from '@utils'
 
 const DefaultCalendar = (props: DefaultCalendarProps) => {
+    const calendarData = new calendarInfo()
+
     const {
         isWithRange = false,
         isWithTodos,
@@ -57,6 +60,11 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
         secondInputDate,
         handleChangeSecondDateInput,
     } = useInputDate()
+
+    calendarData.updateData({
+        firstInputDate,
+        secondInputDate,
+    })
 
     const handleChangeActiveCellId = (id: string) => {
         setActiveCellId(id)
@@ -193,10 +201,12 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                             handleGetHoliday={handleGetHoliday}
                             handleGetAllHolidays={handleGetAllHolidays}
                             minMaxDate={minMaxDate}
+                            calendarData={calendarData}
                         />
                         {isOpenModal && isTodos && (
                             <TodoModal
                                 onClose={handleChangeModalState}
+                                isWithRange={isWithRange}
                                 todo={todo}
                                 addTodo={handleAddTodo}
                                 removeTodo={handleRemoveTodo}

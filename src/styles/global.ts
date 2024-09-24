@@ -2,7 +2,7 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 
 import mixins from './mixins'
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
         margin: 0;
@@ -27,5 +27,3 @@ export const DefaultButton = styled.button<DefaultButtonProps>`
         `
     }}
 `
-
-export default GlobalStyle

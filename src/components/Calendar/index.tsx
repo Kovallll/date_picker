@@ -1,5 +1,6 @@
 import { CalendarProps } from './types'
 
+import ErrorBoundary from '@components/ErrorBoundary'
 import {
     withChangeStartDay,
     withHolidays,
@@ -10,7 +11,7 @@ import {
 import { DateProvider } from '@providers/DateProvider'
 import { InputProvider } from '@providers/InputProvider'
 import ThemeProvider from '@providers/ThemeProvider'
-import calendarCreater from '@service'
+import { calendarCreater } from '@service'
 import { CustomHolidays, minMaxDate } from '@types'
 
 export const Calendar = (props: CalendarProps) => {
@@ -53,12 +54,17 @@ export const Calendar = (props: CalendarProps) => {
     }
     const Calendar = calendar.getCalendar()
     return (
-        <ThemeProvider>
-            <DateProvider initialMonth={initialMonth} initialYear={initialYear}>
-                <InputProvider isWithInput={isWithInput}>
-                    <Calendar />
-                </InputProvider>
-            </DateProvider>
-        </ThemeProvider>
+        <ErrorBoundary>
+            <ThemeProvider>
+                <DateProvider
+                    initialMonth={initialMonth}
+                    initialYear={initialYear}
+                >
+                    <InputProvider isWithInput={isWithInput}>
+                        <Calendar />
+                    </InputProvider>
+                </DateProvider>
+            </ThemeProvider>
+        </ErrorBoundary>
     )
 }

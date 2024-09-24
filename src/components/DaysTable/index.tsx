@@ -45,10 +45,17 @@ const DaysTable = (props: DaysTableProps) => {
         handleGetHoliday,
         handleGetAllHolidays,
         minMaxDate,
+        calendarData,
         ...restProps
     } = props
-    const { year, currentMonth, handleIncrementMonth, handleDecrementMonth } =
-        useContext(DateContext)
+
+    const {
+        year,
+        currentMonth,
+        weekId,
+        handleIncrementMonth,
+        handleDecrementMonth,
+    } = useContext(DateContext)
 
     const isWithInput = useContext(InputContext)
     const [prevFirstDate, setPrevFirstDate] = useState('')
@@ -56,6 +63,14 @@ const DaysTable = (props: DaysTableProps) => {
     const [range, setRange] = useState<Range>({
         start: null,
         end: null,
+    })
+
+    calendarData.updateData({
+        range,
+        activeCellId,
+        year,
+        month: currentMonth,
+        weekNumber: weekId,
     })
 
     const handleSetActiveCellId = (id: string) => {

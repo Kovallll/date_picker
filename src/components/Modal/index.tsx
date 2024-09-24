@@ -8,13 +8,17 @@ import { ModalProps } from './types'
 import { icons } from '@constants'
 import { useClickOutside } from '@hooks'
 
-export const Modal = ({ onCloseModal, children }: ModalProps) => {
+export const Modal = ({
+    onCloseModal,
+    children,
+    isWithRange = false,
+}: ModalProps) => {
     const modalRef = useRef(null)
     useClickOutside(modalRef, () => onCloseModal())
 
     return createPortal(
         <Container>
-            <Window ref={modalRef}>
+            <Window ref={modalRef} $isWithRange={isWithRange}>
                 <CloseButton onClick={onCloseModal}>
                     <Image src={icons.clearIcon} alt={closeAltText} />
                 </CloseButton>

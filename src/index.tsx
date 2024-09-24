@@ -1,3 +1,6 @@
 import { Calendar } from '@components/Calendar'
+import { calendarInfo } from '@service'
 
-export { Calendar }
+const calendarData = new calendarInfo().getData()
+
+export { Calendar, calendarData }

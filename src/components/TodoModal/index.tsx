@@ -28,14 +28,17 @@ import { Modal } from '@components/Modal'
 import { icons, initialActiveCellId, maxLenTodo } from '@constants'
 import { useTodo } from '@hooks'
 
-const TodoModal = ({
-    onClose,
-    todo,
-    addTodo,
-    removeTodo,
-    removeAllTodos,
-    updateTodo,
-}: TodoModalProps) => {
+const TodoModal = (props: TodoModalProps) => {
+    const {
+        onClose,
+        todo,
+        addTodo,
+        removeTodo,
+        removeAllTodos,
+        updateTodo,
+        isWithRange,
+    } = props
+
     const [inputData, setInputData] = useState('')
 
     const isAddDisabled = inputData.length === 0
@@ -106,7 +109,7 @@ const TodoModal = ({
         : icons.deleteIcon
 
     return (
-        <Modal onCloseModal={onCloseTodoModal}>
+        <Modal onCloseModal={onCloseTodoModal} isWithRange={isWithRange}>
             <Title>{title}</Title>
             <TodoCreater>
                 <Input
@@ -146,7 +149,10 @@ const TodoModal = ({
                 ))}
             </TodoList>
             {isDelete && (
-                <Modal onCloseModal={handleChangeIsDelete}>
+                <Modal
+                    onCloseModal={handleChangeIsDelete}
+                    isWithRange={isWithRange}
+                >
                     <Title>{checkTitleText}</Title>
                     <Buttons $isCheckModal={true}>
                         <Button onClick={handleDeleteModal}>
