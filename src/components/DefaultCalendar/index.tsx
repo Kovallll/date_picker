@@ -206,6 +206,7 @@ const DefaultCalendar = (props: DefaultCalendarProps) => {
                         {isOpenModal && isTodos && (
                             <TodoModal
                                 onClose={handleChangeModalState}
+                                isWithRange={isWithRange}
                                 todo={todo}
                                 addTodo={handleAddTodo}
                                 removeTodo={handleRemoveTodo}

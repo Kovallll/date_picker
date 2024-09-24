@@ -16,7 +16,7 @@ test('test WeekCalendar cell styles', () => {
     )
     const firstElement = screen.getByText('1')
     const secondElement = screen.getByText('2')
-    screen.debug()
+
     const stylesFirstElement = window.getComputedStyle(firstElement)
     const stylesSecondElement = window.getComputedStyle(secondElement)
 

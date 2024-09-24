@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import { WindowProps } from './types'
+
 import mixins from '@styles/mixins'
 
 export const Container = styled.div`
@@ -10,8 +12,8 @@ export const Container = styled.div`
     z-index: 10;
 `
 
-export const Window = styled.div`
-    ${({ theme }) => {
+export const Window = styled.div<WindowProps>`
+    ${({ theme, $isWithRange }) => {
         const border = mixins.elementBorder(
             theme,
             theme.baseBorder,
@@ -22,7 +24,11 @@ export const Window = styled.div`
             ${mixins.flexColumnCenter}
 
             position: relative;
-            width: ${mixins.elementWidth(theme, theme.calendarStyles, 'width')};
+            width: ${mixins.elementWidth(
+                theme,
+                theme.calendarStyles,
+                $isWithRange ? 'rangeWidth' : 'width'
+            )};
             font-size: ${mixins.fontSize(theme)};
             padding: ${mixins.padding(theme)};
             border-radius: ${theme.cellBorderRadius + 'px'};

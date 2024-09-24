@@ -7,6 +7,7 @@ export interface TodoModalProps {
     removeTodo: (cellId: string, todoDataId: string) => Todo[]
     removeAllTodos: (cellId: string) => Todo[]
     updateTodo: (todoId: string, todo: TodoData) => void
+    isWithRange?: boolean
 }
 
 export interface TodoTextProps {
