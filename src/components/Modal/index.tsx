@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { createPortal } from 'react-dom'
 
+import { closeAltText } from './config'
 import { CloseButton, Container, Image, Window } from './styled'
 import { ModalProps } from './types'
 
@@ -15,7 +16,7 @@ export const Modal = ({ onCloseModal, children }: ModalProps) => {
         <Container>
             <Window ref={modalRef}>
                 <CloseButton onClick={onCloseModal}>
-                    <Image src={icons.clearIcon} />
+                    <Image src={icons.clearIcon} alt={closeAltText} />
                 </CloseButton>
                 {children}
             </Window>

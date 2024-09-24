@@ -18,7 +18,7 @@ import { DateContext } from '@context'
 import { getMonthByWeek, getPopupTableCells } from '@utils'
 
 const WeekCalendar = forwardRef(function WeekCalendar(
-    { handleOpenCalendar }: WeekCalendarProps,
+    { handleOpenCalendar, ...restprops }: WeekCalendarProps,
     ref: React.ForwardedRef<HTMLElement | null>
 ) {
     const { year, weekId, handleChangeCurrentMonth, handleChangeWeek } =
@@ -97,7 +97,7 @@ const WeekCalendar = forwardRef(function WeekCalendar(
         : icons.nextArrowIcon
 
     return (
-        <WeekSection ref={ref}>
+        <WeekSection ref={ref} {...restprops}>
             <ButtonsWrap>
                 <SwapButton
                     onClick={handleClickPrevButton}

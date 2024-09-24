@@ -1,4 +1,4 @@
-import { noDateError } from './config'
+import { calendarAlt, clearAlt, noDateError } from './config'
 import {
     CalendarImageButton,
     ClearImageButton,
@@ -110,7 +110,7 @@ export const DateInput = (props: DateInputProps) => {
         <DateSection>
             <InputBlock>
                 <CalendarImageButton onClick={handleOpenCalendar}>
-                    <Image src={icons.calendarIcon} />
+                    <Image src={icons.calendarIcon} alt={calendarAlt} />
                 </CalendarImageButton>
                 <Input
                     value={date}
@@ -123,7 +123,7 @@ export const DateInput = (props: DateInputProps) => {
                     disabled={isDisabled}
                 />
                 <ClearImageButton onClick={handleClearDate}>
-                    <Image src={icons.clearIcon} />
+                    <Image src={icons.clearIcon} alt={clearAlt} />
                 </ClearImageButton>
             </InputBlock>
         </DateSection>

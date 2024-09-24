@@ -8,7 +8,6 @@ import disabledNextArrowIcon from '@assets/icons/disabledNextArrow.svg'
 import disabledPrevArrowIcon from '@assets/icons/disabledPrevArrow.svg'
 import nextArrowIcon from '@assets/icons/nextArrow.svg'
 import prevArrowIcon from '@assets/icons/prevArrow.svg'
-import { getWeekNumber } from '@utils'
 
 export enum Month {
     January = 'January',
@@ -100,10 +99,6 @@ export const dateNumberForCurrentDays = 33
 
 export const dayWithSlashId = 3
 
-export const countMsInDay = 86400000
-
-export const thursdayIndex = 4
-
 export const monthWithSlashId = 7
 
 export const waitTime = 600
@@ -149,7 +144,7 @@ export const defaultMinMaxDate = {
 export const initialProps = {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
-    weekId: getWeekNumber(currentDate),
+    weekId: 1,
 }
 
 export const todosKey = 'todos'

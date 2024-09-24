@@ -59,7 +59,7 @@ export const getCellsInMonth = (year: number, monthIndex: number) => {
     return daysInMonth
 }
 
-const getDaysInMonth = (year: number, monthIndex: number) => {
+export const getDaysInMonth = (year: number, monthIndex: number) => {
     const days = new Date(year, monthIndex, 0).getDate()
     return days
 }
